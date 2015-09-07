@@ -236,6 +236,11 @@ Phaser.Plugin.Isometric.Cube.prototype = {
 
     },
 
+    containsXYBlad: function (x, y) {
+
+        return Phaser.Plugin.Isometric.Cube.containsXY(this, x + this.widthX, y + this.widthY);
+    },
+
     /**
      * Returns a new Cube object with the same values for the x, y, z, widthX, widthY and height properties as the original Cube object.
      * @method Phaser.Plugin.Isometric.Cube#clone

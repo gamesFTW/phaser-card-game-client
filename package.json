@@ -4,13 +4,12 @@
   "description": "-",
   "scripts": {
     "watch": "./node_modules/.bin/webpack --progress --watch",
-    "dev-server": "./node_modules/.bin/webpack-dev-server --progress --inline --content-base dist"
+    "web": "python -m SimpleHTTPServer"
   },
 
   "dependencies": {
     "phaser": "~2.2.0",
     "lodash": "~3.10.1"
-
   },
   "devDependencies": {
     "phaser-glsl-loader": "*",

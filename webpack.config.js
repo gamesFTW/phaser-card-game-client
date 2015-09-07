@@ -33,11 +33,11 @@ module.exports = {
             {
                 test: /phaser\.js$/i,
                 loader: 'phaser-shim-loader'
-            },
-            {
-                test: /phaser-debug\.js$/i,
-                loader: 'phaser-debug-webpack-loader'
             }
+            //{
+            //    test: /phaser-debug\.js$/i,
+            //    loader: 'phaser-debug-webpack-loader'
+            //}
         ]
     }
 };
