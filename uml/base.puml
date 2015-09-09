@@ -1,0 +1,96 @@
+@startuml
+
+package "gama" {
+    abstract class BaseController
+    BaseController <|-- gama.creature.CreatureController
+    BaseController <|-- gama.area.AreaController
+    BaseController <|-- gama.tile.TileController
+
+
+    abstract class FiledObjectsView
+    FiledObjectsView <|-- gama.creature.CreatureView
+    FiledObjectsView <|-- gama.area.AreaView
+    FiledObjectsView <|-- gama.tile.TileView
+
+
+    abstract class CardView
+    CardView <|-- gama.creature.CreatureCardView
+    CardView <|-- gama.area.AreaCardView
+
+
+    class FiledController {
+        - pickedCreature: Creature
+    }
+    FiledController *-- gama.tile.TileController
+    FiledController *-- gama.creature.CreatureController
+    FiledController *-- gama.area.AreaController
+
+
+    class CardViewController
+    CardViewController --> CardView
+}
+
+
+package "gama.creature" {
+    class CreatureController {
+        - creatureList
+        + goToPosition(creature: Creature, x, y)
+        + attack(creature1: Creature, creature2: Creature)
+    }
+    CreatureController *-- Creature
+
+
+    class Creature {
+        + attack(creature: Creature)
+        + takeDamage(damage: int)
+    }
+    Creature *-- CreatureView
+    Creature *-- CreatureCardView
+
+
+    class CreatureView
+    CreatureView --> phaser.game
+
+
+    class CreatureCardView
+    CreatureCardView --> phaser.game
+}
+
+
+package "gama.tile" {
+    class TileController
+    TileController *-- Tile
+
+
+    class Tile
+    Tile *-- TileView
+
+
+    class TileView
+    TileView --> phaser.game
+}
+
+
+package "gama.area" {
+    class AreaController
+    AreaController *-- Area
+
+
+    class Area
+    Area *-- AreaView
+    Area *-- AreaCardView
+
+
+    class AreaView
+    AreaView --> phaser.game
+
+
+    class AreaCardView
+    AreaCardView --> phaser.game
+}
+
+
+package "phaser" #DDDDDD {
+    class game
+}
+@enduml
