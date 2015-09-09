@@ -5,9 +5,9 @@
  * Created by Alex Kalmakov <st00nsa@gmail.com>
  */
 
-var Phaser = require('../../plugins/isometric').Phaser;
+var Phaser = require('plugins/isometric').Phaser;
 
-exports.preloadStage = function(game){
+export default function(game) {
     game.time.advancedTiming = true;
     //game.debug.renderShdow = false;
     //game.stage.disableVisibilityChange = true;
