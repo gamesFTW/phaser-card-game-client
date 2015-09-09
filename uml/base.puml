@@ -8,6 +8,18 @@ package "gama" {
 
 
     abstract class CardView
+    
+    
+    class GameController
+    GameController *-- PhaserGame
+    GameController *-- FiledController
+    GameController *-- CardViewController
+
+
+    class PhaserGame {
+        + game
+    }
+    PhaserGame --> phaser.game
 
 
     class FiledController {
@@ -37,7 +49,7 @@ package "gama" {
 
     class TileView
     FiledObjectsView <|-- TileView
-    TileView --> phaser.game
+    TileView --> PhaserGame
 
 
     '''Creature'''
@@ -60,12 +72,12 @@ package "gama" {
 
     class CreatureView
     FiledObjectsView <|-- CreatureView
-    CreatureView --> phaser.game
+    CreatureView --> PhaserGame
 
 
     class CreatureCardView
     CardView <|-- CreatureCardView
-    CreatureCardView --> phaser.game
+    CreatureCardView --> PhaserGame
 
 
     '''Area'''
@@ -81,12 +93,12 @@ package "gama" {
 
     class AreaView
     FiledObjectsView <|-- AreaView
-    AreaView --> phaser.game
+    AreaView --> PhaserGame
 
 
     class AreaCardView
     CardView <|-- AreaCardView
-    AreaCardView --> phaser.game
+    AreaCardView --> PhaserGame
 }
 
 
