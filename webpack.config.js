@@ -12,6 +12,7 @@ module.exports = {
         filename: "main.js"
     },
     resolve: {
+        root:  path.join(__dirname, "src"),
         alias: {
             "phaser": phaserPath,
             "phaser-debug": phaserDebugPath

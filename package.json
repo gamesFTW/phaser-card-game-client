@@ -9,7 +9,8 @@
 
   "dependencies": {
     "phaser": "~2.2.0",
-    "lodash": "~3.10.1"
+    "lodash": "~3.10.1",
+    "ramda": "~0.17.1"
   },
   "devDependencies": {
     "phaser-glsl-loader": "*",
