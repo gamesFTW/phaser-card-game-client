@@ -2,41 +2,51 @@
 
 package "gama" {
     abstract class BaseController
-    BaseController <|-- gama.creature.CreatureController
-    BaseController <|-- gama.area.AreaController
-    BaseController <|-- gama.tile.TileController
 
 
     abstract class FiledObjectsView
-    FiledObjectsView <|-- gama.creature.CreatureView
-    FiledObjectsView <|-- gama.area.AreaView
-    FiledObjectsView <|-- gama.tile.TileView
 
 
     abstract class CardView
-    CardView <|-- gama.creature.CreatureCardView
-    CardView <|-- gama.area.AreaCardView
 
 
     class FiledController {
         - pickedCreature: Creature
     }
-    FiledController *-- gama.tile.TileController
-    FiledController *-- gama.creature.CreatureController
-    FiledController *-- gama.area.AreaController
+    FiledController *-- TileController
+    FiledController *-- CreatureController
+    FiledController *-- AreaController
+
+
+    class CardView
 
 
     class CardViewController
     CardViewController --> CardView
-}
 
 
-package "gama.creature" {
+    '''Tile'''
+    class TileController
+    BaseController <|-- TileController
+    TileController *-- Tile
+
+
+    class Tile
+    Tile *-- TileView
+
+
+    class TileView
+    FiledObjectsView <|-- TileView
+    TileView --> phaser.game
+
+
+    '''Creature'''
     class CreatureController {
         - creatureList
         + goToPosition(creature: Creature, x, y)
         + attack(creature1: Creature, creature2: Creature)
     }
+    BaseController <|-- CreatureController
     CreatureController *-- Creature
 
 
@@ -49,30 +59,18 @@ package "gama.creature" {
 
 
     class CreatureView
+    FiledObjectsView <|-- CreatureView
     CreatureView --> phaser.game
 
 
     class CreatureCardView
+    CardView <|-- CreatureCardView
     CreatureCardView --> phaser.game
-}
 
 
-package "gama.tile" {
-    class TileController
-    TileController *-- Tile
-
-
-    class Tile
-    Tile *-- TileView
-
-
-    class TileView
-    TileView --> phaser.game
-}
-
-
-package "gama.area" {
+    '''Area'''
     class AreaController
+    BaseController <|-- AreaController
     AreaController *-- Area
 
 
@@ -82,10 +80,12 @@ package "gama.area" {
 
 
     class AreaView
+    FiledObjectsView <|-- AreaView
     AreaView --> phaser.game
 
 
     class AreaCardView
+    CardView <|-- AreaCardView
     AreaCardView --> phaser.game
 }
 
