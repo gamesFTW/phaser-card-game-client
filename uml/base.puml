@@ -6,7 +6,7 @@ skinparam class {
 }
 
 skinparam stereotypeCBackgroundColor YellowGreen
-
+skinparam shadowing false
 
 package "gama" {
     abstract class BaseManager #ffffff
