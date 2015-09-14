@@ -21,10 +21,10 @@ package "gama" {
     abstract class CardView #ffffff
     
     
-    class GameManager #ffffff
-    GameManager *-- PhaserGame
-    GameManager *-- FieldManager
-    GameManager *-- CardViewManager
+    class Main #ffffff
+    Main *-- PhaserGame
+    Main *-- GameField
+    Main *-- CardViewManager
 
 
     class PhaserGame #ffffff {
@@ -33,12 +33,12 @@ package "gama" {
     PhaserGame --> phaser.game
 
 
-    class FieldManager #ffffff {
+    class GameField #ffffff {
         - pickedCreature: Creature
     }
-    FieldManager *-- TileManager
-    FieldManager *-- CreatureManager
-    FieldManager *-- AreaManager
+    GameField *-- TileManager
+    GameField *-- CreatureManager
+    GameField *-- AreaManager
 
 
     class CardViewManager #ffffff
