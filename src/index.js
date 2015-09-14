@@ -1,6 +1,6 @@
-require('phaserGame/PhaserGame')
+
 //
-//var GameController = require('./gameController').GameController;
+//var GameController = require('./Main').GameController;
 //
 //
 //
