@@ -1,68 +1,75 @@
 @startuml
 
+skinparam class {
+	ArrowColor black
+	BorderColor black
+}
+
+skinparam stereotypeCBackgroundColor YellowGreen
+skinparam shadowing false
+
 package "gama" {
-    abstract class BaseController
+    abstract class BaseManager #ffffff
 
 
-    abstract class FiledObjectsView
+    abstract class FieldObjectsView #ffffff
+    FieldObjectsView <|-up- TileView
+    FieldObjectsView <|-up- CreatureView
+    FieldObjectsView <|-up- AreaView
 
 
-    abstract class CardView
+    abstract class CardView #ffffff
     
     
-    class GameController
-    GameController *-- PhaserGame
-    GameController *-- FiledController
-    GameController *-- CardViewController
+    class GameManager #ffffff
+    GameManager *-- PhaserGame
+    GameManager *-- FieldManager
+    GameManager *-- CardViewManager
 
 
-    class PhaserGame {
+    class PhaserGame #ffffff {
         + game
     }
     PhaserGame --> phaser.game
 
 
-    class FiledController {
+    class FieldManager #ffffff {
         - pickedCreature: Creature
     }
-    FiledController *-- TileController
-    FiledController *-- CreatureController
-    FiledController *-- AreaController
+    FieldManager *-- TileManager
+    FieldManager *-- CreatureManager
+    FieldManager *-- AreaManager
 
 
-    class CardView
-
-
-    class CardViewController
-    CardViewController --> CardView
+    class CardViewManager #ffffff
+    CardViewManager --> CardView
 
 
     '''Tile'''
-    class TileController
-    BaseController <|-- TileController
-    TileController *-- Tile
+    class TileManager #F7CDFF
+    BaseManager <|-- TileManager
+    TileManager *-- Tile
 
 
-    class Tile
+    class Tile #F7CDFF
     Tile *-- TileView
 
 
-    class TileView
-    FiledObjectsView <|-- TileView
+    class TileView #F7CDFF
     TileView --> PhaserGame
 
 
     '''Creature'''
-    class CreatureController {
+    class CreatureManager #CAD0E8 {
         - creatureList
         + goToPosition(creature: Creature, x, y)
         + attack(creature1: Creature, creature2: Creature)
     }
-    BaseController <|-- CreatureController
-    CreatureController *-- Creature
+    BaseManager <|-- CreatureManager
+    CreatureManager *-- Creature
 
 
-    class Creature {
+    class Creature #CAD0E8 {
         + attack(creature: Creature)
         + takeDamage(damage: int)
     }
@@ -70,34 +77,32 @@ package "gama" {
     Creature *-- CreatureCardView
 
 
-    class CreatureView
-    FiledObjectsView <|-- CreatureView
+    class CreatureView #CAD0E8
     CreatureView --> PhaserGame
 
 
-    class CreatureCardView
-    CardView <|-- CreatureCardView
+    class CreatureCardView #CAD0E8
+    CardView <|-right- CreatureCardView
     CreatureCardView --> PhaserGame
 
 
     '''Area'''
-    class AreaController
-    BaseController <|-- AreaController
-    AreaController *-- Area
+    class AreaManager #D6E8CA
+    BaseManager <|-- AreaManager
+    AreaManager *-- Area
 
 
-    class Area
+    class Area #D6E8CA
     Area *-- AreaView
     Area *-- AreaCardView
 
 
-    class AreaView
-    FiledObjectsView <|-- AreaView
+    class AreaView #D6E8CA
     AreaView --> PhaserGame
 
 
-    class AreaCardView
-    CardView <|-- AreaCardView
+    class AreaCardView #D6E8CA
+    CardView <|-right- AreaCardView
     AreaCardView --> PhaserGame
 }
 
