@@ -4,7 +4,8 @@
  * Created by Alex Kalmakov <st00nsa@gmail.com>
  */
 
-require('phaserWrapper/PhaserWrapper');
+var PhaserWrapper = require('phaserWrapper/PhaserWrapper');
+var GameField = require('field/GameField');
 
 
 /**
@@ -12,7 +13,12 @@ require('phaserWrapper/PhaserWrapper');
  */
 class Main {
     constructor() {
+        PhaserWrapper.createFinished = this.init_;
+    }
 
+
+    init_() {
+        this.gameField = new GameField();
     }
 }
 
