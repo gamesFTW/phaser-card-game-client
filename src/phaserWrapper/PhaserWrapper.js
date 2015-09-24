@@ -15,44 +15,41 @@ class PhaserWrapper {
             1200, 800, Phaser.AUTO, 'gameView', null, false, false
         );
 
-        var self = this;
         this._game.state.add('Boot', {
-            preload: PhaserWrapper._preload,
-            create: function() {
-                self._createFinished();
-            },
-            update: PhaserWrapper._update,
-            render: PhaserWrapper._render
+            preload: this._preload.bind(this),
+            create: this._create.bind(this),
+            update: this._update.bind(this),
+            render: this._render.bind(this)
         });
 
         this._game.state.start('Boot');
     }
 
 
-    static _preload(game) {
-        game.time.advancedTiming = true;
+    _preload() {
+        this._game.time.advancedTiming = true;
 
-        game.load.image('tile', '../assets/tile.png');
-        game.load.image('hero', '../assets/hero.png');
+        this._game.load.image('tile', '../assets/tile.png');
+        this._game.load.image('hero', '../assets/hero.png');
 
-        game.plugins.add(new Phaser.Plugin.Isometric(game));
+        this._game.plugins.add(new Phaser.Plugin.Isometric(this._game));
 
-        game.physics.startSystem(Phaser.Plugin.Isometric.ISOARCADE);
-        game.iso.anchor.setTo(0.5, 0.5);
+        this._game.physics.startSystem(Phaser.Plugin.Isometric.ISOARCADE);
+        this._game.iso.anchor.setTo(0.5, 0.5);
     }
 
 
-    static _create() {
+    _create() {
         this._createFinished();
     }
 
 
-    static _update() {
+    _update() {
 
     }
 
 
-    static _render() {
+    _render() {
 
     }
 }

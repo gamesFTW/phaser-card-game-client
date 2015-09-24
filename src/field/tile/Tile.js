@@ -2,8 +2,7 @@ var TileView = require('field/tile/TileView');
 
 
 export default class Tile {
-    constructor() {
-        this._view = new TileView();
+    constructor(x, y) {
+        this._view = new TileView(x, y);
     }
-
 }

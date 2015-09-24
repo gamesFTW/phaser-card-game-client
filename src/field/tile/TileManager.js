@@ -2,7 +2,7 @@ var Tile = require('field/tile/Tile');
 
 
 export default class TileManager {
-    constructor(width = 2, height = 2) {
+    constructor(width = 10, height = 10) {
         this.createTiles(width, height);
     }
 
@@ -14,14 +14,14 @@ export default class TileManager {
             this._items[i] = {};
 
             for (var j = 0; j < height; j++) {
-                this._items[i][j] = this.createTile();
+                this._items[i][j] = this.createTile(i, j);
             }
         }
     }
 
 
-    createTile() {
-        var tile = new Tile();
+    createTile(x, y) {
+        var tile = new Tile(x, y);
 
         return tile;
     }
