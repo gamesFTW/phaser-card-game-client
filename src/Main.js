@@ -13,11 +13,11 @@ var GameField = require('field/GameField');
  */
 class Main {
     constructor() {
-        PhaserWrapper.createFinished = this.init_;
+        PhaserWrapper.createFinished = this._init;
     }
 
 
-    init_() {
+    _init() {
         this.gameField = new GameField();
     }
 }

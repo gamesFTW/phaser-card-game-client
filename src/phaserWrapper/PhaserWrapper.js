@@ -1,5 +1,5 @@
 var _ = require('lodash');
-var Phaser = require('plugins/isometric').Phaser;
+var Phaser = require('external/isometric').Phaser;
 
 
 /**
