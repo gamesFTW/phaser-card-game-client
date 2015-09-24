@@ -12,37 +12,37 @@ package "gama" {
     abstract class BaseManager #ffffff
 
 
-    abstract class FieldObjectsView #ffffff
-    FieldObjectsView <|-up- TileView
-    FieldObjectsView <|-up- CreatureView
-    FieldObjectsView <|-up- AreaView
+    abstract class BaseFieldObjectsView #ffffff
+    BaseFieldObjectsView <|-up- TileView
+    BaseFieldObjectsView <|-up- CreatureView
+    BaseFieldObjectsView <|-up- AreaView
 
 
-    abstract class CardView #ffffff
+    abstract class BaseCardView #ffffff
     
     
-    class GameManager #ffffff
-    GameManager *-- PhaserGame
-    GameManager *-- FieldManager
-    GameManager *-- CardViewManager
+    class Main #ffffff
+    Main *-- PhaserWrapper
+    Main *-- GameField
+    Main *-- CardViewManager
 
 
-    class PhaserGame #ffffff {
+    class PhaserWrapper #ffffff {
         + game
     }
-    PhaserGame --> phaser.game
+    PhaserWrapper --> phaser.game
 
 
-    class FieldManager #ffffff {
+    class GameField #ffffff {
         - pickedCreature: Creature
     }
-    FieldManager *-- TileManager
-    FieldManager *-- CreatureManager
-    FieldManager *-- AreaManager
+    GameField *-- TileManager
+    GameField *-- CreatureManager
+    GameField *-- AreaManager
 
 
     class CardViewManager #ffffff
-    CardViewManager --> CardView
+    CardViewManager --> BaseCardView
 
 
     '''Tile'''
@@ -56,7 +56,7 @@ package "gama" {
 
 
     class TileView #F7CDFF
-    TileView --> PhaserGame
+    TileView --> PhaserWrapper
 
 
     '''Creature'''
@@ -78,12 +78,12 @@ package "gama" {
 
 
     class CreatureView #CAD0E8
-    CreatureView --> PhaserGame
+    CreatureView --> PhaserWrapper
 
 
     class CreatureCardView #CAD0E8
-    CardView <|-right- CreatureCardView
-    CreatureCardView --> PhaserGame
+    BaseCardView <|-right- CreatureCardView
+    CreatureCardView --> PhaserWrapper
 
 
     '''Area'''
@@ -98,12 +98,12 @@ package "gama" {
 
 
     class AreaView #D6E8CA
-    AreaView --> PhaserGame
+    AreaView --> PhaserWrapper
 
 
     class AreaCardView #D6E8CA
-    CardView <|-right- AreaCardView
-    AreaCardView --> PhaserGame
+    BaseCardView <|-right- AreaCardView
+    AreaCardView --> PhaserWrapper
 }
 
 

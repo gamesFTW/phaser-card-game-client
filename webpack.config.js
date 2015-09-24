@@ -6,12 +6,13 @@ var phaserPath = path.join(__dirname, '/node_modules/phaser/dist/phaser.js'),
     phaserDebugPath = path.join(__dirname, '/node_modules/phaser-debug/dist/phaser-debug.js');
 
 module.exports = {
-    entry: "./src",
+    entry: "./src/Main.js",
     output: {
         path: __dirname + "/dist",
         filename: "main.js"
     },
     resolve: {
+        root:  path.join(__dirname, "src"),
         alias: {
             "phaser": phaserPath,
             "phaser-debug": phaserDebugPath
