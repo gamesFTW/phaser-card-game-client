@@ -7,6 +7,8 @@ export default class GameField {
         this._tileManager = new TileManager();
 
         this._creatureManager = new CreatureManager();
-        this._creatureManager.createCreature(3, 7);
+        this._creatureManager.createCreature(0, 0);
+        this._creatureManager.createCreature(0, 3);
+        this._creatureManager.createCreature(1, 3);
     }
 }
