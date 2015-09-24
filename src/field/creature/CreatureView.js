@@ -1,11 +1,14 @@
 var PhaserWrapper = require('phaserWrapper/PhaserWrapper');
 var Tile = require('field/tile/Tile');
+var BaseFieldObjectView = require('field/BaseFieldObjectsView');
 
-export default class CretureView {
-
+export default class CretureView extends BaseFieldObjectView {
     constructor(x, y) {
+        super();
 
-        var heroSprite = PhaserWrapper.game.add.isoSprite(x * Tile.SIZE, y * Tile.SIZE, 0, 'hero', 0);
-        heroSprite.anchor.set(0, 1);
+        this._sprite = PhaserWrapper.game.add.isoSprite(x * Tile.SIZE, y * Tile.SIZE, 0, 'hero', 0);
+        this._sprite.anchor.set(0, 1);
+
+        this.addClick();
     }
 }
