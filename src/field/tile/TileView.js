@@ -12,6 +12,6 @@ export default class TileView extends BaseFieldObjectView {
         this._sprite.anchor.set(0, 1);
         this._sprite.smoothed = true;
 
-        this.addClick();
+        this.addClickHandler();
     }
 }

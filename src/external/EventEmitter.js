@@ -8,17 +8,23 @@ function error(message, ...args){
 }
 
 export default class EventEmitter {
-    constructor(){
+    constructor() {
+        this._parent = null;
         this._maxListeners = DEFAULT_MAX_LISTENERS;
-        this._events = {}
+        this._events = {};
     }
+
+
+    set parent(value) { this._parent = value }
+
+
     on(type, listener) {
         if(typeof listener != "function") {
-            throw new TypeError()
+            throw new TypeError();
         }
-        var listeners = this._events[type] ||(this._events[type] = []);
+        var listeners = this._events[type] || (this._events[type] = []);
         if(listeners.indexOf(listener) != -1) {
-            return this
+            return this;
         }
         listeners.push(listener);
         if(listeners.length > this._maxListeners) {
@@ -31,47 +37,70 @@ export default class EventEmitter {
                 this._maxListeners
             )
         }
-        return this
+        return this;
     }
+
+
     once(type, listener) {
         var eventsInstance = this;
         function onceCallback(){
             eventsInstance.off(type, onceCallback);
-            listener.apply(null, arguments)
+            listener.apply(null, arguments);
         }
-        return this.on(type, onceCallback)
+        return this.on(type, onceCallback);
     }
+
+
     off(type, ...args) {
         if(args.length == 0) {
-            this._events[type] = null
+            this._events[type] = null;
         }
         var listener = args[0];
         if(typeof listener != "function") {
-            throw new TypeError()
+            throw new TypeError();
         }
         var listeners = this._events[type];
         if(!listeners || !listeners.length) {
-            return this
+            return this;
         }
         var indexOfListener = listeners.indexOf(listener);
         if(indexOfListener == -1) {
-            return this
+            return this;
         }
         listeners.splice(indexOfListener, 1);
-        return this
+        return this;
     }
-    emit(type, ...args){
-        var listeners = this._events[type];
-        if(!listeners || !listeners.length) {
-            return false
+
+
+    emit(type, event = {}) {
+        if (!event.currentTarget) {
+            event.currentTarget = this;
         }
-        listeners.forEach(fn => fn.apply(null, args));
-        return true
+
+        var listeners = this._events[type];
+        if (listeners) {
+            listeners.forEach(function (fn) {
+                fn.call(null, event);
+            });
+
+        }
+
+        if (this._parent) {
+            event.target = this._parent;
+
+            if (this._parent instanceof EventEmitter) {
+                this._parent.emit(type, event);
+            }
+        }
+
+        return true;
     }
+
+
     setMaxListeners(newMaxListeners){
         if(parseInt(newMaxListeners) !== newMaxListeners) {
-            throw new TypeError()
+            throw new TypeError();
         }
-        this._maxListeners = newMaxListeners
+        this._maxListeners = newMaxListeners;
     }
 }

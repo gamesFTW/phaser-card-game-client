@@ -5,7 +5,7 @@
  */
 
 var PhaserWrapper = require('phaserWrapper/PhaserWrapper');
-var GameField = require('field/GameField');
+var Field = require('field/Field');
 
 
 /**
@@ -18,7 +18,7 @@ class Main {
 
 
     _init() {
-        this.gameField = new GameField();
+        this.field = new Field();
     }
 }
 
