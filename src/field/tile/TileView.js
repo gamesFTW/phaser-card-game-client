@@ -1,5 +1,6 @@
 var PhaserWrapper = require('phaserWrapper/PhaserWrapper');
-var BaseFieldObjectView = require('field/BaseFieldObjectsView');
+var BaseFieldObjectView = require('field/BaseFieldObjectView');
+
 
 export default class TileView extends BaseFieldObjectView {
     constructor(x, y) {

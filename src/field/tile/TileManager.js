@@ -1,6 +1,7 @@
 var Tile = require('field/tile/Tile');
 var BaseManager = require('field/BaseManager');
 
+
 export default class TileManager extends BaseManager {
     constructor(width = 10, height = 10) {
         super();
@@ -9,8 +10,11 @@ export default class TileManager extends BaseManager {
     }
 
 
+    /**
+     * @param {int} width
+     * @param {int} height
+     */
     createTiles(width, height) {
-
         for (var i = 0; i < width; i++) {
             this._items[i] = {};
 
@@ -21,8 +25,14 @@ export default class TileManager extends BaseManager {
     }
 
 
+    /**
+     * @param {int} x
+     * @param {int} y
+     * @returns {Tile}
+     */
     createTile(x, y) {
         var tile = new Tile(x, y);
+        tile.parent = this;
 
         return tile;
     }

@@ -8,10 +8,28 @@ export default class CreatureManager extends BaseManager {
     }
 
 
+    /**
+     * @param {int} x
+     * @param {int} y
+     * @returns {Creature}
+     */
     createCreature(x, y) {
         let creature = new Creature(x, y);
         creature.parent = this;
 
         return creature;
+    }
+
+
+    /**
+     * @param {Creature} creature
+     * @param {object} point
+     */
+    moveCreatureTo(creature, point) {
+        var isPointEmpty = this.checkIsEmptiness(point);
+
+        if (isPointEmpty) {
+            this.putItemTo(creature, point);
+        }
     }
 }

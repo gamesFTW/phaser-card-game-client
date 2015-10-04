@@ -1,6 +1,6 @@
 var PhaserWrapper = require('phaserWrapper/PhaserWrapper');
 var Tile = require('field/tile/Tile');
-var BaseFieldObjectView = require('field/BaseFieldObjectsView');
+var BaseFieldObjectView = require('field/BaseFieldObjectView');
 
 export default class CretureView extends BaseFieldObjectView {
     constructor(x, y) {

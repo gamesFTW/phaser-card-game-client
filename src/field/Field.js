@@ -1,6 +1,9 @@
 var TileManager = require('field/tile/TileManager');
 var CreatureManager = require('field/creature/CreatureManager');
-var CreatureEvents = require('field/creature/CreatureEvents');
+
+var CreatureEvent = require('field/creature/CreatureEvent');
+var TileEvent = require('field/tile/TileEvent');
+
 var Creature = require('field/creature/Creature');
 
 
@@ -13,21 +16,27 @@ export default class Field {
         this._tileManager = new TileManager();
 
         /**
+         * @type {CreatureManager}
+         * @private
+         */
+        this._creatureManager = new CreatureManager();
+
+        /**
          * Creature selected by player.
          * @type {Creature}
          * @private
          */
         this._selectedCreature = null;
 
-        /**
-         * @type {CreatureManager}
-         * @private
-         */
-        this._creatureManager = new CreatureManager();
+        this._initCreatureManager();
+        this._initTileManager();
+    }
 
+
+    _initCreatureManager() {
         this._creatureManager.parent = this;
         this._creatureManager.on(
-            CreatureEvents.CLICK, this.onCreatureClick.bind(this)
+            CreatureEvent.CLICK, this._onCreatureClick.bind(this)
         );
 
         this._creatureManager.createCreature(0, 0);
@@ -36,10 +45,27 @@ export default class Field {
     }
 
 
-    onCreatureClick(event) {
-        this._selectedCreature = event.currentTarget;
-        console.log(
-            'From "Field" class: selected creature =', this._selectedCreature
+    _initTileManager() {
+        this._tileManager.parent = this;
+
+        this._tileManager.on(
+            TileEvent.CLICK, this._onTileClick.bind(this)
         );
+    }
+
+
+    _onCreatureClick(event) {
+        this._selectedCreature = event.currentTarget;
+    }
+
+
+    _onTileClick(event) {
+        var clickedTile = event.currentTarget;
+
+        if (this._selectedCreature) {
+            this._creatureManager.moveCreatureTo(
+                this._selectedCreature, clickedTile.position
+            );
+        }
     }
 }

@@ -1,21 +1,19 @@
 var CreatureView = require('field/creature/CreatureView');
-var EventEmitter = require('external/EventEmitter');
-var FiledObjectsViewEvents = require('field/FiledObjectsViewEvents');
-var CreatureEvents = require('field/creature/CreatureEvents');
+var BaseFiledObject = require('field/BaseFiledObject');
+var FiledObjectsViewEvent = require('field/FiledObjectsViewEvent');
+var CreatureEvent = require('field/creature/CreatureEvent');
 
 
-export default class Creature extends EventEmitter {
+export default class Creature extends BaseFiledObject {
     constructor(x, y) {
-        super();
+        super(x, y);
 
         this._view = new CreatureView(x, y);
-        this._view.parent = this;
-
-        this._view.on(FiledObjectsViewEvents.CLICK, this.onViewClick.bind(this));
+        this._view.on(FiledObjectsViewEvent.CLICK, this.onViewClick.bind(this));
     }
 
 
     onViewClick() {
-        this.emit(CreatureEvents.CLICK);
+        this.emit(CreatureEvent.CLICK);
     }
 }

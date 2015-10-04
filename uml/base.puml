@@ -12,10 +12,10 @@ package "gama" {
     abstract class BaseManager #ffffff
 
 
-    abstract class BaseFieldObjectsView #ffffff
-    BaseFieldObjectsView <|-up- TileView
-    BaseFieldObjectsView <|-up- CreatureView
-    BaseFieldObjectsView <|-up- AreaView
+    abstract class BaseFieldObjectView #ffffff
+    BaseFieldObjectView <|-up- TileView
+    BaseFieldObjectView <|-up- CreatureView
+    BaseFieldObjectView <|-up- AreaView
 
 
     abstract class BaseCardView #ffffff
