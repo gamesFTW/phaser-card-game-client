@@ -1,7 +1,7 @@
-var TileView = require('field/tile/TileView');
-var BaseFiledObject = require('field/BaseFiledObject');
-var TileEvent = require('field/tile/TileEvent');
-var FiledObjectsViewEvent = require('field/FiledObjectsViewEvent');
+import TileView from 'field/tile/TileView';
+import BaseFiledObject from 'field/BaseFiledObject';
+import TileEvent from 'field/tile/TileEvent';
+import FiledObjectsViewEvent from 'field/FiledObjectsViewEvent';
 
 
 export default class Tile extends BaseFiledObject {

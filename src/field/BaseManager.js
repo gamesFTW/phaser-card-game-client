@@ -1,4 +1,4 @@
-var EventEmitter = require('external/EventEmitter');
+import EventEmitter from 'external/EventEmitter';
 
 
 export default class BaseManager extends EventEmitter {

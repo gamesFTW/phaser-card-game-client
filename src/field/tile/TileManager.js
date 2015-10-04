@@ -1,5 +1,5 @@
-var Tile = require('field/tile/Tile');
-var BaseManager = require('field/BaseManager');
+import Tile from 'field/tile/Tile';
+import BaseManager from 'field/BaseManager';
 
 
 export default class TileManager extends BaseManager {

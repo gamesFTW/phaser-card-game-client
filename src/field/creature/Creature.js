@@ -1,7 +1,7 @@
-var CreatureView = require('field/creature/CreatureView');
-var BaseFiledObject = require('field/BaseFiledObject');
-var FiledObjectsViewEvent = require('field/FiledObjectsViewEvent');
-var CreatureEvent = require('field/creature/CreatureEvent');
+import CreatureView from 'field/creature/CreatureView';
+import BaseFiledObject from 'field/BaseFiledObject';
+import FiledObjectsViewEvent from 'field/FiledObjectsViewEvent';
+import CreatureEvent from 'field/creature/CreatureEvent';
 
 
 export default class Creature extends BaseFiledObject {

@@ -1,5 +1,6 @@
-var EventEmitter = require('external/EventEmitter');
-var FiledObjectsViewEvent = require('field/FiledObjectsViewEvent');
+import EventEmitter from 'external/EventEmitter';
+import FiledObjectsViewEvent from 'field/FiledObjectsViewEvent';
+import Tile from 'field/tile/Tile';
 
 
 export default class BaseFieldObjectView extends EventEmitter {
@@ -7,8 +8,6 @@ export default class BaseFieldObjectView extends EventEmitter {
      * @type {object} value
      */
     set position(value) {
-        var Tile = require('field/tile/Tile');
-
         this._sprite.isoX = value.x * Tile.SIZE;
         this._sprite.isoY = value.y * Tile.SIZE;
     }

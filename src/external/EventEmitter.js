@@ -1,11 +1,11 @@
-
-
 var DEFAULT_MAX_LISTENERS = 12;
+
 
 function error(message, ...args){
     console.error.apply(console, [message].concat(args));
     console.trace()
 }
+
 
 export default class EventEmitter {
     constructor() {

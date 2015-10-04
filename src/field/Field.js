@@ -1,10 +1,10 @@
-var TileManager = require('field/tile/TileManager');
-var CreatureManager = require('field/creature/CreatureManager');
+import TileManager from 'field/tile/TileManager';
+import CreatureManager from 'field/creature/CreatureManager';
 
-var CreatureEvent = require('field/creature/CreatureEvent');
-var TileEvent = require('field/tile/TileEvent');
+import CreatureEvent from 'field/creature/CreatureEvent';
+import TileEvent from 'field/tile/TileEvent';
 
-var Creature = require('field/creature/Creature');
+import Creature from 'field/creature/Creature';
 
 
 export default class Field {
@@ -24,7 +24,6 @@ export default class Field {
         /**
          * Creature selected by player.
          * @type {Creature}
-         * @private
          */
         this._selectedCreature = null;
 

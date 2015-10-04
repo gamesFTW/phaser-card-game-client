@@ -1,5 +1,5 @@
-var BaseManager = require('field/BaseManager');
-var Creature = require('field/creature/Creature');
+import BaseManager from 'field/BaseManager';
+import Creature from 'field/creature/Creature';
 
 
 export default class CreatureManager extends BaseManager {

@@ -4,8 +4,8 @@
  * Created by Alex Kalmakov <st00nsa@gmail.com>
  */
 
-var PhaserWrapper = require('phaserWrapper/PhaserWrapper');
-var Field = require('field/Field');
+import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
+import Field from 'field/Field';
 
 
 /**
