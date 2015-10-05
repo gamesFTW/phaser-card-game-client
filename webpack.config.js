@@ -2,8 +2,6 @@ var path = require('path');
 
 var webpack = require("webpack");
 
-var phaserPath = path.join(__dirname, '/node_modules/phaser/dist/phaser.js'),
-    phaserDebugPath = path.join(__dirname, '/node_modules/phaser-debug/dist/phaser-debug.js');
 
 module.exports = {
     entry: "./src/Main.js",
@@ -14,8 +12,9 @@ module.exports = {
     resolve: {
         root:  path.join(__dirname, "src"),
         alias: {
-            "phaser": phaserPath,
-            "phaser-debug": phaserDebugPath
+            "phaser": path.join(__dirname, "node_modules/phaser/dist/phaser.js"),
+            "p2": path.join(__dirname, "node_modules/p2/build/p2.js"),
+            "phaser-debug": path.join(__dirname, "node_modules/phaser-debug/dist/phaser-debug.js")
         },
         extensions: ["", ".js"]
     },
@@ -30,15 +29,7 @@ module.exports = {
                 test: /\.jsx?$/,
                 exclude: /(node_modules|bower_components)/,
                 loader: 'babel'
-            },
-            {
-                test: /phaser\.js$/i,
-                loader: 'phaser-shim-loader'
             }
-            //{
-            //    test: /phaser-debug\.js$/i,
-            //    loader: 'phaser-debug-webpack-loader'
-            //}
         ]
     }
 };

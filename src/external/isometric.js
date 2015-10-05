@@ -42,8 +42,10 @@
  * @constructor
  * @param {Phaser.Game} game The current game instance.
  */
-var Phaser = require('phaser').Phaser;
 
+global.PIXI = require('pixi.js');
+global.p2 = require('p2');
+global.Phaser = require('phaser');
 
 Phaser.Plugin.Isometric = function (game, parent) {
 
