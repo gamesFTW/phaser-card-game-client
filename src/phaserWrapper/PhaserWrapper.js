@@ -1,6 +1,8 @@
 var _ = require('lodash');
-var Phaser = require('external/isometric').Phaser;
 
+global.PIXI = require('pixi.js');
+global.p2 = require('p2');
+var Phaser = require('phaser');
 
 /**
  * Create, set up, and contain instance of Phaser.Game. Singleton.
@@ -27,15 +29,8 @@ class PhaserWrapper {
 
 
     _preload() {
-        this._game.time.advancedTiming = true;
-
         this._game.load.image('tile', '../assets/tile.png');
-        this._game.load.image('hero', '../assets/hero.png');
-
-        this._game.plugins.add(new Phaser.Plugin.Isometric(this._game));
-
-        this._game.physics.startSystem(Phaser.Plugin.Isometric.ISOARCADE);
-        this._game.iso.anchor.setTo(0.5, 0.5);
+        this._game.load.image('orc', '../assets/orc.png');
     }
 
 

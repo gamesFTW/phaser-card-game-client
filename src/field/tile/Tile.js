@@ -9,7 +9,7 @@ export default class Tile extends BaseFiledObject {
      * @returns {number}
      * @const
      */
-    static get SIZE() { return 38; }
+    static get SIZE() { return 50; }
 
 
     constructor(x, y) {
