@@ -8,8 +8,8 @@ export default class BaseFieldObjectView extends EventEmitter {
      * @type {object} value
      */
     set position(value) {
-        this._sprite.isoX = value.x * Tile.SIZE;
-        this._sprite.isoY = value.y * Tile.SIZE;
+        this._sprite.x = value.x * Tile.SIZE;
+        this._sprite.y = value.y * Tile.SIZE;
     }
 
 

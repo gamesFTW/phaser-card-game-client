@@ -38,9 +38,9 @@ export default class Field {
             CreatureEvent.CLICK, this._onCreatureClick.bind(this)
         );
 
-        this._creatureManager.createCreature(0, 0);
+        this._creatureManager.createCreature(0, 1);
+        this._creatureManager.createCreature(0, 2);
         this._creatureManager.createCreature(0, 3);
-        this._creatureManager.createCreature(1, 3);
     }
 
 
