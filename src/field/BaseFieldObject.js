@@ -1,7 +1,7 @@
 import EventEmitter from 'external/EventEmitter';
 
 
-export default class BaseFiledObject extends EventEmitter {
+export default class BaseFieldObject extends EventEmitter {
     /**
      * @returns {object}
      */

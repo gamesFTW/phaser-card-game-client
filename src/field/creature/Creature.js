@@ -1,10 +1,10 @@
 import CreatureView from 'field/creature/CreatureView';
-import BaseFiledObject from 'field/BaseFiledObject';
+import BaseFieldObject from 'field/BaseFieldObject';
 import FiledObjectsViewEvent from 'field/FiledObjectsViewEvent';
 import CreatureEvent from 'field/creature/CreatureEvent';
 
 
-export default class Creature extends BaseFiledObject {
+export default class Creature extends BaseFieldObject {
     constructor(x, y) {
         super(x, y);
 
