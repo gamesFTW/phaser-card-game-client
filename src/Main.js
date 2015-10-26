@@ -1,9 +1,3 @@
-/**
- *
- * @see:
- * Created by Alex Kalmakov <st00nsa@gmail.com>
- */
-
 import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
 import Field from 'field/Field';
 
@@ -22,5 +16,6 @@ class Main {
     }
 }
 
+global.main = new Main();
 
-var main = new Main();
+console.log(global.Units.findOne());
