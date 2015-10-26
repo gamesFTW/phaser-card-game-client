@@ -16,6 +16,4 @@ class Main {
     }
 }
 
-global.main = new Main();
-
-console.log(global.Units.findOne());
+new Main();

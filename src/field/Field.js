@@ -1,3 +1,5 @@
+import Backend from 'Backend';
+
 import TileManager from 'field/tile/TileManager';
 import CreatureManager from 'field/creature/CreatureManager';
 
@@ -37,10 +39,6 @@ export default class Field {
         this._creatureManager.on(
             CreatureEvent.CLICK, this._onCreatureClick.bind(this)
         );
-
-        this._creatureManager.createCreature(0, 1);
-        this._creatureManager.createCreature(0, 2);
-        this._creatureManager.createCreature(0, 3);
     }
 
 
@@ -62,8 +60,8 @@ export default class Field {
         var clickedTile = event.currentTarget;
 
         if (this._selectedCreature) {
-            this._creatureManager.moveCreatureTo(
-                this._selectedCreature, clickedTile.position
+            Backend.moveCreatureTo(
+                this._selectedCreature.id, clickedTile.position
             );
         }
     }

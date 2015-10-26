@@ -10,14 +10,12 @@ export default class BaseManager extends EventEmitter {
 
 
     /**
-     * @param {object} item
+     * @param {BaseFieldObject} item
      * @param {object} point
      */
     putItemTo(item, point) {
-        var yList = this._items[point.x];
-        yList = yList ? yList : {};
-
-        yList[point.y] = item;
+        this._items[point.x] = this._items[point.x] ? this._items[point.x] : {};
+        this._items[point.x][point.y] = item;
 
         item.position = point;
     }

@@ -13,7 +13,7 @@ export default class Tile extends BaseFieldObject {
 
 
     constructor(x, y) {
-        super(x, y);
+        super(null, x, y);
 
         this._view = new TileView(x, y);
         this._view.on(FiledObjectsViewEvent.CLICK, this.onViewClick.bind(this));

@@ -1,21 +1,37 @@
 import BaseManager from 'field/BaseManager';
 import Creature from 'field/creature/Creature';
+import Backend from 'Backend';
 
 
 export default class CreatureManager extends BaseManager {
     constructor(width, heigth) {
         super();
+
+        var creatures = Backend.getCreatures();
+        creatures.forEach(function(creature) {
+            this.createCreature(creature);
+        }.bind(this));
+
+        Backend.creatureObserve(function(newCreature, oldCreature) {
+            var creature = this._items[oldCreature.x][oldCreature.y];
+            this._items[oldCreature.x][oldCreature.y] = null;
+            this.moveCreatureTo(creature, {x: newCreature.x, y: newCreature.y});
+        }.bind(this));
     }
 
 
     /**
-     * @param {int} x
-     * @param {int} y
      * @returns {Creature}
      */
-    createCreature(x, y) {
-        let creature = new Creature(x, y);
+    createCreature(creatureParams) {
+        let creature = new Creature(
+            creatureParams.id,
+            creatureParams.x,
+            creatureParams.y
+        );
         creature.parent = this;
+
+        this.putItemTo(creature, {x: creatureParams.x, y: creatureParams.y});
 
         return creature;
     }

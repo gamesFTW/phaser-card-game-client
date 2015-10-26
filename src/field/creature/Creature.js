@@ -5,8 +5,8 @@ import CreatureEvent from 'field/creature/CreatureEvent';
 
 
 export default class Creature extends BaseFieldObject {
-    constructor(x, y) {
-        super(x, y);
+    constructor(id, x, y) {
+        super(id, x, y);
 
         this._view = new CreatureView(x, y);
         this._view.on(FiledObjectsViewEvent.CLICK, this.onViewClick.bind(this));
