@@ -21,6 +21,28 @@ export default class BaseManager extends EventEmitter {
     }
 
 
+    removeItemFrom(point) {
+        if (this._items[point.x] && this._items[point.x][point.y]) {
+            delete this._items[point.x][point.y];
+        }
+    }
+
+
+    findById(id) {
+        for (var x in this._items) {
+            var itemsX = this._items[x];
+
+            for (var y in itemsX) {
+                var item = itemsX[y];
+
+                if (item.id === id) {
+                    return item;
+                }
+            }
+        }
+    }
+
+
     checkIsEmptiness(point) {
         var yList = this._items[point.x];
 

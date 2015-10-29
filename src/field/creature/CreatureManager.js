@@ -12,11 +12,7 @@ export default class CreatureManager extends BaseManager {
             this.createCreature(creature);
         }.bind(this));
 
-        Backend.creatureObserve(function(newCreature, oldCreature) {
-            var creature = this._items[oldCreature.x][oldCreature.y];
-            this._items[oldCreature.x][oldCreature.y] = null;
-            this.moveCreatureTo(creature, {x: newCreature.x, y: newCreature.y});
-        }.bind(this));
+        Backend.on(Backend.CREATURE_MOVED, this._onCreatureMoved.bind(this));
     }
 
 
@@ -46,6 +42,14 @@ export default class CreatureManager extends BaseManager {
 
         if (isPointEmpty) {
             this.putItemTo(creature, point);
+            this.removeItemFrom(point);
         }
+    }
+
+
+    _onCreatureMoved(event) {
+        var position = event.position;
+        var creature = this.findById(event.id);
+        this.moveCreatureTo(creature, position);
     }
 }
