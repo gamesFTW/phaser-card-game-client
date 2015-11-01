@@ -10,12 +10,18 @@ class Backend extends EventEmitter {
 
     constructor() {
         super();
+        // хак для того что бы все прошлые эвенты не пожгружались
+        var initializing = true;
 
         Action.find().observe({
             added: function(action) {
-                this.emit(action.type, action.params);
+                if(!initializing) {
+                    this.emit(action.type, action.params);
+                }
             }.bind(this)
         });
+
+        initializing = false;
     }
 
 

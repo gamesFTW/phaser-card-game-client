@@ -5,6 +5,8 @@ import CreatureEvent from 'field/creature/CreatureEvent';
 
 
 export default class Creature extends BaseFieldObject {
+
+
     constructor(id, x, y) {
         super(id, x, y);
 

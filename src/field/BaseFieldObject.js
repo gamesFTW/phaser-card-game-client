@@ -9,19 +9,18 @@ export default class BaseFieldObject extends EventEmitter {
 
 
     /**
-     * @returns {object}
+     * @returns {Object}
      */
     get position() { return {x: this._x, y: this._y}; }
 
 
     /**
-     * @type {object} value
+     * @param {Object} point
      */
-    set position(value) {
-        this._x = value.x;
-        this._y = value.y;
+    set position(point) {
+        [this._x, this._y] = [point.x, point.y];
 
-        this._view.position = value;
+        this._view.position = point;
     }
 
 

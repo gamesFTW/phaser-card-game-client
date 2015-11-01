@@ -5,11 +5,11 @@ import Tile from 'field/tile/Tile';
 
 export default class BaseFieldObjectView extends EventEmitter {
     /**
-     * @type {object} value
+     * @param {Object} point
      */
-    set position(value) {
-        this._sprite.x = value.x * Tile.SIZE;
-        this._sprite.y = value.y * Tile.SIZE;
+    set position(point) {
+        this._sprite.x = point.x * Tile.SIZE;
+        this._sprite.y = point.y * Tile.SIZE;
     }
 
 
@@ -17,7 +17,6 @@ export default class BaseFieldObjectView extends EventEmitter {
         super();
 
         /**
-         * @type {Phaser.Plugin.Isometric.IsoSprite}
          * @protected
          */
         this._sprite = null;

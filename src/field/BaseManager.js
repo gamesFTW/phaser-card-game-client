@@ -1,3 +1,6 @@
+import _ from 'lodash';
+
+
 import EventEmitter from 'external/EventEmitter';
 
 
@@ -22,30 +25,42 @@ export default class BaseManager extends EventEmitter {
 
 
     removeItemFrom(point) {
-        if (this._items[point.x] && this._items[point.x][point.y]) {
-            delete this._items[point.x][point.y];
+        let [x, y] = [point.x, point.y];
+
+        if (this._items[x] && this._items[x][y]) {
+            this._items[x][y] = null;
+        } else {
+            console.warn('Удаляемый item не найде в x = "%s", y = "%s"', x, y)
         }
     }
 
 
     findById(id) {
-        for (var x in this._items) {
-            var itemsX = this._items[x];
+        var foundItem = null;
 
-            for (var y in itemsX) {
-                var item = itemsX[y];
-
-                if (item.id === id) {
-                    return item;
+        _.forIn(this._items, function(itemsX, x) {
+            _.forIn(itemsX, function(item, y) {
+                if(item && item.id === id) {
+                    foundItem = item;
                 }
-            }
-        }
+            });
+        });
+
+        foundItem === null && console.warn('Не нашлось item по id == "%s"', id);
+
+        return foundItem;
     }
 
 
-    checkIsEmptiness(point) {
-        var yList = this._items[point.x];
+    isEmpty(point) {
+        let [x, y] = [point.x, point.y];
 
-        return !(yList && yList[point.y]);
+        var yItems = this._items[x];
+
+        if (!yItems) {
+            return true;
+        }
+
+        return Boolean(!yItems[y]);
     }
 }

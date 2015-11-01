@@ -38,11 +38,12 @@ export default class CreatureManager extends BaseManager {
      * @param {object} point
      */
     moveCreatureTo(creature, point) {
-        var isPointEmpty = this.checkIsEmptiness(point);
+        var isPointEmpty = this.isEmpty(point);
 
         if (isPointEmpty) {
+            var oldPointPosition = creature.position;
             this.putItemTo(creature, point);
-            this.removeItemFrom(point);
+            this.removeItemFrom(oldPointPosition);
         }
     }
 
