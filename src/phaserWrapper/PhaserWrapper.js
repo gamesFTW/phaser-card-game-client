@@ -37,7 +37,6 @@ class PhaserWrapper {
      *
      * @param {String} name
      * @param {Phaser.Sprite} sprite
-     * @param {BaseFieldObjectView} [view]
      * @link _createGroups
      * @link refreshGroupSorting
      */

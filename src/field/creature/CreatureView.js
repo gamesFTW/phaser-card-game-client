@@ -12,7 +12,7 @@ export default class CretureView extends BaseFieldObjectView {
         );
 
 
-        PhaserWrapper.addToGroup('creatures', this._sprite, this);
+        PhaserWrapper.addToGroup('creatures', this._sprite);
 
         this.addClickHandler();
     }

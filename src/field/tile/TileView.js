@@ -11,7 +11,7 @@ export default class TileView extends BaseFieldObjectView {
             x * Tile.SIZE, y * Tile.SIZE, 'tile'
         );
 
-        PhaserWrapper.addToGroup('tiles', this._sprite, this);
+        PhaserWrapper.addToGroup('tiles', this._sprite);
 
         this.addClickHandler();
     }
