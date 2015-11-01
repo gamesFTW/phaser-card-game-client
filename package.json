@@ -5,7 +5,8 @@
   "description": "-",
   "scripts": {
     "watch": "./node_modules/.bin/webpack --progress --watch",
-    "web": "python -m SimpleHTTPServer"
+    "web": "python -m SimpleHTTPServer",
+    "web3": "python3 -m http.server"
   },
 
   "dependencies": {
