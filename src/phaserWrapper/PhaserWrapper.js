@@ -5,8 +5,6 @@ global.p2 = require('p2');
 
 var Phaser = require('phaser');
 
-import FiledObjectsViewEvent from 'field/FiledObjectsViewEvent';
-
 
 /**
  * Create, set up, and contain instance of Phaser.Game. Singleton.
@@ -43,17 +41,16 @@ class PhaserWrapper {
      * @link _createGroups
      * @link refreshGroupSorting
      */
-    addToGroup(name, sprite, view) {
+    addToGroup(name, sprite) {
         if (this._groups[name]) {
             this._groups[name].add(sprite);
-            this.refreshGroupSorting(name);
-
-            // TODO подумать как еще сделать можно, кажется проеб в архитектуре
-            // Подписываемся на события перевежения
-            view && view.on(FiledObjectsViewEvent.MOVED, this.refreshGroupSorting.bind(this, name));
         } else {
             console.warn('Группы с названием "%s" не существует', name);
         }
+    }
+
+    refreshAllGroupsSorting() {
+       _.forEach(this._groups, (group, name) => this.refreshGroupSorting(name) );
     }
 
     /**
@@ -61,7 +58,6 @@ class PhaserWrapper {
      * @link _sortGroupZByY
      */
     refreshGroupSorting(name) {
-        console.info('Обновляем сортировку группы ', name);
         this._sortGroupZByY(name);
     }
 
@@ -83,6 +79,7 @@ class PhaserWrapper {
 
 
     _update() {
+       this.refreshAllGroupsSorting();
 
     }
 
