@@ -11,6 +11,9 @@ export default class CretureView extends BaseFieldObjectView {
             x * Tile.SIZE, y * Tile.SIZE, 'orc'
         );
 
+
+        PhaserWrapper.addToGroup('creatures', this._sprite);
+
         this.addClickHandler();
     }
 }

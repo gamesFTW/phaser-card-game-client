@@ -1,5 +1,8 @@
 import EventEmitter from 'external/EventEmitter';
+
 import FiledObjectsViewEvent from 'field/FiledObjectsViewEvent';
+
+
 import Tile from 'field/tile/Tile';
 
 
@@ -10,6 +13,8 @@ export default class BaseFieldObjectView extends EventEmitter {
     set position(point) {
         this._sprite.x = point.x * Tile.SIZE;
         this._sprite.y = point.y * Tile.SIZE;
+        
+        this.emit(FiledObjectsViewEvent.MOVED);
     }
 
 
