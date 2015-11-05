@@ -1,5 +1,6 @@
 import BaseManager from 'field/BaseManager';
 import Creature from 'field/creature/Creature';
+import CreatureEvent from 'field/creature/CreatureEvent';
 import Backend from 'Backend';
 
 
@@ -8,11 +9,13 @@ export default class CreatureManager extends BaseManager {
         super();
 
         var creatures = Backend.getCreatures();
-        creatures.forEach(function(creature) {
-            this.createCreature(creature);
+        creatures.forEach(function(creatureData) {
+            let creature = this.createCreature(creatureData);
+            creature.on(CreatureEvent.CTRL_CLICK, this._onCreatureCtrlClick.bind(this))
         }.bind(this));
 
         Backend.on(Backend.CREATURE_MOVED, this._onCreatureMoved.bind(this));
+        Backend.on(Backend.CREATURE_REMOVED, this._onCreatureRemoved.bind(this));
     }
 
 
@@ -48,9 +51,26 @@ export default class CreatureManager extends BaseManager {
     }
 
 
+    removeCreature(creature) {
+        this.removeItemFrom(creature.position);
+        creature.remove();
+    }
+
+
+    _onCreatureCtrlClick(event) {
+        Backend.removeCreature(event.currentTarget.id);
+    }
+
+
     _onCreatureMoved(event) {
         var position = event.position;
         var creature = this.findById(event.id);
         this.moveCreatureTo(creature, position);
+    }
+
+
+    _onCreatureRemoved(event) {
+        var creature = this.findById(event.id);
+        this.removeCreature(creature);
     }
 }
