@@ -1,9 +1,12 @@
-import EventEmitter from 'external/EventEmitter';
+import R from 'ramda';
 
+import Phaser from 'phaser';
+import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
 import FiledObjectsViewEvent from 'field/FiledObjectsViewEvent';
-
-
 import Tile from 'field/tile/Tile';
+
+
+import EventEmitter from 'external/EventEmitter';
 
 
 export default class BaseFieldObjectView extends EventEmitter {
@@ -28,13 +31,27 @@ export default class BaseFieldObjectView extends EventEmitter {
     }
 
 
+    remove() {
+        this._sprite.kill();
+    }
+
+
     addClickHandler() {
         this._sprite.inputEnabled = true;
         this._sprite.events.onInputDown.add(this.onClick, this);
     }
 
 
-    onClick() {
-        this.emit(FiledObjectsViewEvent.CLICK);
+    onClick(event, pointer) {
+        if (PhaserWrapper.game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)) {
+            this.emit(FiledObjectsViewEvent.CTRL_CLICK);
+        } else {
+            this.emit(FiledObjectsViewEvent.CLICK);
+        }
     }
+
+
+    //onDblClick() {
+    //    this.emit(FiledObjectsViewEvent.DBL_CLICK);
+    //}
 }

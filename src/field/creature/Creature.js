@@ -12,10 +12,21 @@ export default class Creature extends BaseFieldObject {
 
         this._view = new CreatureView(x, y);
         this._view.on(FiledObjectsViewEvent.CLICK, this.onViewClick.bind(this));
+        this._view.on(FiledObjectsViewEvent.CTRL_CLICK, this.onViewCtrlClick.bind(this));
     }
 
 
+    remove() {
+        this.emit(CreatureEvent.REMOVE);
+        this._view.remove();
+    }
+
     onViewClick() {
         this.emit(CreatureEvent.CLICK);
+    }
+
+
+    onViewCtrlClick() {
+        this.emit(CreatureEvent.CTRL_CLICK);
     }
 }

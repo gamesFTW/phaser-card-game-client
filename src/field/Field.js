@@ -36,8 +36,13 @@ export default class Field {
 
     _initCreatureManager() {
         this._creatureManager.parent = this;
+
         this._creatureManager.on(
             CreatureEvent.CLICK, this._onCreatureClick.bind(this)
+        );
+
+        this._creatureManager.on(
+            CreatureEvent.REMOVE, this._onCreatureRemoved.bind(this)
         );
     }
 
@@ -56,13 +61,18 @@ export default class Field {
     }
 
 
+    _onCreatureRemoved(event) {
+        if (this._selectedCreature === event.currentTarget) {
+            this._selectedCreature = null;
+        }
+    }
+
+
     _onTileClick(event) {
         var clickedTile = event.currentTarget;
 
         if (this._selectedCreature) {
-            Backend.moveCreatureTo(
-                this._selectedCreature.id, clickedTile.position
-            );
+            Backend.moveCreatureTo(this._selectedCreature.id, clickedTile.position);
         }
     }
 }
