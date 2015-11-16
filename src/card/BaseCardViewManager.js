@@ -29,8 +29,9 @@ export default class BaseCardViewManager extends EventEmitter {
     addRandomCard() {
         let data = {
             id: _.random(10000).toString(),
-            title: _.sample(['Жирный окр', 'Тонкий орк', 'Средний окр']),
+            title: _.sample(['Жирный орк', 'Тонкий орк', 'Средний орк']),
             type: 'creature',
+            text: 'Любит есть',
             dmg: _.sample([1, 2, 3]),
             health: _.sample([1, 3, 4]),
             img: [1,2,3].map(i => 'card/orc' + i)

@@ -32,16 +32,89 @@ export default class BaseCardView extends EventEmitter {
 
     constructor(x, y, data) {
         super();
-        this._data = data;
 
+        this._data = data;
+        this._sprite = null;
+
+        this.createView(x, y);
+    }
+
+
+    createView(x, y) {
         this._sprite = PhaserWrapper.game.add.sprite(
             x, y, 'card_bg'
         );
 
+        this.addHeader()
+            .addMiddle()
+            .addFooter();
+
         PhaserWrapper.addToGroup('cards', this._sprite);
+    }
+
+
+    enableDragAndDrop() {
 
     }
 
+
+    addHeader() {
+        var text = PhaserWrapper.game.make.text(
+            5, 5,
+            this._data.title,
+            {
+                font: "12px Arial",
+                align: "center"
+            }
+        );
+
+        this._sprite.addChild(text);
+
+        return this;
+    }
+
+    addMiddle() {
+        var text= PhaserWrapper.game.make.text(
+            5, BaseCardView.CARD_HEIGHT / 2,
+            this._data.text,
+            {
+                font: "10px Arial",
+                align: "center",
+                fontStyle: "italic"
+            }
+        );
+
+        this._sprite.addChild(text);
+
+        return this;
+    }
+
+    addFooter() {
+        var dmg = PhaserWrapper.game.make.text(
+            25, BaseCardView.CARD_HEIGHT - 25,
+            this._data.dmg,
+            {
+                font: "18px Arial",
+                align: "center",
+                fill: 'black'
+            }
+        );
+
+        var hp = PhaserWrapper.game.make.text(
+            BaseCardView.CARD_WIDTH - 25, BaseCardView.CARD_HEIGHT - 25,
+            this._data.health,
+            {
+                font: "18px Arial",
+                align: "center",
+                fill: 'red'
+            }
+        );
+
+        this._sprite.addChild(dmg);
+        this._sprite.addChild(hp);
+
+        return this;
+    }
 
 
 }
