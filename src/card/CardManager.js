@@ -17,6 +17,7 @@ export default class CardManager extends EventEmitter {
         super();
 
         this.handView = new HandView();
+        this.handView.parent = this;
 
     }
 

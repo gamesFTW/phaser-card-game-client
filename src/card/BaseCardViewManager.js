@@ -46,6 +46,7 @@ export default class BaseCardViewManager extends EventEmitter {
         let { x,y }  = this.nextCardPosition;
         //Здесь может быть не только креачур
         let card = new CreatureCardView(x, y, cardData);
+        card.parent = this;
 
         this._cards.push(card);
     }
