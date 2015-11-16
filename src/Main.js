@@ -1,5 +1,8 @@
 import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
+
+
 import Field from 'field/Field';
+import CardManager from 'card/cardManager';
 
 
 /**
@@ -13,6 +16,7 @@ class Main {
 
     _init() {
         this.field = new Field();
+        this.cardManager = new CardManager();
     }
 }
 

@@ -12,6 +12,8 @@ import EventEmitter from 'external/EventEmitter';
 export default class BaseFieldObjectView extends EventEmitter {
     /**
      * @param {Object} point
+     * @param {Number} point.x
+     * @param {Number} point.y
      */
     set position(point) {
         this._sprite.x = point.x * Tile.SIZE;
