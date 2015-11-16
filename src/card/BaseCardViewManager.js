@@ -15,7 +15,7 @@ export default class BaseCardViewManager extends EventEmitter {
     }
 
 
-    constructor(x, y, scale = 1, padding = 3) {
+    constructor(x, y, draggable = false, scale = 1, padding = 3) {
         super();
 
         this._x = x;
@@ -24,6 +24,7 @@ export default class BaseCardViewManager extends EventEmitter {
         this._padding = padding;
 
         this._cards = [];
+        this._draggable = draggable;
     }
 
     addRandomCard() {
@@ -47,6 +48,10 @@ export default class BaseCardViewManager extends EventEmitter {
         //Здесь может быть не только креачур
         let card = new CreatureCardView(x, y, cardData);
         card.parent = this;
+
+        if (this._draggable) {
+            card.enableDragAndDrop();
+        }
 
         this._cards.push(card);
     }

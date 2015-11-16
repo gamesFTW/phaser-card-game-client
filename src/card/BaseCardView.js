@@ -54,7 +54,11 @@ export default class BaseCardView extends EventEmitter {
 
 
     enableDragAndDrop() {
-
+        this._sprite.inputEnabled = true;
+        this._sprite.input.enableDrag();
+        this._sprite.events.onDragStart.add(this._onDragStart, this);
+        this._sprite.events.onDragStop.add(this._onDragStop, this);
+        //this._sprite.events.onDragUpdate.add(this._onDragUpdate, this);
     }
 
 
@@ -117,4 +121,19 @@ export default class BaseCardView extends EventEmitter {
     }
 
 
+    _onDragStart() {
+
+        console.log(arguments);
+    }
+
+
+    _onDragStop() {
+        console.log('stop', arguments);
+
+    }
+
+
+    _onDragUpdate(sprite, pointer, dragX, dragY, snapPoint) {
+
+    }
 }
