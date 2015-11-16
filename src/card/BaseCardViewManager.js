@@ -8,7 +8,7 @@ import BaseCardView from './BaseCardView';
 export default class BaseCardViewManager extends EventEmitter {
     get nextCardPosition() {
         let cards = this._cards.length;
-        let cardsWidth = BaseCardView.CARD_WIDTH * this._sacle * cards;
+        let cardsWidth = BaseCardView.CARD_WIDTH * this._scale * cards;
         let cardsPadding = this._padding * cards;
         let x = this._x + cardsPadding + cardsWidth;
         return { x: x, y: this._y };
@@ -20,7 +20,7 @@ export default class BaseCardViewManager extends EventEmitter {
 
         this._x = x;
         this._y = y;
-        this._sacle = scale;
+        this._scale = scale;
         this._padding = padding;
 
         this._cards = [];
@@ -51,7 +51,22 @@ export default class BaseCardViewManager extends EventEmitter {
     }
 
 
-    removeCard() {
+    removeCard(id) {
+
+    }
+
+
+    reorderCards() {
+        var nextX = this._x;
+        let nextY = this._y;
+        let padding = this._padding;
+        let scale = this._scale;
+
+        this._cards.forEach(function(card) {
+            card.position = { x: nextX, y: nextY };
+
+            nextX = nextX + (BaseCardView.CARD_WIDTH + padding) * scale;
+        });
 
     }
 }
