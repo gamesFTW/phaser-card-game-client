@@ -18,6 +18,7 @@ CardManager --> GraveyardView
 
 abstract BaseCardView
 
+abstract BaseCardViewManager
 
 class CreatureCardView
 BaseCardView <|-- CreatureCardView
@@ -29,18 +30,22 @@ BaseCardView <|-- AreaCardView
 
 class HandView
 HandView --> BaseCardView
+BaseCardViewManager <|-- HandView
 
 
 class TableView
 TableView --> BaseCardView
+BaseCardViewManager <|-- TableView
 
 
 class DeckView
 DeckView --> BaseCardView
+BaseCardViewManager <|-- DeckView
 
 
 class GraveyardView
 GraveyardView --> BaseCardView
+BaseCardViewManager <|-- GraveyardView
 
 
 'class Deck
