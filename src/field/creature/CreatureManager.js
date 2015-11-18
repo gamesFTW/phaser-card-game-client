@@ -5,7 +5,7 @@ import Backend from 'Backend';
 
 
 export default class CreatureManager extends BaseManager {
-    constructor(width, heigth) {
+    constructor(width, height) {
         super();
 
         var creatures = Backend.getCreatures();

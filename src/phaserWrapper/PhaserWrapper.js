@@ -68,6 +68,8 @@ class PhaserWrapper {
     _preload() {
         this._game.load.image('tile', '../assets/tile.png');
         this._game.load.image('orc', '../assets/orc.png');
+        this._game.load.image('card_bg', '../assets/card1.png');
+        this._game.load.image('card_bg_side', '../assets/card2.png');
     }
 
 

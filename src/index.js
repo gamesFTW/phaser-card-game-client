@@ -1,4 +1,4 @@
-
+// Старый пример, не используется в проекте
 
 var Phaser = require('external/isometric').Phaser;
 
