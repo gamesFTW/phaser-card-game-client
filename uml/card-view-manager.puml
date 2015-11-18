@@ -9,47 +9,58 @@ skinparam stereotypeCBackgroundColor YellowGreen
 skinparam shadowing false
 
 
-class CardManager
-CardManager --> HandView
-CardManager --> TableView
-CardManager --> DeckView
-CardManager --> GraveyardView
+class CardField
+CardField --> Hand
+CardField --> Table
+CardField --> Deck
+CardField --> Graveyard
+
+abstract CardView
+
+abstract CardManager
+
+abstract CardRowViewManager
+
+abstract StackCardViewManager
 
 
-abstract BaseCardView
+class Card
+Card --> CardView
 
-abstract BaseCardViewManager
 
 class CreatureCardView
-BaseCardView <|-- CreatureCardView
+CardView <|-- CreatureCardView
 
 
 class AreaCardView
-BaseCardView <|-- AreaCardView
+CardView <|-- AreaCardView
 
 
-class HandView
-HandView --> BaseCardView
-BaseCardViewManager <|-- HandView
+class Hand
+Hand <|-- CardManager
+Hand --> HandView
+HandView --> Card
+CardRowViewManager <|-- HandView
 
 
-class TableView
-TableView --> BaseCardView
-BaseCardViewManager <|-- TableView
+class Table
+Table <|-- CardManager
+Table --> TableView
+TableView --> Card
+CardRowViewManager <|-- TableView
+
+class Graveyard
+Graveyard <|-- CardManager
+Graveyard --> GraveyardView
+GraveyardView --> Card
+StackCardViewManager <|-- GraveyardView
 
 
-class DeckView
-DeckView --> BaseCardView
-BaseCardViewManager <|-- DeckView
-
-
-class GraveyardView
-GraveyardView --> BaseCardView
-BaseCardViewManager <|-- GraveyardView
-
-
-'class Deck
-'class Graveyard
+class Deck
+Deck <|-- CardManager
+Deck  --> DeckView
+DeckView --> Card
+StackCardViewManager <|-- DeckView
 
 
 @enduml
