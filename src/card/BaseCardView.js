@@ -6,6 +6,9 @@ import EventEmitter from 'external/EventEmitter';
 import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
 
 
+import CardEvent from './CardEvent';
+
+
 export default class BaseCardView extends EventEmitter {
     static get CARD_WIDTH() {
         return 150;
@@ -122,14 +125,14 @@ export default class BaseCardView extends EventEmitter {
 
 
     _onDragStart() {
-
+        this.emit(CardEvent.START_DRAG);
         console.log(arguments);
     }
 
 
     _onDragStop() {
         console.log('stop', arguments);
-
+        this.emit(CardEvent.STOP_DRAG);
     }
 
 

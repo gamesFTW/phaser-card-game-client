@@ -45,9 +45,10 @@ export default class BaseCardViewManager extends EventEmitter {
 
     addCard(cardData) {
         let { x,y }  = this.nextCardPosition;
-        //Здесь может быть не только креачур
+        // Здесь может быть не только креачур
         let card = new CreatureCardView(x, y, cardData);
         card.parent = this;
+
 
         if (this._draggable) {
             card.enableDragAndDrop();
