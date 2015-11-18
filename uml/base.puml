@@ -8,41 +8,57 @@ skinparam class {
 skinparam stereotypeCBackgroundColor YellowGreen
 skinparam shadowing false
 
-package "gama" {
+class Main #ffffff
+
+Main *-- field.Field
+Main *-- CardField
+
+
+''' Про это смотри cards.puml, тут очень упощеная ее часть
+class CardField #cccccc
+CardField *-- Card
+
+
+class Card #cccccc
+Card *-- field.Creature
+Card *-- field.Area
+Card *-- CardView
+
+
+class CreatureCardView #CAD0E8
+CardView <|-- CreatureCardView
+
+
+class AreaCardView #CAD0E8
+CardView <|-- AreaCardView
+
+
+abstract class CardView #ffffff
+CardView --> PhaserWrapper
+
+
+class PhaserWrapper #ffffff {
+    + game
+}
+PhaserWrapper --> phaser.game
+
+
+package "field" {
     abstract class BaseManager #ffffff
 
 
-    abstract class BaseFieldObjectView #ffffff
-    BaseFieldObjectView <|-up- TileView
-    BaseFieldObjectView <|-up- CreatureView
-    BaseFieldObjectView <|-up- AreaView
+    abstract class FieldObjectView #ffffff
+    FieldObjectView <|-up- TileView
+    FieldObjectView <|-up- CreatureView
+    FieldObjectView <|-up- AreaView
+    FieldObjectView --> .PhaserWrapper
 
 
-    abstract class BaseCardView #ffffff
-    
-    
-    class Main #ffffff
-    Main *-- PhaserWrapper
-    Main *-- GameField
-    Main *-- CardViewManager
-
-
-    class PhaserWrapper #ffffff {
-        + game
-    }
-    PhaserWrapper --> phaser.game
-
-
-    class GameField #ffffff {
+    class Field #ffffff {
         - pickedCreature: Creature
     }
-    GameField *-- TileManager
-    GameField *-- CreatureManager
-    GameField *-- AreaManager
-
-
-    class CardViewManager #ffffff
-    CardViewManager --> BaseCardView
+    Field *-- TileManager
+    Field *-- FieldObjectsManager
 
 
     '''Tile'''
@@ -56,17 +72,17 @@ package "gama" {
 
 
     class TileView #F7CDFF
-    TileView --> PhaserWrapper
 
 
     '''Creature'''
-    class CreatureManager #CAD0E8 {
+    class FieldObjectsManager #CAD0E8 {
         - creatureList
+        - areaList
         + goToPosition(creature: Creature, x, y)
         + attack(creature1: Creature, creature2: Creature)
     }
-    BaseManager <|-- CreatureManager
-    CreatureManager *-- Creature
+    BaseManager <|-- FieldObjectsManager
+    FieldObjectsManager *-- Creature
 
 
     class Creature #CAD0E8 {
@@ -74,36 +90,23 @@ package "gama" {
         + takeDamage(damage: int)
     }
     Creature *-- CreatureView
-    Creature *-- CreatureCardView
 
 
     class CreatureView #CAD0E8
-    CreatureView --> PhaserWrapper
 
 
-    class CreatureCardView #CAD0E8
-    BaseCardView <|-right- CreatureCardView
-    CreatureCardView --> PhaserWrapper
 
 
     '''Area'''
-    class AreaManager #D6E8CA
-    BaseManager <|-- AreaManager
-    AreaManager *-- Area
+    FieldObjectsManager *-- Area
 
 
     class Area #D6E8CA
     Area *-- AreaView
-    Area *-- AreaCardView
 
 
     class AreaView #D6E8CA
-    AreaView --> PhaserWrapper
 
-
-    class AreaCardView #D6E8CA
-    BaseCardView <|-right- AreaCardView
-    AreaCardView --> PhaserWrapper
 }
 
 
