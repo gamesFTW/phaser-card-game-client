@@ -44,7 +44,7 @@ PhaserWrapper --> phaser.game
 
 
 package "field" {
-    abstract class BaseManager #ffffff
+    abstract class FieldManager #ffffff
 
 
     abstract class FieldObjectView #ffffff
@@ -63,7 +63,7 @@ package "field" {
 
     '''Tile'''
     class TileManager #F7CDFF
-    BaseManager <|-- TileManager
+    FieldManager <|-- TileManager
     TileManager *-- Tile
 
 
@@ -81,7 +81,7 @@ package "field" {
         + goToPosition(creature: Creature, x, y)
         + attack(creature1: Creature, creature2: Creature)
     }
-    BaseManager <|-- FieldObjectsManager
+    FieldManager <|-- FieldObjectsManager
     FieldObjectsManager *-- Creature
 
 
