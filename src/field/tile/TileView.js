@@ -1,9 +1,9 @@
 import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
-import BaseFieldObjectView from 'field/BaseFieldObjectView';
+import FieldObjectView from 'field/FieldObjectView';
 import Tile from 'field/tile/Tile';
 
 
-export default class TileView extends BaseFieldObjectView {
+export default class TileView extends FieldObjectView {
     constructor(x, y) {
         super();
 

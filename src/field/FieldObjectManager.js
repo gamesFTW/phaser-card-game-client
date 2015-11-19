@@ -1,10 +1,10 @@
-import BaseManager from 'field/BaseManager';
+import FieldManager from 'field/FieldManager';
 import Creature from 'field/creature/Creature';
 import CreatureEvent from 'field/creature/CreatureEvent';
 import Backend from 'Backend';
 
 
-export default class CreatureManager extends BaseManager {
+export default class FieldObjectManager extends FieldManager {
     constructor(width, height) {
         super();
 

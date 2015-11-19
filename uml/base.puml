@@ -58,7 +58,7 @@ package "field" {
         - pickedCreature: Creature
     }
     Field *-- TileManager
-    Field *-- FieldObjectsManager
+    Field *-- FieldObjectManager
 
 
     '''Tile'''
@@ -75,14 +75,14 @@ package "field" {
 
 
     '''Creature'''
-    class FieldObjectsManager #CAD0E8 {
+    class FieldObjectManager #CAD0E8 {
         - creatureList
         - areaList
         + goToPosition(creature: Creature, x, y)
         + attack(creature1: Creature, creature2: Creature)
     }
-    FieldManager <|-- FieldObjectsManager
-    FieldObjectsManager *-- Creature
+    FieldManager <|-- FieldObjectManager
+    FieldObjectManager *-- Creature
 
 
     class Creature #CAD0E8 {
@@ -95,10 +95,8 @@ package "field" {
     class CreatureView #CAD0E8
 
 
-
-
     '''Area'''
-    FieldObjectsManager *-- Area
+    FieldObjectManager *-- Area
 
 
     class Area #D6E8CA

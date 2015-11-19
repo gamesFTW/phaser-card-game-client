@@ -1,7 +1,7 @@
 import Backend from 'Backend';
 
 import TileManager from 'field/tile/TileManager';
-import CreatureManager from 'field/creature/CreatureManager';
+import FieldObjectManager from 'field/FieldObjectManager';
 
 import CreatureEvent from 'field/creature/CreatureEvent';
 import TileEvent from 'field/tile/TileEvent';
@@ -18,10 +18,10 @@ export default class Field {
         this._tileManager = new TileManager();
 
         /**
-         * @type {CreatureManager}
+         * @type {FieldObjectManager}
          * @private
          */
-        this._creatureManager = new CreatureManager();
+        this._fieldObjectManager = new FieldObjectManager();
 
         /**
          * Creature selected by player.
@@ -29,19 +29,19 @@ export default class Field {
          */
         this._selectedCreature = null;
 
-        this._initCreatureManager();
+        this._initFieldObjectManager();
         this._initTileManager();
     }
 
 
-    _initCreatureManager() {
-        this._creatureManager.parent = this;
+    _initFieldObjectManager() {
+        this._fieldObjectManager.parent = this;
 
-        this._creatureManager.on(
+        this._fieldObjectManager.on(
             CreatureEvent.CLICK, this._onCreatureClick.bind(this)
         );
 
-        this._creatureManager.on(
+        this._fieldObjectManager.on(
             CreatureEvent.REMOVE, this._onCreatureRemoved.bind(this)
         );
     }

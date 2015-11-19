@@ -4,7 +4,7 @@ import _ from 'lodash';
 import EventEmitter from 'external/EventEmitter';
 
 
-export default class BaseManager extends EventEmitter {
+export default class FieldManager extends EventEmitter {
     constructor() {
         super();
 
@@ -13,7 +13,7 @@ export default class BaseManager extends EventEmitter {
 
 
     /**
-     * @param {BaseFieldObject} item
+     * @param {FieldObject} item
      * @param {object} point
      */
     putItemTo(item, point) {
