@@ -1,6 +1,5 @@
 /**
  * @FileOverview
- * Главный класс отвечающий за все вьюшки зон карт(наследуются от BaseCardViewManager).
  *
  *
  */
@@ -9,7 +8,7 @@
 import EventEmitter from 'external/EventEmitter';
 
 
-import HandView from './HandView';
+import HandView from './Hand/HandView';
 
 
 export default class CardManager extends EventEmitter {

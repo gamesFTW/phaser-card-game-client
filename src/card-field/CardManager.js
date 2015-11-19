@@ -1,14 +1,14 @@
 import EventEmitter from 'external/EventEmitter';
 
 
-import CreatureCardView from './CreatureCardView';
-import BaseCardView from './BaseCardView';
+import CreatureCardView from './Card/CreatureCardView';
+import CardView from './Card/CardView';
 
 
-export default class BaseCardViewManager extends EventEmitter {
+export default class CardManager extends EventEmitter {
     get nextCardPosition() {
         let cards = this._cards.length;
-        let cardsWidth = BaseCardView.CARD_WIDTH * this._scale * cards;
+        let cardsWidth = CardView.CARD_WIDTH * this._scale * cards;
         let cardsPadding = this._padding * cards;
         let x = this._x + cardsPadding + cardsWidth;
         return { x: x, y: this._y };
@@ -72,7 +72,7 @@ export default class BaseCardViewManager extends EventEmitter {
         this._cards.forEach(function(card) {
             card.position = { x: nextX, y: nextY };
 
-            nextX = nextX + (BaseCardView.CARD_WIDTH + padding) * scale;
+            nextX = nextX + (CardView.CARD_WIDTH + padding) * scale;
         });
 
     }

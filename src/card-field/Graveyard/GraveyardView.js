@@ -1,4 +1,4 @@
-import BaseCardViewManager from './BaseCardViewManager.js';
+import BaseCardViewManager from './../BaseCardViewManager.js';
 
 
 export default class GraveyardView extends BaseCardViewManager {

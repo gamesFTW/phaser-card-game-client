@@ -9,7 +9,7 @@ import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
 import CardEvent from './CardEvent';
 
 
-export default class BaseCardView extends EventEmitter {
+export default class CardView extends EventEmitter {
     static get CARD_WIDTH() {
         return 150;
     }
@@ -82,7 +82,7 @@ export default class BaseCardView extends EventEmitter {
 
     addMiddle() {
         var text= PhaserWrapper.game.make.text(
-            5, BaseCardView.CARD_HEIGHT / 2,
+            5, CardView.CARD_HEIGHT / 2,
             this._data.text,
             {
                 font: "10px Arial",
@@ -98,7 +98,7 @@ export default class BaseCardView extends EventEmitter {
 
     addFooter() {
         var dmg = PhaserWrapper.game.make.text(
-            25, BaseCardView.CARD_HEIGHT - 25,
+            25, CardView.CARD_HEIGHT - 25,
             this._data.dmg,
             {
                 font: "18px Arial",
@@ -108,7 +108,7 @@ export default class BaseCardView extends EventEmitter {
         );
 
         var hp = PhaserWrapper.game.make.text(
-            BaseCardView.CARD_WIDTH - 25, BaseCardView.CARD_HEIGHT - 25,
+            CardView.CARD_WIDTH - 25, CardView.CARD_HEIGHT - 25,
             this._data.health,
             {
                 font: "18px Arial",

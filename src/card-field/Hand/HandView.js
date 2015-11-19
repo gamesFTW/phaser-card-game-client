@@ -1,7 +1,7 @@
-import BaseCardViewManager from './BaseCardViewManager.js';
+import CardManager from './../CardManager.js';
 
 
-export default class HandView extends BaseCardViewManager {
+export default class HandView extends CardManager {
     constructor() {
         // TODO подобрать позицию
         super(20, 600, true);
