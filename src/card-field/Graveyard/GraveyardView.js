@@ -1,7 +1,7 @@
-import BaseCardViewManager from './../BaseCardViewManager.js';
+import CardStackViewManager from './../CardStackViewManager';
 
 
-export default class GraveyardView extends BaseCardViewManager {
+export default class GraveyardView extends CardStackViewManager {
     constructor() {
         super();
 

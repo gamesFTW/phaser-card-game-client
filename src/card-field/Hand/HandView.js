@@ -1,18 +1,9 @@
-import CardManager from './../CardManager.js';
+import CardRowViewManager from './../CardRowViewManager';
 
 
-export default class HandView extends CardManager {
+export default class HandView extends CardRowViewManager {
     constructor() {
-        // TODO подобрать позицию
-        super(20, 600, true);
-
-        // TODO debug, remove later
-        this.addRandomCard();
-        this.addRandomCard();
-        this.addRandomCard();
-        this.addRandomCard();
-        this.addRandomCard();
-        this.addRandomCard();
+        super();
 
     }
 }

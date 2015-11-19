@@ -1,7 +1,7 @@
-import BaseCardViewManager from './../BaseCardViewManager.js';
+import CardRowViewManager from './../CardRowViewManager';
 
 
-export default class TableView extends BaseCardViewManager {
+export default class TableView extends CardRowViewManager {
     constructor() {
         super();
 

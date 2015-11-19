@@ -21,7 +21,7 @@ abstract CardManager
 
 abstract CardRowViewManager
 
-abstract StackCardViewManager
+abstract CardStackViewManager
 
 
 class Card
@@ -53,14 +53,14 @@ class Graveyard
 Graveyard <|-- CardManager
 Graveyard --> GraveyardView
 GraveyardView --> Card
-StackCardViewManager <|-- GraveyardView
+CardStackViewManager <|-- GraveyardView
 
 
 class Deck
 Deck <|-- CardManager
 Deck  --> DeckView
 DeckView --> Card
-StackCardViewManager <|-- DeckView
+CardStackViewManager <|-- DeckView
 
 
 @enduml
