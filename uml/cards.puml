@@ -10,10 +10,10 @@ skinparam shadowing false
 
 
 class CardField
-CardField --> Hand
-CardField --> Table
-CardField --> Deck
-CardField --> Graveyard
+CardField *-- Hand
+CardField *-- Table
+CardField *-- Deck
+CardField *-- Graveyard
 
 abstract CardView
 
@@ -27,7 +27,6 @@ abstract CardStackViewManager
 class Card
 Card --> CardView
 
-
 class CreatureCardView
 CardView <|-- CreatureCardView
 
@@ -37,29 +36,29 @@ CardView <|-- AreaCardView
 
 
 class Hand
-Hand <|-- CardManager
-Hand --> HandView
-HandView --> Card
+Hand -up-|> CardManager
+Hand *-- Card
+Hand *-- HandView
 CardRowViewManager <|-- HandView
 
 
 class Table
-Table <|-- CardManager
-Table --> TableView
-TableView --> Card
+Table -up-|> CardManager
+Table *-- Card
+Table *-- TableView
 CardRowViewManager <|-- TableView
 
 class Graveyard
-Graveyard <|-- CardManager
-Graveyard --> GraveyardView
-GraveyardView --> Card
+Graveyard -up-|> CardManager
+Graveyard *-- Card
+Graveyard *-- GraveyardView
 CardStackViewManager <|-- GraveyardView
 
 
 class Deck
-Deck <|-- CardManager
-Deck  --> DeckView
-DeckView --> Card
+Deck -up-|> CardManager
+Deck *-- Card
+Deck *-- DeckView
 CardStackViewManager <|-- DeckView
 
 
