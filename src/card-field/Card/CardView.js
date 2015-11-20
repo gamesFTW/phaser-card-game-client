@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import Phaser from 'phaser';
-import EventEmitter from 'external/EventEmitter';
-
-
 import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
+
+
+import EventEmitter from 'external/EventEmitter';
 
 
 import CardEvent from './CardEvent';
@@ -33,19 +33,20 @@ export default class CardView extends EventEmitter {
     }
 
 
-    constructor(x, y, data) {
+    constructor(data) {
         super();
 
-        this._data = data;
         this._sprite = null;
+        // TODO убрать? У вью должен быть?
+        this._data = data;
 
-        this.createView(x, y);
+        this.createView();
     }
 
 
-    createView(x, y) {
-        this._sprite = PhaserWrapper.game.add.sprite(
-            x, y, 'card_bg'
+    createView() {
+        this._sprite = PhaserWrapper.game.make.sprite(
+            0, 0, 'card_bg'
         );
 
         this.addHeader()

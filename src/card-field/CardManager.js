@@ -1,31 +1,18 @@
 import EventEmitter from 'external/EventEmitter';
 
 
-import CreatureCardView from './Card/CreatureCardView';
-import CardView from './Card/CardView';
+import Card from './Card/Card';
+//import CreatureCardView from './Card/CreatureCardView';
+//import CardView from './Card/CardView';
 
 
 export default class CardManager extends EventEmitter {
-    get nextCardPosition() {
-        let cards = this._cards.length;
-        let cardsWidth = CardView.CARD_WIDTH * this._scale * cards;
-        let cardsPadding = this._padding * cards;
-        let x = this._x + cardsPadding + cardsWidth;
-        return { x: x, y: this._y };
-    }
-
-
-    constructor(x, y, draggable = false, scale = 1, padding = 3) {
+    constructor() {
         super();
 
-        this._x = x;
-        this._y = y;
-        this._scale = scale;
-        this._padding = padding;
-
         this._cards = [];
-        this._draggable = draggable;
     }
+
 
     addRandomCard() {
         let data = {
@@ -38,42 +25,18 @@ export default class CardManager extends EventEmitter {
             img: [1,2,3].map(i => 'card/orc' + i)
         };
 
-
         this.addCard(data);
     }
 
 
     addCard(cardData) {
-        let { x,y }  = this.nextCardPosition;
-        // Здесь может быть не только креачур
-        let card = new CreatureCardView(x, y, cardData);
+        let card = new Card(cardData);
         card.parent = this;
-
-
-        if (this._draggable) {
-            card.enableDragAndDrop();
-        }
-
         this._cards.push(card);
     }
 
 
     removeCard(id) {
-
-    }
-
-
-    reorderCards() {
-        var nextX = this._x;
-        let nextY = this._y;
-        let padding = this._padding;
-        let scale = this._scale;
-
-        this._cards.forEach(function(card) {
-            card.position = { x: nextX, y: nextY };
-
-            nextX = nextX + (CardView.CARD_WIDTH + padding) * scale;
-        });
 
     }
 }
