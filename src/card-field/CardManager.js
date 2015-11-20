@@ -7,10 +7,19 @@ import Card from './Card/Card';
 
 
 export default class CardManager extends EventEmitter {
-    constructor() {
+    get _cardViews() {
+        return this._cards.map(x => x._view);
+    }
+
+
+    constructor(cards = [], view = null) {
         super();
 
-        this._cards = [];
+        this._cards = cards;
+        this._view = view;
+
+        // TODO event names via class and getter
+        this.on('change', this._onChange.bind(this));
     }
 
 
@@ -33,10 +42,19 @@ export default class CardManager extends EventEmitter {
         let card = new Card(cardData);
         card.parent = this;
         this._cards.push(card);
+
+        this.emit('change', card);
     }
 
 
     removeCard(id) {
 
+    }
+
+
+    _onChange() {
+        if (this._view) {
+            this._view.reorderCards(this._cardViews);
+        }
     }
 }

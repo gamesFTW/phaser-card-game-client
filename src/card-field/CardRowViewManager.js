@@ -1,8 +1,8 @@
-import EventEmitter from 'external/EventEmitter';
+import CardViewManager from './CardViewManager';
 import CardView from './Card/CardView';
 
 
-export default class CardRowViewManager extends EventEmitter {
+export default class CardRowViewManager extends CardViewManager {
     get nextCardPosition() {
         let cards = this._cards.length;
         let cardsWidth = CardView.CARD_WIDTH * this._scale * cards;
@@ -12,15 +12,17 @@ export default class CardRowViewManager extends EventEmitter {
     }
 
 
-    constructor(x, y, draggable = false, scale = 1, padding = 3) {
-        super();
-
-        this._x = x;
-        this._y = y;
-        this._scale = scale;
-        this._padding = padding;
-
-        this._draggable = draggable;
+    /**
+     *
+     * @param {Number} x
+     * @param {Number} y
+     * @param {Boolean} faceUp
+     * @param {Boolean} draggable
+     * @param {Number} scale
+     * @param {Number} padding
+     */
+    constructor(x, y, faceUp, draggable = false, scale = 1, padding = 3) {
+        super(x, y, faceUp, draggable, scale, padding);
     }
 
 
@@ -31,16 +33,10 @@ export default class CardRowViewManager extends EventEmitter {
     reorderCards(cardsViews) {
         var nextX = this._x;
 
-        cardsViews.forEach(function(card) {
-            card.position = { x: nextX, y: this._y};
-
-            // Наверное нужно делать только еще не делали до этого
-            if (this._draggable)
-                card.enableDragAndDrop();
+        cardsViews.forEach(function(cardView) {
+            this.placeCard(cardView, nextX, this._y);
 
             nextX = nextX + (CardView.CARD_WIDTH + this._padding) * this._scale;
         }.bind(this));
-
     }
-
 }

@@ -20,6 +20,22 @@ export default class CardView extends EventEmitter {
     }
 
 
+    set faceUp (b) {
+        let oldState = this._faceUp;
+        this._faceUp = b;
+
+        if (b !== oldState) {
+            // TODO events
+            this.render();
+        }
+    }
+    get faceUp () { return this._faceUp; }
+
+
+    set visible (b) { this._sprite.visible = b; }
+    get visible () { return this._sprite.visible; }
+
+
     /**
      * @param {Object} point
      * @param {Number} point.x
@@ -37,8 +53,9 @@ export default class CardView extends EventEmitter {
         super();
 
         this._sprite = null;
-        // TODO убрать? У вью должен быть?
         this._data = data;
+
+        this._faceUp = true;
 
         this.createView();
     }
@@ -46,14 +63,24 @@ export default class CardView extends EventEmitter {
 
     createView() {
         this._sprite = PhaserWrapper.game.make.sprite(
-            0, 0, 'card_bg'
+            0, 0
         );
 
-        this.addHeader()
-            .addMiddle()
-            .addFooter();
-
         PhaserWrapper.addToGroup('cards', this._sprite);
+
+        this.render();
+    }
+
+
+    render() {
+        this._sprite.removeChild();
+
+        this.addBg();
+        if (this.faceUp) {
+            this.addHeader()
+                .addMiddle()
+                .addFooter();
+        }
     }
 
 
@@ -65,6 +92,18 @@ export default class CardView extends EventEmitter {
         //this._sprite.events.onDragUpdate.add(this._onDragUpdate, this);
     }
 
+
+    addBg() {
+        let bgImg = this.faceUp ? 'card_bg' : 'card_bg_facedown';
+
+        let bg = PhaserWrapper.game.make.sprite(
+            0, 0, bgImg
+        );
+
+        this._sprite.addChild(bg);
+
+        return this;
+    }
 
     addHeader() {
         var text = PhaserWrapper.game.make.text(

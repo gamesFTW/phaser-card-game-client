@@ -3,10 +3,6 @@ import HandView from './HandView';
 
 
 export default class Hand extends CardManager {
-    get _cardViews() {
-        return this._cards.map(x => x._view);
-    }
-
 
     constructor() {
         super();
@@ -21,6 +17,6 @@ export default class Hand extends CardManager {
         this.addRandomCard();
         this.addRandomCard();
 
-        this._view.reorderCards(this._cardViews);
+
     }
 }

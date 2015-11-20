@@ -18,6 +18,7 @@ export default class EventEmitter {
     set parent(value) { this._parent = value }
 
 
+    // TOOD и че когда можно будет this передавать?
     on(type, listener) {
         if(typeof listener != "function") {
             throw new TypeError();
