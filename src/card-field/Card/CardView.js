@@ -1,15 +1,15 @@
 import _ from 'lodash';
 import Phaser from 'phaser';
-import EventEmitter from 'external/EventEmitter';
-
-
 import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
+
+
+import EventEmitter from 'external/EventEmitter';
 
 
 import CardEvent from './CardEvent';
 
 
-export default class BaseCardView extends EventEmitter {
+export default class CardView extends EventEmitter {
     static get CARD_WIDTH() {
         return 150;
     }
@@ -18,6 +18,22 @@ export default class BaseCardView extends EventEmitter {
     static get CARD_HEIGHT() {
         return 200;
     }
+
+
+    set faceUp (b) {
+        let oldState = this._faceUp;
+        this._faceUp = b;
+
+        if (b !== oldState) {
+            // TODO events
+            this.render();
+        }
+    }
+    get faceUp () { return this._faceUp; }
+
+
+    set visible (b) { this._sprite.visible = b; }
+    get visible () { return this._sprite.visible; }
 
 
     /**
@@ -33,26 +49,38 @@ export default class BaseCardView extends EventEmitter {
     }
 
 
-    constructor(x, y, data) {
+    constructor(data) {
         super();
 
-        this._data = data;
         this._sprite = null;
+        this._data = data;
 
-        this.createView(x, y);
+        this._faceUp = true;
+
+        this.createView();
     }
 
 
-    createView(x, y) {
-        this._sprite = PhaserWrapper.game.add.sprite(
-            x, y, 'card_bg'
+    createView() {
+        this._sprite = PhaserWrapper.game.make.sprite(
+            0, 0
         );
 
-        this.addHeader()
-            .addMiddle()
-            .addFooter();
-
         PhaserWrapper.addToGroup('cards', this._sprite);
+
+        this.render();
+    }
+
+
+    render() {
+        this._sprite.removeChild();
+
+        this.addBg();
+        if (this.faceUp) {
+            this.addHeader()
+                .addMiddle()
+                .addFooter();
+        }
     }
 
 
@@ -64,6 +92,18 @@ export default class BaseCardView extends EventEmitter {
         //this._sprite.events.onDragUpdate.add(this._onDragUpdate, this);
     }
 
+
+    addBg() {
+        let bgImg = this.faceUp ? 'card_bg' : 'card_bg_facedown';
+
+        let bg = PhaserWrapper.game.make.sprite(
+            0, 0, bgImg
+        );
+
+        this._sprite.addChild(bg);
+
+        return this;
+    }
 
     addHeader() {
         var text = PhaserWrapper.game.make.text(
@@ -82,7 +122,7 @@ export default class BaseCardView extends EventEmitter {
 
     addMiddle() {
         var text= PhaserWrapper.game.make.text(
-            5, BaseCardView.CARD_HEIGHT / 2,
+            5, CardView.CARD_HEIGHT / 2,
             this._data.text,
             {
                 font: "10px Arial",
@@ -98,7 +138,7 @@ export default class BaseCardView extends EventEmitter {
 
     addFooter() {
         var dmg = PhaserWrapper.game.make.text(
-            25, BaseCardView.CARD_HEIGHT - 25,
+            25, CardView.CARD_HEIGHT - 25,
             this._data.dmg,
             {
                 font: "18px Arial",
@@ -108,7 +148,7 @@ export default class BaseCardView extends EventEmitter {
         );
 
         var hp = PhaserWrapper.game.make.text(
-            BaseCardView.CARD_WIDTH - 25, BaseCardView.CARD_HEIGHT - 25,
+            CardView.CARD_WIDTH - 25, CardView.CARD_HEIGHT - 25,
             this._data.health,
             {
                 font: "18px Arial",

@@ -1,0 +1,65 @@
+@startuml
+
+skinparam class {
+	ArrowColor black
+	BorderColor black
+}
+
+skinparam stereotypeCBackgroundColor YellowGreen
+skinparam shadowing false
+
+
+class CardField
+CardField *-- Hand
+CardField *-- Table
+CardField *-- Deck
+CardField *-- Graveyard
+
+abstract CardView
+
+abstract CardManager
+
+abstract CardRowViewManager
+
+abstract CardStackViewManager
+
+
+class Card
+Card --> CardView
+
+class CreatureCardView
+CardView <|-- CreatureCardView
+
+
+class AreaCardView
+CardView <|-- AreaCardView
+
+
+class Hand
+Hand -up-|> CardManager
+Hand *-- Card
+Hand *-- HandView
+CardRowViewManager <|-- HandView
+
+
+class Table
+Table -up-|> CardManager
+Table *-- Card
+Table *-- TableView
+CardRowViewManager <|-- TableView
+
+class Graveyard
+Graveyard -up-|> CardManager
+Graveyard *-- Card
+Graveyard *-- GraveyardView
+CardStackViewManager <|-- GraveyardView
+
+
+class Deck
+Deck -up-|> CardManager
+Deck *-- Card
+Deck *-- DeckView
+CardStackViewManager <|-- DeckView
+
+
+@enduml

@@ -9,7 +9,7 @@ import Tile from 'field/tile/Tile';
 import EventEmitter from 'external/EventEmitter';
 
 
-export default class BaseFieldObjectView extends EventEmitter {
+export default class FieldObjectView extends EventEmitter {
     /**
      * @param {Object} point
      * @param {Number} point.x

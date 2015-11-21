@@ -1,7 +1,7 @@
 import EventEmitter from 'external/EventEmitter';
 
 
-export default class BaseFieldObject extends EventEmitter {
+export default class FieldObject extends EventEmitter {
     /**
      * @returns {String}
      */
@@ -43,7 +43,7 @@ export default class BaseFieldObject extends EventEmitter {
         this._y = y;
 
         /**
-         * @type {BaseFieldObjectView}
+         * @type {FieldObjectView}
          * @protected
          */
         this._view = null;

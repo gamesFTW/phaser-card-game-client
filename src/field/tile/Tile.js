@@ -1,10 +1,10 @@
 import TileView from 'field/tile/TileView';
-import BaseFieldObject from 'field/BaseFieldObject';
+import FieldObject from 'field/FieldObject';
 import TileEvent from 'field/tile/TileEvent';
 import FiledObjectsViewEvent from 'field/FiledObjectsViewEvent';
 
 
-export default class Tile extends BaseFieldObject {
+export default class Tile extends FieldObject {
     /**
      * @returns {number}
      * @const

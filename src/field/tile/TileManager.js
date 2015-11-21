@@ -1,8 +1,8 @@
 import Tile from 'field/tile/Tile';
-import BaseManager from 'field/BaseManager';
+import FieldManager from 'field/FieldManager';
 
 
-export default class TileManager extends BaseManager {
+export default class TileManager extends FieldManager {
     constructor(width = 10, height = 10) {
         super();
 
