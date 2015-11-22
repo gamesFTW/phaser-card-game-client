@@ -1,5 +1,10 @@
 @startuml
 
+'Палитра
+'#D6E8CA
+'#CAD0E8
+'#F7CDFF
+
 skinparam class {
 	ArrowColor black
 	BorderColor black
@@ -15,14 +20,19 @@ Main *-- CardField
 
 
 ''' Про это смотри cards.puml, тут очень упощеная ее часть
-class CardField #cccccc
+class CardField #fff
 CardField *-- Card
 
 
-class Card #cccccc
-Card *-- field.Creature
-Card *-- field.Area
+class Card #fff
+Card *-- field.CreatureView
+Card *-- field.AreaView
 Card *-- CardView
+
+
+
+abstract class CardView #CAD0E8
+CardView --> PhaserWrapper
 
 
 class CreatureCardView #CAD0E8
@@ -33,10 +43,6 @@ class AreaCardView #CAD0E8
 CardView <|-- AreaCardView
 
 
-abstract class CardView #ffffff
-CardView --> PhaserWrapper
-
-
 class PhaserWrapper #ffffff {
     + game
 }
@@ -44,71 +50,36 @@ PhaserWrapper --> phaser.game
 
 
 package "field" {
-    abstract class FieldManager #ffffff
-
-
-    abstract class FieldObjectView #ffffff
-    FieldObjectView <|-up- TileView
-    FieldObjectView <|-up- CreatureView
-    FieldObjectView <|-up- AreaView
-    FieldObjectView --> .PhaserWrapper
-
-
     class Field #ffffff {
         - pickedCreature: Creature
     }
-    Field *-- TileManager
     Field *-- FieldObjectManager
+    Field *-- TileView
+    Field --> .CardField
 
 
-    '''Tile'''
-    class TileManager #F7CDFF
-    FieldManager <|-- TileManager
-    TileManager *-- Tile
-
-
-    class Tile #F7CDFF
-    Tile *-- TileView
-
-
-    class TileView #F7CDFF
-
-
-    '''Creature'''
-    class FieldObjectManager #CAD0E8 {
+    class FieldObjectManager #fff {
         - creatureList
         - areaList
         + goToPosition(creature: Creature, x, y)
-        + attack(creature1: Creature, creature2: Creature)
     }
-    FieldManager <|-- FieldObjectManager
-    FieldObjectManager *-- Creature
+    FieldObjectManager --> .Card
 
 
-    class Creature #CAD0E8 {
-        + attack(creature: Creature)
-        + takeDamage(damage: int)
-    }
-    Creature *-- CreatureView
 
+    abstract class FieldObjectView #D6E8CA
+    FieldObjectView <|-left- TileView
+    FieldObjectView <|-down- CreatureView
+    FieldObjectView <|-down- AreaView
+    FieldObjectView --> .PhaserWrapper
 
-    class CreatureView #CAD0E8
-
-
-    '''Area'''
-    FieldObjectManager *-- Area
-
-
-    class Area #D6E8CA
-    Area *-- AreaView
-
-
+    class CreatureView #D6E8CA
     class AreaView #D6E8CA
-
+    class TileView #D6E8CA
 }
 
 
 package "phaser" #DDDDDD {
-    class game
+    class game #fff
 }
 @enduml
