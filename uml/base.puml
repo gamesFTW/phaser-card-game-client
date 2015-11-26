@@ -13,22 +13,67 @@ skinparam class {
 skinparam stereotypeCBackgroundColor YellowGreen
 skinparam shadowing false
 
-class Main #ffffff
 
-Main *-- field.Field
-Main *-- CardField
+class Main #ffffff
+Main *-- TileManager
+Main *-- CardManager
+Main *-- UserController
+
+
+class UserController #ffffff {
+    - pickedCreature
+}
+UserController --> TileManager
+UserController --> CardManager
 
 
 ''' Про это смотри cards.puml, тут очень упощеная ее часть
-class CardField #fff
-CardField *-- Card
+class CardManager #fff {
+    + addCard()
+    + createFieldObject()
+    + getCardById()
+}
+CardManager *-- Card
+CardManager *-- CardInFieldManager
+CardManager *-- CardGroupManager
+
+
+class TileManager #ffffff {
+}
+TileManager *--> TileView
+
+
+class CardInFieldManager #fff {
+    - getCardByPoint
+}
+CardInFieldManager --> Card
+
+
+abstract class CardGroupManager #fff {
+}
+CardGroupManager --> Card
+
+
+class Hand #fff
+CardGroupManager <|-- Hand
+
+
+class Table #fff
+CardGroupManager <|-- Table
+
+
+class Graveyard #fff
+CardGroupManager <|-- Graveyard
+
+
+class Deck #fff
+CardGroupManager <|-- Deck
 
 
 class Card #fff
-Card *-- field.CreatureView
-Card *-- field.AreaView
+Card *-- CreatureView
+Card *-- AreaView
 Card *-- CardView
-
 
 
 abstract class CardView #CAD0E8
@@ -43,40 +88,22 @@ class AreaCardView #CAD0E8
 CardView <|-- AreaCardView
 
 
+abstract class FieldObjectView #D6E8CA
+FieldObjectView <|-- TileView
+FieldObjectView <|-- CreatureView
+FieldObjectView <|-- AreaView
+FieldObjectView --> PhaserWrapper
+
+
+class CreatureView #D6E8CA
+class AreaView #D6E8CA
+class TileView #D6E8CA
+
+
 class PhaserWrapper #ffffff {
     + game
 }
 PhaserWrapper --> phaser.game
-
-
-package "field" {
-    class Field #ffffff {
-        - pickedCreature: Creature
-    }
-    Field *-- FieldObjectManager
-    Field *-- TileView
-    Field --> .CardField
-
-
-    class FieldObjectManager #fff {
-        - creatureList
-        - areaList
-        + goToPosition(creature: Creature, x, y)
-    }
-    FieldObjectManager --> .Card
-
-
-
-    abstract class FieldObjectView #D6E8CA
-    FieldObjectView <|-left- TileView
-    FieldObjectView <|-down- CreatureView
-    FieldObjectView <|-down- AreaView
-    FieldObjectView --> .PhaserWrapper
-
-    class CreatureView #D6E8CA
-    class AreaView #D6E8CA
-    class TileView #D6E8CA
-}
 
 
 package "phaser" #DDDDDD {
