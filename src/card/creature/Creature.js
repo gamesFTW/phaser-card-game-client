@@ -1,7 +1,7 @@
-import CreatureView from 'field/creature/CreatureView';
-import FieldObject from 'field/FieldObject';
-import FiledObjectsViewEvent from 'field/FiledObjectsViewEvent';
-import CreatureEvent from 'field/creature/CreatureEvent';
+import CreatureView from 'card/creature/CreatureView';
+import FieldObject from 'card/FieldObject';
+import FiledObjectsViewEvent from 'card/FiledObjectsViewEvent';
+import CreatureEvent from 'card/creature/CreatureEvent';
 
 
 export default class Creature extends FieldObject {

@@ -1,7 +1,7 @@
 import EventEmitter from 'external/EventEmitter';
 
 
-export default class FieldObject extends EventEmitter {
+export default class Card extends EventEmitter {
     /**
      * @returns {String}
      */

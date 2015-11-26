@@ -1,27 +1,28 @@
 import Backend from 'Backend';
 
-import TileManager from 'field/tile/TileManager';
-import FieldObjectManager from 'field/FieldObjectManager';
+import TileManager from 'tile/TileManager';
+import FieldObjectManager from 'card/CardManager';
 
-import CreatureEvent from 'field/creature/CreatureEvent';
-import TileEvent from 'field/tile/TileEvent';
+import CreatureEvent from 'card/creature/CreatureEvent';
+import FiledObjectsViewEvent from 'FiledObjectsViewEvent';
 
-import Creature from 'field/creature/Creature';
+import Creature from 'card/creature/Creature';
 
 
-export default class Field {
-    constructor() {
+export default class TileCardManager {
+    constructor(tileManager, cardManager) {
         /**
          * type {TileManager}
          * @private
          */
-        this._tileManager = new TileManager();
+        this._tileManager = tileManager;
+
 
         /**
-         * @type {FieldObjectManager}
+         * type {CardManager}
          * @private
          */
-        this._fieldObjectManager = new FieldObjectManager();
+        this._cardManager = cardManager;
 
         /**
          * Creature selected by player.
@@ -35,13 +36,13 @@ export default class Field {
 
 
     _initFieldObjectManager() {
-        this._fieldObjectManager.parent = this;
+        this._cardManager.parent = this;
 
-        this._fieldObjectManager.on(
+        this._cardManager.on(
             CreatureEvent.CLICK, this._onCreatureClick.bind(this)
         );
 
-        this._fieldObjectManager.on(
+        this._cardManager.on(
             CreatureEvent.REMOVE, this._onCreatureRemoved.bind(this)
         );
     }
@@ -51,7 +52,7 @@ export default class Field {
         this._tileManager.parent = this;
 
         this._tileManager.on(
-            TileEvent.CLICK, this._onTileClick.bind(this)
+            FiledObjectsViewEvent.CLICK, this._onTileClick.bind(this)
         );
     }
 
@@ -72,7 +73,8 @@ export default class Field {
         var clickedTile = event.currentTarget;
 
         if (this._selectedCreature) {
-            Backend.moveCreatureTo(this._selectedCreature.id, clickedTile.position);
+            Backend.moveCreatureTo(
+                this._selectedCreature.id, clickedTile.position);
         }
     }
 }
