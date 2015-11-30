@@ -17,29 +17,47 @@ export default class FieldObjectView extends EventEmitter {
 
 
     /**
+     */
+    get position() {
+        return {x: this._x, y: this._y};
+    }
+
+
+    /**
      * @param {Object} point
      * @param {Number} point.x
      * @param {Number} point.y
      */
     set position(point) {
-        this._sprite.x = point.x * FieldObjectView.SIZE;
-        this._sprite.y = point.y * FieldObjectView.SIZE;
-        
+        this._x = point.x;
+        this._y = point.y;
+
+        if (this._sprite) {
+            this._sprite.x = point.x * FieldObjectView.SIZE;
+            this._sprite.y = point.y * FieldObjectView.SIZE;
+        }
+
         this.emit(FiledObjectsViewEvent.MOVED);
     }
 
 
-    constructor() {
+    constructor(x, y) {
         super();
+
+        this._x = null;
+        this._y = null;
 
         /**
          * @protected
          */
         this._sprite = null;
+
+
+        this.position = {x: x, y: y};
     }
 
 
-    remove() {
+    dispose() {
         this._sprite.kill();
     }
 

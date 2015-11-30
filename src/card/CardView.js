@@ -20,11 +20,11 @@ export default class CardView extends EventEmitter {
     }
 
 
-    set faceUp (b) {
+    set faceUp (value) {
         let oldState = this._faceUp;
-        this._faceUp = b;
+        this._faceUp = value;
 
-        if (b !== oldState) {
+        if (value !== oldState) {
             // TODO events
             this.render();
         }
@@ -32,7 +32,7 @@ export default class CardView extends EventEmitter {
     get faceUp () { return this._faceUp; }
 
 
-    set visible (b) { this._sprite.visible = b; }
+    set visible (value) { this._sprite.visible = value; }
     get visible () { return this._sprite.visible; }
 
 
@@ -57,30 +57,35 @@ export default class CardView extends EventEmitter {
 
         this._faceUp = true;
 
-        this.createView();
+        this._createView();
     }
 
 
-    createView() {
+    _createView() {
         this._sprite = PhaserWrapper.game.make.sprite(
             0, 0
         );
 
         PhaserWrapper.addToGroup('cards', this._sprite);
 
-        this.render();
+        //this.render();
     }
 
 
     render() {
         this._sprite.removeChild();
 
-        this.addBg();
+        this._addBg();
         if (this.faceUp) {
-            this.addHeader()
-                .addMiddle()
-                .addFooter();
+            this._addHeader()
+                ._addMiddle()
+                ._addFooter();
         }
+    }
+
+
+    dispose() {
+        this._sprite.kill();
     }
 
 
@@ -93,7 +98,7 @@ export default class CardView extends EventEmitter {
     }
 
 
-    addBg() {
+    _addBg() {
         let bgImg = this.faceUp ? 'card_bg' : 'card_bg_facedown';
 
         let bg = PhaserWrapper.game.make.sprite(
@@ -105,7 +110,7 @@ export default class CardView extends EventEmitter {
         return this;
     }
 
-    addHeader() {
+    _addHeader() {
         var text = PhaserWrapper.game.make.text(
             5, 5,
             this._data.title,
@@ -120,7 +125,7 @@ export default class CardView extends EventEmitter {
         return this;
     }
 
-    addMiddle() {
+    _addMiddle() {
         var text= PhaserWrapper.game.make.text(
             5, CardView.CARD_HEIGHT / 2,
             this._data.text,
@@ -136,7 +141,7 @@ export default class CardView extends EventEmitter {
         return this;
     }
 
-    addFooter() {
+    _addFooter() {
         var dmg = PhaserWrapper.game.make.text(
             25, CardView.CARD_HEIGHT - 25,
             this._data.dmg,

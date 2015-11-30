@@ -1,11 +1,10 @@
 import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
-import FieldObjectView from 'card/FieldObjectView';
-import Tile from 'card/tile/Tile';
+import FieldObjectView from 'FieldObjectView';
 
 
 export default class TileView extends FieldObjectView {
     constructor(x, y) {
-        super();
+        super(x, y);
 
         this._sprite = PhaserWrapper.game.add.sprite(
             x * FieldObjectView.SIZE, y * FieldObjectView.SIZE, 'tile'

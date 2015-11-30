@@ -31,14 +31,16 @@ class Main {
         this._tileCardManager = null;
 
 
-        PhaserWrapper.createFinished = this._init;
+        PhaserWrapper.createFinished = this._init.bind(this);
     }
 
 
     _init() {
         this._tileManager = new TileManager();
         this._cardManager = new CardManager();
-        this._tileCardManager = new TileCardManager();
+        this._tileCardManager = new TileCardManager(
+            this._tileManager, this._cardManager
+        );
 
         this._loadSavedGame();
     }
@@ -46,6 +48,7 @@ class Main {
 
     _loadSavedGame() {
         var cards = Backend.getCards();
+
         cards.forEach(function(cardData) {
             this._cardManager.createCard(cardData);
         }.bind(this));

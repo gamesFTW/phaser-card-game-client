@@ -1,12 +1,12 @@
 import Backend from 'Backend';
 
 import TileManager from 'tile/TileManager';
-import FieldObjectManager from 'card/CardManager';
+import CardManager from 'card/CardManager';
 
-import CreatureEvent from 'card/creature/CreatureEvent';
+import CardEvent from 'card/CardEvent';
 import FiledObjectsViewEvent from 'FiledObjectsViewEvent';
 
-import Creature from 'card/creature/Creature';
+import Card from 'card/Card';
 
 
 export default class TileCardManager {
@@ -25,10 +25,10 @@ export default class TileCardManager {
         this._cardManager = cardManager;
 
         /**
-         * Creature selected by player.
-         * @type {Creature}
+         * Card selected by player.
+         * @type {Card}
          */
-        this._selectedCreature = null;
+        this._selectedCard = null;
 
         this._initFieldObjectManager();
         this._initTileManager();
@@ -36,14 +36,12 @@ export default class TileCardManager {
 
 
     _initFieldObjectManager() {
-        this._cardManager.parent = this;
-
         this._cardManager.on(
-            CreatureEvent.CLICK, this._onCreatureClick.bind(this)
+            CardEvent.CLICK, this._onCreatureClick.bind(this)
         );
 
         this._cardManager.on(
-            CreatureEvent.REMOVE, this._onCreatureRemoved.bind(this)
+            CardEvent.DISPOSE, this._onCreatureDisposed.bind(this)
         );
     }
 
@@ -58,13 +56,13 @@ export default class TileCardManager {
 
 
     _onCreatureClick(event) {
-        this._selectedCreature = event.currentTarget;
+        this._selectedCard = event.currentTarget;
     }
 
 
-    _onCreatureRemoved(event) {
-        if (this._selectedCreature === event.currentTarget) {
-            this._selectedCreature = null;
+    _onCreatureDisposed(event) {
+        if (this._selectedCard === event.currentTarget) {
+            this._selectedCard = null;
         }
     }
 
@@ -72,9 +70,10 @@ export default class TileCardManager {
     _onTileClick(event) {
         var clickedTile = event.currentTarget;
 
-        if (this._selectedCreature) {
-            Backend.moveCreatureTo(
-                this._selectedCreature.id, clickedTile.position);
+        if (this._selectedCard) {
+            Backend.moveCardTo(
+                this._selectedCard.id, clickedTile.position
+            );
         }
     }
 }

@@ -1,9 +1,12 @@
-import TileView from 'card/tile/TileView';
+import TileView from 'tile/TileView';
 import EventEmitter from 'external/EventEmitter';
 
 
 export default class TileManager extends EventEmitter {
     constructor(width = 10, height = 10) {
+        super();
+
+
         /**
          * @type {Object}
          * @private

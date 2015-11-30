@@ -1,7 +1,56 @@
 import EventEmitter from 'external/EventEmitter';
+import CardView from 'card/CardView';
+import CreatureView from 'card/CreatureView';
+import CardEvent from 'card/CardEvent';
+import FiledObjectsViewEvent from 'FiledObjectsViewEvent';
 
 
 export default class Card extends EventEmitter {
+    constructor(data) {
+        super();
+
+        /**
+         * @type {String}
+         */
+        this._id = data.id;
+
+        /**
+         * @type {int}
+         */
+        this._x = data.x;
+
+        /**
+         * @type {int}
+         */
+        this._y = data.y;
+
+        /**
+         * @type {Boolean}
+         */
+        this._isOnField = false;
+
+        /**
+         * @type {CardView}
+         * @protected
+         */
+        this._cardView = null;
+
+        /**
+         * @type {FieldObjectView}
+         * @protected
+         */
+        this._fieldView = null;
+
+
+        this._cardView = new CardView(data);
+        this._cardView.parent = this;
+
+        if (this._x !== undefined && this._y !== undefined) {
+            this._createFieldView();
+        }
+    }
+
+
     /**
      * @returns {String}
      */
@@ -20,32 +69,34 @@ export default class Card extends EventEmitter {
     set position(point) {
         [this._x, this._y] = [point.x, point.y];
 
-        this._view.position = point;
+        this._fieldView.position = point;
     }
 
 
-    constructor(id, x, y) {
-        super();
+    dispose() {
+        this._cardView.dispose();
 
-        /**
-         * @type {String}
-         */
-        this._id = id;
+        if (this._fieldView) {
+            this._fieldView.dispose();
+        }
 
-        /**
-         * @type {int}
-         */
-        this._x = x;
+        this.emit(CardEvent.DISPOSE);
+    }
 
-        /**
-         * @type {int}
-         */
-        this._y = y;
 
-        /**
-         * @type {FieldObjectView}
-         * @protected
-         */
-        this._view = null;
+    _createFieldView() {
+        this._fieldView = new CreatureView(this._x, this._y);
+        this._fieldView.parent = this;
+        this._isOnField = true;
+
+        this._fieldView.on(
+            FiledObjectsViewEvent.CLICK, this._fieldViewClick.bind(this)
+        );
+    }
+
+
+    _fieldViewClick(event) {
+        this.emit(CardEvent.CLICK);
     }
 }
+
