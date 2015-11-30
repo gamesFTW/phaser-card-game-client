@@ -1,4 +1,4 @@
-import CardManager from './../CardManager';
+import CardManager from './../CardGroupManager';
 import DeckView from './DeckView';
 
 
@@ -9,11 +9,5 @@ export default class Deck extends CardManager {
 
         this._view = new DeckView();
         this._view.parent = this;
-
-        //TODO убрать, debug
-        this.addRandomCard();
-        this.addRandomCard();
-        this.addRandomCard();
-        this.addRandomCard();
     }
 }

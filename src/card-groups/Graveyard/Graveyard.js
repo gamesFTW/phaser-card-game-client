@@ -1,4 +1,4 @@
-import CardManager from './../CardManager';
+import CardManager from './../CardGroupManager';
 
 
 export default class Graveyard extends CardManager {
