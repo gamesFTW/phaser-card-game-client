@@ -1,5 +1,10 @@
 @startuml
 
+'Палитра
+'#D6E8CA
+'#CAD0E8
+'#F7CDFF
+
 skinparam class {
 	ArrowColor black
 	BorderColor black
@@ -8,21 +13,71 @@ skinparam class {
 skinparam stereotypeCBackgroundColor YellowGreen
 skinparam shadowing false
 
-class Main #ffffff
 
-Main *-- field.Field
-Main *-- CardField
+class Main #ffffff
+Main *-- TileManager
+Main *-- CardManager
+Main *-- UserController
+
+
+class UserController #ffffff {
+    - pickedCreature
+}
+UserController --> TileManager
+UserController --> CardManager
 
 
 ''' Про это смотри cards.puml, тут очень упощеная ее часть
-class CardField #cccccc
-CardField *-- Card
+class CardManager #fff {
+    + addCard()
+    + createFieldObject()
+    + getCardById()
+}
+CardManager *-- Card
+CardManager *-- CardInFieldManager
+CardManager *-- CardGroupManager
 
 
-class Card #cccccc
-Card *-- field.Creature
-Card *-- field.Area
+class TileManager #ffffff {
+}
+TileManager *--> TileView
+
+
+class CardInFieldManager #fff {
+    - getCardByPoint
+}
+CardInFieldManager --> Card
+
+
+abstract class CardGroupManager #fff {
+}
+CardGroupManager --> Card
+
+
+class Hand #fff
+CardGroupManager <|-- Hand
+
+
+class Table #fff
+CardGroupManager <|-- Table
+
+
+class Graveyard #fff
+CardGroupManager <|-- Graveyard
+
+
+class Deck #fff
+CardGroupManager <|-- Deck
+
+
+class Card #fff
+Card *-- CreatureView
+Card *-- AreaView
 Card *-- CardView
+
+
+abstract class CardView #CAD0E8
+CardView --> PhaserWrapper
 
 
 class CreatureCardView #CAD0E8
@@ -33,8 +88,16 @@ class AreaCardView #CAD0E8
 CardView <|-- AreaCardView
 
 
-abstract class CardView #ffffff
-CardView --> PhaserWrapper
+abstract class FieldObjectView #D6E8CA
+FieldObjectView <|-- TileView
+FieldObjectView <|-- CreatureView
+FieldObjectView <|-- AreaView
+FieldObjectView --> PhaserWrapper
+
+
+class CreatureView #D6E8CA
+class AreaView #D6E8CA
+class TileView #D6E8CA
 
 
 class PhaserWrapper #ffffff {
@@ -43,72 +106,7 @@ class PhaserWrapper #ffffff {
 PhaserWrapper --> phaser.game
 
 
-package "field" {
-    abstract class FieldManager #ffffff
-
-
-    abstract class FieldObjectView #ffffff
-    FieldObjectView <|-up- TileView
-    FieldObjectView <|-up- CreatureView
-    FieldObjectView <|-up- AreaView
-    FieldObjectView --> .PhaserWrapper
-
-
-    class Field #ffffff {
-        - pickedCreature: Creature
-    }
-    Field *-- TileManager
-    Field *-- FieldObjectManager
-
-
-    '''Tile'''
-    class TileManager #F7CDFF
-    FieldManager <|-- TileManager
-    TileManager *-- Tile
-
-
-    class Tile #F7CDFF
-    Tile *-- TileView
-
-
-    class TileView #F7CDFF
-
-
-    '''Creature'''
-    class FieldObjectManager #CAD0E8 {
-        - creatureList
-        - areaList
-        + goToPosition(creature: Creature, x, y)
-        + attack(creature1: Creature, creature2: Creature)
-    }
-    FieldManager <|-- FieldObjectManager
-    FieldObjectManager *-- Creature
-
-
-    class Creature #CAD0E8 {
-        + attack(creature: Creature)
-        + takeDamage(damage: int)
-    }
-    Creature *-- CreatureView
-
-
-    class CreatureView #CAD0E8
-
-
-    '''Area'''
-    FieldObjectManager *-- Area
-
-
-    class Area #D6E8CA
-    Area *-- AreaView
-
-
-    class AreaView #D6E8CA
-
-}
-
-
 package "phaser" #DDDDDD {
-    class game
+    class game #fff
 }
 @enduml
