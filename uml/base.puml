@@ -17,14 +17,14 @@ skinparam shadowing false
 class Main #ffffff
 Main *-- TileManager
 Main *-- CardManager
-Main *-- UserController
+Main *-- TileCardManager
 
 
-class UserController #ffffff {
+class TileCardManager #ffffff {
     - pickedCreature
 }
-UserController --> TileManager
-UserController --> CardManager
+TileCardManager --> TileManager
+TileCardManager --> CardManager
 
 
 ''' Про это смотри cards.puml, тут очень упощеная ее часть
@@ -35,7 +35,7 @@ class CardManager #fff {
 }
 CardManager *-- Card
 CardManager *-- CardInFieldManager
-CardManager *-- CardGroupManager
+CardManager *-- PlayerCards
 
 
 class TileManager #ffffff {
@@ -49,12 +49,21 @@ class CardInFieldManager #fff {
 CardInFieldManager --> Card
 
 
+class PlayerCards #fff {
+    + id
+    + type
+}
+PlayerCards --> CardGroupManager
+
+
 abstract class CardGroupManager #fff {
 }
 CardGroupManager --> Card
 
 
-class Hand #fff
+class Hand #fff {
+    + ownerType
+}
 CardGroupManager <|-- Hand
 
 
@@ -70,7 +79,10 @@ class Deck #fff
 CardGroupManager <|-- Deck
 
 
-class Card #fff
+class Card #fff {
+    + isMine
+    + isFaceUp
+}
 Card *-- CreatureView
 Card *-- AreaView
 Card *-- CardView

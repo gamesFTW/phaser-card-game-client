@@ -1,10 +1,18 @@
-import Tile from 'field/tile/Tile';
-import FieldManager from 'field/FieldManager';
+import TileView from 'tile/TileView';
+import EventEmitter from 'external/EventEmitter';
 
 
-export default class TileManager extends FieldManager {
+export default class TileManager extends EventEmitter {
     constructor(width = 10, height = 10) {
         super();
+
+
+        /**
+         * @type {Object}
+         * @private
+         */
+        this._items = {};
+
 
         this.createTiles(width, height);
     }
@@ -28,10 +36,10 @@ export default class TileManager extends FieldManager {
     /**
      * @param {int} x
      * @param {int} y
-     * @returns {Tile}
+     * @returns {TileView}
      */
     createTile(x, y) {
-        var tile = new Tile(x, y);
+        var tile = new TileView(x, y);
         tile.parent = this;
 
         return tile;

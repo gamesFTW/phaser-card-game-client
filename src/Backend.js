@@ -1,12 +1,12 @@
 import EventEmitter from 'external/EventEmitter';
 
-var Creature = MeteorApp.lib.field.creature.CreatureCollection;
-var Action = MeteorApp.lib.ActionCollection;
+var Card = MeteorApp.Card;
+var Action = MeteorApp.Action;
 
 
 class Backend extends EventEmitter {
-    get CREATURE_MOVED() { return 'Backend:creatureMoved'}
-    get CREATURE_REMOVED() { return 'Backend:creatureRemoved'}
+    get CARD_MOVED() { return 'Backend:cardMoved'}
+    get CARD_REMOVED() { return 'Backend:cardRemoved'}
 
 
     constructor() {
@@ -31,20 +31,20 @@ class Backend extends EventEmitter {
     }
 
 
-    getCreatures() {
-        return Creature.find().fetch().map(function(creature) {
-            return {x: creature.x, y: creature.y, id: creature._id}
+    getCards() {
+        return Card.find().fetch().map(function(card) {
+            return {x: card.x, y: card.y, id: card._id}
         });
     }
 
 
-    removeCreature(id) {
-        Meteor.call('removeCreature', id);
+    removeCard(id) {
+        Meteor.call('removeCard', id);
     }
 
 
-    moveCreatureTo(id, position) {
-        Meteor.call('moveCreature', id, position);
+    moveCardTo(id, position) {
+        Meteor.call('moveCard', id, position);
     }
 }
 

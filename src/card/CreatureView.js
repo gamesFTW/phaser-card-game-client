@@ -1,14 +1,13 @@
 import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
-import Tile from 'field/tile/Tile';
-import FieldObjectView from 'field/FieldObjectView';
+import FieldObjectView from 'FieldObjectView';
 
 
-export default class CretureView extends FieldObjectView {
+export default class CreatureView extends FieldObjectView {
     constructor(x, y) {
-        super();
+        super(x, y);
 
         this._sprite = PhaserWrapper.game.add.sprite(
-            x * Tile.SIZE, y * Tile.SIZE, 'orc'
+            x * FieldObjectView.SIZE, y * FieldObjectView.SIZE, 'orc'
         );
 
 

@@ -1,5 +1,5 @@
 import CardViewManager from './CardViewManager';
-import CardView from './Card/CardView';
+import CardView from './../card/CardView';
 
 
 export default class CardRowViewManager extends CardViewManager {
