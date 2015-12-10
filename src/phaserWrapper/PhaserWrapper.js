@@ -49,7 +49,7 @@ class PhaserWrapper {
     }
 
     refreshAllGroupsSorting() {
-       _.forEach(this._groups, (group, name) => this.refreshGroupSorting(name) );
+       _.forEach(['creatures', 'areas', 'tiles'], name => this.refreshGroupSorting(name));
     }
 
     /**

@@ -16,12 +16,12 @@ export default class PlayerCards extends EventEmitter {
     constructor(id, type) {
         super();
 
-        /*
+        /**
          * @type {String}
          */
         this._id = id;
 
-        /*
+        /**
          * @type {String} - you|friend|enemy
          */
         this._type = type;
@@ -36,4 +36,30 @@ export default class PlayerCards extends EventEmitter {
         //this.graveyard.parent = this;
     }
 
+
+    /**
+     *
+     * @param {Card} card
+     * @param {String} cardGroup
+     */
+    addCard(card, cardGroup) {
+        switch (cardGroup) {
+           case 'deck':
+               this.addCardToDeck(card);
+               break;
+           case 'hand':
+               this.addCardToHand(card);
+               break;
+        }
+    }
+
+
+    addCardToDeck(card) {
+        this._deck.addCard(card);
+    }
+
+
+    addCardToHand(card) {
+        this._hand.addCard(card);
+    }
 }

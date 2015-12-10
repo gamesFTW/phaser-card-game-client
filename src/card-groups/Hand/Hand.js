@@ -1,8 +1,8 @@
-import CardManager from './../CardGroupManager';
+import CardGroupManager from './../CardGroupManager';
 import HandView from './HandView';
 
 
-export default class Hand extends CardManager {
+export default class Hand extends CardGroupManager {
 
     constructor() {
         super();

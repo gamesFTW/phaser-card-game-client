@@ -68,7 +68,7 @@ export default class CardView extends EventEmitter {
 
         PhaserWrapper.addToGroup('cards', this._sprite);
 
-        //this.render();
+        this.render();
     }
 
 

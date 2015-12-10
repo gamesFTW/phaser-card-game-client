@@ -1,8 +1,8 @@
-import CardManager from './../CardGroupManager';
+import CardGroupManager from './../CardGroupManager';
 import DeckView from './DeckView';
 
 
-export default class Deck extends CardManager {
+export default class Deck extends CardGroupManager {
     constructor() {
         super();
 

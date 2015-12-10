@@ -12,7 +12,7 @@ class Backend extends EventEmitter {
     constructor() {
         super();
 
-        this.listenServerActions();
+        //this.listenServerActions();
     }
 
     listenServerActions() {

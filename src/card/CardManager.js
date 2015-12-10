@@ -17,10 +17,28 @@ export default class CardManager extends EventEmitter {
         this._cardInFieldManager = new CardInFieldManager();
 
 
-        this._activePlayer = new PlayerCards('123', 'you');
+        this._players = {
+            '1': new PlayerCards('1', 'you'),
+            '2': new PlayerCards('2', 'enemy')
+        };
 
 
         this._cards = {};
+
+
+        //TODO DEBUG ONLY
+        this.addRandomCard();
+        this.addRandomCard();
+        this.addRandomCard();
+        this.addRandomCard();
+        this.addRandomCard();
+        this.addRandomCard();
+        this.addRandomCard();
+        this.addRandomCard();
+
+
+
+
 
 
         //TODO: remove it to MoveAction class
@@ -38,9 +56,13 @@ export default class CardManager extends EventEmitter {
             title: _.sample(['Жирный орк', 'Тонкий орк', 'Средний орк']),
             type: 'creature',
             text: 'Любит есть',
+            x: _.sample([1, 2, 3]),
+            y: _.sample([1, 2, 3]),
             dmg: _.sample([1, 2, 3]),
             health: _.sample([1, 3, 4]),
-            img: [1,2,3].map(i => 'card/orc' + i)
+            img: [1,2,3].map(i => 'card/orc' + i),
+            cardGroup: _.sample(['hand', 'deck']),
+            ownerId: '1'
         };
 
         this.createCard(data);
@@ -58,6 +80,8 @@ export default class CardManager extends EventEmitter {
 
         this._addCard(card);
 
+        this._giveCardToPlayer(card, cardData);
+
         return card;
     }
 
@@ -71,6 +95,11 @@ export default class CardManager extends EventEmitter {
 
     _addCard(card) {
         this._cards[card.id] = card;
+    }
+
+
+    _giveCardToPlayer(card, cardData) {
+        this._players[cardData.ownerId].addCard(card, cardData.cardGroup);
     }
 
 
