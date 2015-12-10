@@ -26,46 +26,9 @@ export default class CardManager extends EventEmitter {
         this._cards = {};
 
 
-        //TODO DEBUG ONLY
-        this.addRandomCard();
-        this.addRandomCard();
-        this.addRandomCard();
-        this.addRandomCard();
-        this.addRandomCard();
-        this.addRandomCard();
-        this.addRandomCard();
-        this.addRandomCard();
-
-
-
-
-
-
         //TODO: remove it to MoveAction class
         Backend.on(Backend.CARD_MOVED, this._onCreatureMoved.bind(this));
         Backend.on(Backend.CARD_REMOVED, this._onCreatureRemoved.bind(this));
-    }
-
-
-    /*
-    TODO убрать нужно только для дебага
-     */
-    addRandomCard() {
-        let data = {
-            id: _.random(10000).toString(),
-            title: _.sample(['Жирный орк', 'Тонкий орк', 'Средний орк']),
-            type: 'creature',
-            text: 'Любит есть',
-            x: _.sample([1, 2, 3]),
-            y: _.sample([1, 2, 3]),
-            dmg: _.sample([1, 2, 3]),
-            health: _.sample([1, 3, 4]),
-            img: [1,2,3].map(i => 'card/orc' + i),
-            cardGroup: _.sample(['hand', 'deck']),
-            ownerId: '1'
-        };
-
-        this.createCard(data);
     }
 
 
@@ -73,8 +36,16 @@ export default class CardManager extends EventEmitter {
         return this._cards[id];
     }
 
-
+    /**
+     *
+     * @param cardData
+     * @returns {Card}
+     */
     createCard(cardData) {
+        if (cardData.cardGroup == 'table') {
+            cardData.isOnField = true;
+        }
+
         let card = new Card(cardData);
         card.parent = this;
 

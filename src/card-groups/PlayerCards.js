@@ -10,6 +10,12 @@ import EventEmitter from 'external/EventEmitter';
 
 import Hand from './Hand/Hand';
 import Deck from './Deck/Deck';
+import Graveyard from './Graveyard/Graveyard';
+import Table  from './Table/Table';
+
+
+
+
 
 
 export default class PlayerCards extends EventEmitter {
@@ -32,6 +38,10 @@ export default class PlayerCards extends EventEmitter {
         this._deck = new Deck();
         this._deck.parent = this;
 
+
+        this._table = new Table();
+        this._table.parent = this;
+
         //this.graveyard = new Graveyard();
         //this.graveyard.parent = this;
     }
@@ -50,12 +60,28 @@ export default class PlayerCards extends EventEmitter {
            case 'hand':
                this.addCardToHand(card);
                break;
+           case 'table':
+               this.addCardToTable(card);
+               break;
+           case 'graveyard':
+               this.addCardToGraveyard(card);
+               break;
         }
     }
 
 
     addCardToDeck(card) {
         this._deck.addCard(card);
+    }
+
+
+    addCardToTable(card) {
+        this._table.addCard(card);
+    }
+
+
+    addCardToGraveyard(card) {
+        this._graveyard.addCard(card);
     }
 
 

@@ -12,11 +12,11 @@ class Backend extends EventEmitter {
     constructor() {
         super();
 
-        //this.listenServerActions();
+        this.listenServerActions();
     }
 
     listenServerActions() {
-        // ХАК для того что бы все прошлые эвенты не пожгружались
+        //TODO ХАК для того что бы все прошлые эвенты не пожгружались
         var initializing = true;
 
         Action.find().observe({
@@ -33,7 +33,14 @@ class Backend extends EventEmitter {
 
     getCards() {
         return Card.find().fetch().map(function(card) {
-            return {x: card.x, y: card.y, id: card._id}
+            // TODO здесь хочется сделать нормальное отбрасывание ненужного из cardData
+            // TODO Тоесть хочется отдавать только нужно для создание карты у плеера
+            var cardData = card;
+            cardData['id'] = cardData['_id'];
+            delete cardData['_id'];
+
+            return cardData;
+
         });
     }
 

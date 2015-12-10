@@ -50,7 +50,7 @@ class Main {
         var cards = Backend.getCards();
 
         cards.forEach(function(cardData) {
-            //this._cardManager.createCard(cardData);
+            this._cardManager.createCard(cardData);
         }.bind(this));
     }
 }

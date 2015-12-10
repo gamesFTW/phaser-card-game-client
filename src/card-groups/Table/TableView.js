@@ -3,7 +3,7 @@ import CardRowViewManager from './../CardRowViewManager';
 
 export default class TableView extends CardRowViewManager {
     constructor() {
-        super();
+        super(550, 300, true, true);
 
     }
 }

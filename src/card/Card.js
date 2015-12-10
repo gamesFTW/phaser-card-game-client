@@ -6,6 +6,14 @@ import FiledObjectsViewEvent from 'FiledObjectsViewEvent';
 
 
 export default class Card extends EventEmitter {
+    /**
+     *
+     * @param {Object} data
+     * @param {Number} data.x
+     * @param {Number} data.y
+     * @param {String} data.id
+     * @param {Boolean} data.isOnField
+     */
     constructor(data) {
         super();
 
@@ -27,7 +35,7 @@ export default class Card extends EventEmitter {
         /**
          * @type {Boolean}
          */
-        this._isOnField = false;
+        this._isOnField = data.isOnField;
 
         /**
          * @type {CardView}
@@ -45,7 +53,7 @@ export default class Card extends EventEmitter {
         this._cardView = new CardView(data);
         this._cardView.parent = this;
 
-        if (this._x !== undefined && this._y !== undefined) {
+        if (this._isOnField) {
             this._createFieldView();
         }
     }
