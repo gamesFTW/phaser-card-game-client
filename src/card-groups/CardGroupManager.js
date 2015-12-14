@@ -1,31 +1,47 @@
 import EventEmitter from 'external/EventEmitter';
+import _ from 'lodash';
 
 
 export default class CardGroupManager extends EventEmitter {
     get _cardViews() {
-        return this._cards.map(x => x._cardView);
+        return _.values(this._cards).map(x => x._cardView);
     }
 
 
     constructor(cards = [], view = null) {
         super();
 
-        this._cards = cards;
+        this._cards = _.transform(cards, function(obj, card) {
+            obj[card.id] = card;
+        }, {});
         this._view = view;
 
         // TODO event names via class and getter
         this.on('change', this._onChange.bind(this));
     }
 
+
     /**
      * @param {Card} card
      */
     addCard(card) {
-        this._cards.push(card);
+        this._cards[card.id] = card;
 
         // TODO нормальные эвенты
         this.emit('change');
     }
+
+
+    /**
+     * @param {Card} card
+     */
+    removeCard(card) {
+        delete this._cards[card.id];
+
+        // TODO нормальные эвенты
+        this.emit('change');
+    }
+
 
     _onChange() {
         if (this._view) {

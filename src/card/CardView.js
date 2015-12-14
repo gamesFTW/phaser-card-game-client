@@ -200,12 +200,10 @@ export default class CardView extends EventEmitter {
 
     _onDragStart() {
         this.emit(CardViewEvent.START_DRAG);
-        console.log(arguments);
     }
 
 
     _onDragStop() {
-        console.log('stop', arguments);
         this.emit(CardViewEvent.STOP_DRAG);
     }
 

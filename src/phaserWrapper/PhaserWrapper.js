@@ -16,7 +16,7 @@ class PhaserWrapper {
 
     constructor() {
         this._game = new Phaser.Game(
-            1200, 800, Phaser.AUTO, 'gameView', null, false, false
+            1200, 800, Phaser.AUTO, 'gameView', null, true, true
         );
 
         // Объект из Phaser.Group, где ключ название группы. @see this._createGroups
@@ -48,9 +48,11 @@ class PhaserWrapper {
         }
     }
 
+
     refreshAllGroupsSorting() {
        _.forEach(['creatures', 'areas', 'tiles'], name => this.refreshGroupSorting(name));
     }
+
 
     /**
      * @param {String} name
@@ -59,6 +61,7 @@ class PhaserWrapper {
     refreshGroupSorting(name) {
         this._sortGroupZByY(name);
     }
+
 
     _sortGroupZByY(name) {
         this._groups[name].sort('y', Phaser.Group.SORT_ASCENDING)

@@ -88,4 +88,10 @@ export default class PlayerCards extends EventEmitter {
     addCardToHand(card) {
         this._hand.addCard(card);
     }
+
+
+    moveCardFromHandToTable(card) {
+        this._hand.removeCard(card);
+        this._table.addCard(card);
+    }
 }

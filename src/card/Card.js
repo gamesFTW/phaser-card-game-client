@@ -83,7 +83,9 @@ export default class Card extends EventEmitter {
     set position(point) {
         [this._x, this._y] = [point.x, point.y];
 
-        this._fieldView.position = point;
+        if (this._fieldView) {
+            this._fieldView.position = point;
+        }
     }
 
 
@@ -110,9 +112,19 @@ export default class Card extends EventEmitter {
     }
 
 
+    play(position) {
+        this._createFieldView();
+        this.position = position;
+    }
+
+
     _createCardView(data) {
         this._cardView = new CardView(data);
         this._cardView.parent = this;
+
+        this._cardView.on(
+            CardViewEvent.CLICK, this._cardViewClick.bind(this)
+        );
 
         this._cardView.on(
             CardViewEvent.CTRL_CLICK, this._cardViewCtrlClick.bind(this)
@@ -132,7 +144,12 @@ export default class Card extends EventEmitter {
 
 
     _fieldViewClick(event) {
-        this.emit(CardEvent.CLICK);
+        this.emit(CardEvent.FIELD_CLICK);
+    }
+
+
+    _cardViewClick(event) {
+        this.emit(CardEvent.CARD_CLICK);
     }
 
 

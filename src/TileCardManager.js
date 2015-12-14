@@ -30,6 +30,12 @@ export default class TileCardManager {
          */
         this._selectedCard = null;
 
+        /**
+         * Card selected by player.
+         * @type {Card}
+         */
+        this._selectedCardOnField = null;
+
         this._initFieldObjectManager();
         this._initTileManager();
     }
@@ -37,11 +43,15 @@ export default class TileCardManager {
 
     _initFieldObjectManager() {
         this._cardManager.on(
-            CardEvent.CLICK, this._onCreatureClick.bind(this)
+            CardEvent.CARD_CLICK, this._onCardClick.bind(this)
         );
 
         this._cardManager.on(
-            CardEvent.DISPOSE, this._onCreatureDisposed.bind(this)
+            CardEvent.FIELD_CLICK, this._onCardFieldClick.bind(this)
+        );
+
+        this._cardManager.on(
+            CardEvent.DISPOSE, this._onCardDisposed.bind(this)
         );
     }
 
@@ -55,14 +65,19 @@ export default class TileCardManager {
     }
 
 
-    _onCreatureClick(event) {
+    _onCardClick(event) {
         this._selectedCard = event.currentTarget;
     }
 
 
-    _onCreatureDisposed(event) {
-        if (this._selectedCard === event.currentTarget) {
-            this._selectedCard = null;
+    _onCardFieldClick(event) {
+        this._selectedCardOnField = event.currentTarget;
+    }
+
+
+    _onCardDisposed(event) {
+        if (this._selectedCardOnField === event.currentTarget) {
+            this._selectedCardOnField = null;
         }
     }
 
@@ -71,8 +86,16 @@ export default class TileCardManager {
         var clickedTile = event.currentTarget;
 
         if (this._selectedCard) {
-            Backend.moveCardTo(
+            Backend.playCard(
                 this._selectedCard.id, clickedTile.position
+            );
+
+            this._selectedCard = null;
+        }
+
+        if (this._selectedCardOnField) {
+            Backend.moveCardTo(
+                this._selectedCardOnField.id, clickedTile.position
             );
         }
     }

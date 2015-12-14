@@ -1,5 +1,6 @@
 export default class CardEvent {
-    static get CLICK() { return 'CardEvent:click'}
+    static get CARD_CLICK() { return 'CardEvent:cardClick'}
+    static get FIELD_CLICK() { return 'CardEvent:fieldClick'}
     static get DISPOSE() { return 'CardEvent:dispose'}
     static get MOVED() { return 'CardEvent:moved' }
     static get PRESS_TAP() { return 'CardEvent:pressTap' }

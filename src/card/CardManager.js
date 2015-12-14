@@ -32,6 +32,7 @@ export default class CardManager extends EventEmitter {
         Backend.on(Backend.CARD_REMOVED, this._onCardRemoved.bind(this));
         Backend.on(Backend.CARD_TAPPED, this._onCardTapped.bind(this));
         Backend.on(Backend.CARD_UNTAPPED, this._onCardUntapped.bind(this));
+        Backend.on(Backend.CARD_PLAYED, this._onCardPlayed.bind(this));
     }
 
 
@@ -84,6 +85,14 @@ export default class CardManager extends EventEmitter {
     }
 
 
+    _playCard(id, ownerId, position) {
+        let card = this.findById(id);
+
+        this._players[ownerId].moveCardFromHandToTable(card);
+        card.play(position);
+    }
+
+
     _addCard(card) {
         this._cards[card.id] = card;
     }
@@ -126,5 +135,11 @@ export default class CardManager extends EventEmitter {
     //TODO: remove it to MoveAction class
     _onCardUntapped(event) {
         this._untapCard(event.id);
+    }
+
+
+    //TODO: remove it to MoveAction class
+    _onCardPlayed(event) {
+        this._playCard(event.id, event.ownerId, event.position);
     }
 }
