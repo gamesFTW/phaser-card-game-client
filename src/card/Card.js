@@ -2,6 +2,7 @@ import EventEmitter from 'external/EventEmitter';
 import CardView from 'card/CardView';
 import CreatureView from 'card/CreatureView';
 import CardEvent from 'card/CardEvent';
+import CardViewEvent from 'card/CardViewEvent';
 import FiledObjectsViewEvent from 'FiledObjectsViewEvent';
 
 
@@ -38,6 +39,11 @@ export default class Card extends EventEmitter {
         this._isOnField = data.isOnField;
 
         /**
+         * @type {Boolean}
+         */
+        this._isTapped = data.isTapped;
+
+        /**
          * @type {CardView}
          * @protected
          */
@@ -50,9 +56,9 @@ export default class Card extends EventEmitter {
         this._fieldView = null;
 
 
-        this._cardView = new CardView(data);
-        this._cardView.parent = this;
+        this._cardView = null;
 
+        this._createCardView(data);
         if (this._isOnField) {
             this._createFieldView();
         }
@@ -92,6 +98,28 @@ export default class Card extends EventEmitter {
     }
 
 
+    tap() {
+        this._isTapped = true;
+        this._cardView.tap();
+    }
+
+
+    untap() {
+        this._isTapped = false;
+        this._cardView.untap();
+    }
+
+
+    _createCardView(data) {
+        this._cardView = new CardView(data);
+        this._cardView.parent = this;
+
+        this._cardView.on(
+            CardViewEvent.CTRL_CLICK, this._cardViewCtrlClick.bind(this)
+        );
+    }
+
+
     _createFieldView() {
         this._fieldView = new CreatureView(this._x, this._y);
         this._fieldView.parent = this;
@@ -106,5 +134,13 @@ export default class Card extends EventEmitter {
     _fieldViewClick(event) {
         this.emit(CardEvent.CLICK);
     }
-}
 
+
+    _cardViewCtrlClick(event) {
+        if (this._isTapped) {
+            this.emit(CardEvent.PRESS_UNTAP);
+        } else {
+            this.emit(CardEvent.PRESS_TAP);
+        }
+    }
+}

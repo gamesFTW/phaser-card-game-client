@@ -1,5 +1,6 @@
 import EventEmitter from 'external/EventEmitter';
 import Card from 'card/Card';
+import CardEvent from 'card/CardEvent';
 import CardInFieldManager from 'card/CardInFieldManager';
 import PlayerCards from 'card-groups/PlayerCards';
 import Backend from 'Backend';
@@ -27,14 +28,17 @@ export default class CardManager extends EventEmitter {
 
 
         //TODO: remove it to MoveAction class
-        Backend.on(Backend.CARD_MOVED, this._onCreatureMoved.bind(this));
-        Backend.on(Backend.CARD_REMOVED, this._onCreatureRemoved.bind(this));
+        Backend.on(Backend.CARD_MOVED, this._onCardMoved.bind(this));
+        Backend.on(Backend.CARD_REMOVED, this._onCardRemoved.bind(this));
+        Backend.on(Backend.CARD_TAPPED, this._onCardTapped.bind(this));
+        Backend.on(Backend.CARD_UNTAPPED, this._onCardUntapped.bind(this));
     }
 
 
     findById(id) {
         return this._cards[id];
     }
+
 
     /**
      *
@@ -49,6 +53,10 @@ export default class CardManager extends EventEmitter {
         let card = new Card(cardData);
         card.parent = this;
 
+        // Возможно стоит вынести все слушатели в отдельный класс.
+        card.on(CardEvent.PRESS_TAP, this._onPressTap.bind(this));
+        card.on(CardEvent.PRESS_UNTAP, this._onPressUntap.bind(this));
+
         this._addCard(card);
 
         this._giveCardToPlayer(card, cardData);
@@ -57,10 +65,22 @@ export default class CardManager extends EventEmitter {
     }
 
 
-    removeCard(id) {
+    _removeCard(id) {
         let card = this.findById(id);
         card.dispose();
         delete this._cards[id];
+    }
+
+
+    _tapCard(id) {
+        let card = this.findById(id);
+        card.tap();
+    }
+
+
+    _untapCard(id) {
+        let card = this.findById(id);
+        card.untap();
     }
 
 
@@ -74,15 +94,37 @@ export default class CardManager extends EventEmitter {
     }
 
 
+    _onPressTap(event) {
+        Backend.tapCard(event.currentTarget.id);
+    }
+
+
+    _onPressUntap(event) {
+        Backend.untapCard(event.currentTarget.id);
+    }
+
+
     //TODO: remove it to MoveAction class
-    _onCreatureMoved(event) {
+    _onCardMoved(event) {
         var card = this.findById(event.id);
         card.position = event.position;
     }
 
 
     //TODO: remove it to MoveAction class
-    _onCreatureRemoved(event) {
-        this.removeCard(event.id);
+    _onCardRemoved(event) {
+        this._removeCard(event.id);
+    }
+
+
+    //TODO: remove it to MoveAction class
+    _onCardTapped(event) {
+        this._tapCard(event.id);
+    }
+
+
+    //TODO: remove it to MoveAction class
+    _onCardUntapped(event) {
+        this._untapCard(event.id);
     }
 }
