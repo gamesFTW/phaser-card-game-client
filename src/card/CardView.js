@@ -6,7 +6,7 @@ import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
 import EventEmitter from 'external/EventEmitter';
 
 
-import CardEvent from './CardEvent';
+import CardViewEvent from './CardViewEvent';
 
 
 export default class CardView extends EventEmitter {
@@ -44,8 +44,6 @@ export default class CardView extends EventEmitter {
     set position(point) {
         this._sprite.x = point.x;
         this._sprite.y = point.y;
-
-        //this.emit();
     }
 
 
@@ -57,18 +55,11 @@ export default class CardView extends EventEmitter {
 
         this._faceUp = true;
 
-        this._createView();
-    }
-
-
-    _createView() {
-        this._sprite = PhaserWrapper.game.make.sprite(
-            0, 0
-        );
-
-        PhaserWrapper.addToGroup('cards', this._sprite);
-
-        //this.render();
+        this._createContainerSprite();
+        if (data.isTapped) {
+            this.tap();
+        }
+        this._addClickHandler();
     }
 
 
@@ -95,6 +86,44 @@ export default class CardView extends EventEmitter {
         this._sprite.events.onDragStart.add(this._onDragStart, this);
         this._sprite.events.onDragStop.add(this._onDragStop, this);
         //this._sprite.events.onDragUpdate.add(this._onDragUpdate, this);
+    }
+
+
+    tap() {
+        this._sprite.angle = 90;
+    }
+
+
+    untap() {
+        this._sprite.angle = 0;
+    }
+
+
+    _addClickHandler() {
+        this._sprite.inputEnabled = true;
+        this._sprite.events.onInputDown.add(this._onClick, this);
+    }
+
+
+    _onClick(event, pointer) {
+        if (PhaserWrapper.game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)) {
+            this.emit(CardViewEvent.CTRL_CLICK);
+        } else {
+            this.emit(CardViewEvent.CLICK);
+        }
+    }
+
+
+    _createContainerSprite() {
+        this._sprite = PhaserWrapper.game.make.sprite(
+            0, 0
+        );
+        this._sprite.pivot.x = this._sprite.width * .5;
+        this._sprite.pivot.y = this._sprite.height * .5;
+
+        PhaserWrapper.addToGroup('cards', this._sprite);
+
+        this.render();
     }
 
 
@@ -170,14 +199,14 @@ export default class CardView extends EventEmitter {
 
 
     _onDragStart() {
-        this.emit(CardEvent.START_DRAG);
+        this.emit(CardViewEvent.START_DRAG);
         console.log(arguments);
     }
 
 
     _onDragStop() {
         console.log('stop', arguments);
-        this.emit(CardEvent.STOP_DRAG);
+        this.emit(CardViewEvent.STOP_DRAG);
     }
 
 
