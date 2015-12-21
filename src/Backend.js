@@ -49,6 +49,11 @@ class Backend extends EventEmitter {
     }
 
 
+    getPlayerId() {
+        return MeteorApp.data.playerId;
+    }
+
+
     // ----------------------- Setters -----------------------
     // TODO: move it to class.
     removeCard(id) {

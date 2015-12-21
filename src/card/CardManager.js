@@ -3,6 +3,7 @@ import Card from 'card/Card';
 import CardEvent from 'card/CardEvent';
 import CardInFieldManager from 'card/CardInFieldManager';
 import PlayerCards from 'card-groups/PlayerCards';
+import PlayerCardsFactory from 'card-groups/PlayerCardsFactory';
 import Backend from 'Backend';
 
 
@@ -18,10 +19,7 @@ export default class CardManager extends EventEmitter {
         this._cardInFieldManager = new CardInFieldManager();
 
 
-        this._players = {
-            '1': new PlayerCards('1', 'you'),
-            '2': new PlayerCards('2', 'enemy')
-        };
+        this._players = PlayerCardsFactory.createPlayerCards(['1', '2'], Backend.getPlayerId());
 
 
         this._cards = {};
@@ -54,7 +52,7 @@ export default class CardManager extends EventEmitter {
         let card = new Card(cardData);
         card.parent = this;
 
-        // Возможно стоит вынести все слушатели в отдельный класс.
+        // Р’РѕР·РјРѕР¶РЅРѕ СЃС‚РѕРёС‚ РІС‹РЅРµСЃС‚Рё РІСЃРµ СЃР»СѓС€Р°С‚РµР»Рё РІ РѕС‚РґРµР»СЊРЅС‹Р№ РєР»Р°СЃСЃ
         card.on(CardEvent.PRESS_TAP, this._onPressTap.bind(this));
         card.on(CardEvent.PRESS_UNTAP, this._onPressUntap.bind(this));
 

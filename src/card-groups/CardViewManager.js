@@ -14,7 +14,7 @@ export default class CardViewManager extends EventEmitter {
      * @param {Number} scale
      * @param {Number} padding
      */
-    constructor(x, y, faceUp, draggable, scale, padding) {
+    constructor({x: x, y: y, faceUp: faceUp, draggable: draggable = false, scale: scale = 1, padding: padding = 5}) {
         super();
 
         this._x = x;

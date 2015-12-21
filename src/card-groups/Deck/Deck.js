@@ -3,11 +3,11 @@ import DeckView from './DeckView';
 
 
 export default class Deck extends CardGroupManager {
-    constructor() {
+    constructor(viewProperties) {
         super();
 
 
-        this._view = new DeckView();
+        this._view = new DeckView(viewProperties);
         this._view.parent = this;
     }
 }

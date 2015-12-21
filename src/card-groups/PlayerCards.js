@@ -3,8 +3,6 @@
  *
  *
  */
-
-
 import EventEmitter from 'external/EventEmitter';
 
 
@@ -14,12 +12,8 @@ import Graveyard from './Graveyard/Graveyard';
 import Table  from './Table/Table';
 
 
-
-
-
-
 export default class PlayerCards extends EventEmitter {
-    constructor(id, type) {
+    constructor(id, type, decksViewsProperties) {
         super();
 
         /**
@@ -32,14 +26,14 @@ export default class PlayerCards extends EventEmitter {
          */
         this._type = type;
 
-        this._hand = new Hand();
+        this._hand = new Hand(decksViewsProperties.hand);
         this._hand.parent = this;
 
-        this._deck = new Deck();
+        this._deck = new Deck(decksViewsProperties.deck);
         this._deck.parent = this;
 
 
-        this._table = new Table();
+        this._table = new Table(decksViewsProperties.table);
         this._table.parent = this;
 
         //this.graveyard = new Graveyard();

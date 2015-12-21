@@ -13,16 +13,9 @@ export default class CardRowViewManager extends CardViewManager {
 
 
     /**
-     *
-     * @param {Number} x
-     * @param {Number} y
-     * @param {Boolean} faceUp
-     * @param {Boolean} draggable
-     * @param {Number} scale
-     * @param {Number} padding
      */
-    constructor(x, y, faceUp, draggable = false, scale = 1, padding = 3) {
-        super(x, y, faceUp, draggable, scale, padding);
+    constructor(properties) {
+        super(properties);
     }
 
 

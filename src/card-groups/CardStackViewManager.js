@@ -7,14 +7,9 @@ import CardViewManager from './CardViewManager';
 export default class CardStackViewManager extends CardViewManager {
     /**
      *
-     * @param {Number} x
-     * @param {Number} y
-     * @param {Boolean} faceUp
-     * @param {Boolean} draggable
-     * @param {Number} scale
      */
-    constructor(x, y, faceUp, draggable = false, scale = 1) {
-        super(x, y, faceUp, draggable, scale, 0);
+    constructor(properties) {
+        super(properties);
     }
 
 
