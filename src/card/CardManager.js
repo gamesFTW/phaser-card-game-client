@@ -19,6 +19,9 @@ export default class CardManager extends EventEmitter {
         this._cardInFieldManager = new CardInFieldManager();
 
 
+        /**
+         * @type {Object}
+         */
         this._players = PlayerCardsFactory.createPlayerCards(['1', '2'], Backend.getPlayerId());
 
 
@@ -61,6 +64,15 @@ export default class CardManager extends EventEmitter {
         this._giveCardToPlayer(card, cardData);
 
         return card;
+    }
+
+    /**
+     * @param {Card} card
+     * @return {Boolean}
+     */
+    checkCardInHand(card) {
+        var playerCards = this._players[Backend.getPlayerId()];
+        return playerCards.checkCardInHand(card);
     }
 
 

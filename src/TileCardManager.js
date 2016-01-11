@@ -28,7 +28,7 @@ export default class TileCardManager {
          * Card selected by player.
          * @type {Card}
          */
-        this._selectedCard = null;
+        this._selectedCardOnHand = null;
 
         /**
          * Card selected by player.
@@ -66,7 +66,12 @@ export default class TileCardManager {
 
 
     _onCardClick(event) {
-        this._selectedCard = event.currentTarget;
+        var card = event.currentTarget;
+
+        if (this._cardManager.checkCardInHand(card)) {
+            this._selectedCardOnHand = card;
+            this._selectedCardOnField = null;
+        }
     }
 
 
@@ -85,12 +90,12 @@ export default class TileCardManager {
     _onTileClick(event) {
         var clickedTile = event.currentTarget;
 
-        if (this._selectedCard) {
+        if (this._selectedCardOnHand) {
             Backend.playCard(
-                this._selectedCard.id, clickedTile.position
+                this._selectedCardOnHand.id, clickedTile.position
             );
 
-            this._selectedCard = null;
+            this._selectedCardOnHand = null;
         }
 
         if (this._selectedCardOnField) {

@@ -88,4 +88,13 @@ export default class PlayerCards extends EventEmitter {
         this._hand.removeCard(card);
         this._table.addCard(card);
     }
+
+
+    /**
+     * @param {Card} card
+     * @return {Boolean}
+     */
+    checkCardInHand(card) {
+        return this._hand.findById(card.id) !== undefined;
+    }
 }

@@ -43,6 +43,14 @@ export default class CardGroupManager extends EventEmitter {
     }
 
 
+    /**
+     * @param {Number} id
+     */
+    findById(id) {
+        return this._cards[id];
+    }
+
+
     _onChange() {
         if (this._view) {
             this._view.reorderCards(this._cardViews);
