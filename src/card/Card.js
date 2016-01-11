@@ -21,6 +21,11 @@ export default class Card extends EventEmitter {
         /**
          * @type {String}
          */
+        this._color = data.color;
+
+        /**
+         * @type {String}
+         */
         this._id = data.id;
 
         /**
@@ -133,7 +138,7 @@ export default class Card extends EventEmitter {
 
 
     _createFieldView() {
-        this._fieldView = new CreatureView(this._x, this._y);
+        this._fieldView = new CreatureView(this._x, this._y, this._color);
         this._fieldView.parent = this;
         this._isOnField = true;
 
