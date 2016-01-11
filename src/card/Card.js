@@ -128,11 +128,19 @@ export default class Card extends EventEmitter {
         this._cardView.parent = this;
 
         this._cardView.on(
-            CardViewEvent.CLICK, this._cardViewClick.bind(this)
+            CardViewEvent.CLICK, this._onCardViewClick.bind(this)
         );
 
         this._cardView.on(
-            CardViewEvent.CTRL_CLICK, this._cardViewCtrlClick.bind(this)
+            CardViewEvent.CTRL_CLICK, this._onCardViewCtrlClick.bind(this)
+        );
+
+        this._cardView.on(
+            CardViewEvent.OVER, this._onCardViewOver.bind(this)
+        );
+
+        this._cardView.on(
+            CardViewEvent.OUT, this._onCardViewOut.bind(this)
         );
     }
 
@@ -143,22 +151,55 @@ export default class Card extends EventEmitter {
         this._isOnField = true;
 
         this._fieldView.on(
-            FiledObjectsViewEvent.CLICK, this._fieldViewClick.bind(this)
+            FiledObjectsViewEvent.CLICK, this._onFieldViewClick.bind(this)
+        );
+
+        this._fieldView.on(
+            FiledObjectsViewEvent.OVER, this._onFieldViewOver.bind(this)
+        );
+
+        this._fieldView.on(
+            FiledObjectsViewEvent.OUT, this._onFieldViewOut.bind(this)
         );
     }
 
-
-    _fieldViewClick(event) {
+    // Field view handlers
+    _onFieldViewClick(event) {
         this.emit(CardEvent.FIELD_CLICK);
     }
 
 
-    _cardViewClick(event) {
+    _onFieldViewOver(event) {
+        this._fieldView.highlightOn();
+        this._cardView.highlightOn();
+    }
+
+
+    _onFieldViewOut(event) {
+        this._fieldView.highlightOff();
+        this._cardView.highlightOff();
+    }
+
+
+    // Card view handlers
+    _onCardViewClick(event) {
         this.emit(CardEvent.CARD_CLICK);
     }
 
 
-    _cardViewCtrlClick(event) {
+    _onCardViewOver(event) {
+        this._fieldView.highlightOn();
+        this._cardView.highlightOn();
+    }
+
+
+    _onCardViewOut(event) {
+        this._fieldView.highlightOff();
+        this._cardView.highlightOff();
+    }
+
+
+    _onCardViewCtrlClick(event) {
         if (this._isTapped) {
             this.emit(CardEvent.PRESS_UNTAP);
         } else {

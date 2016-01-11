@@ -46,6 +46,7 @@ export default class FieldObjectView extends EventEmitter {
 
         this._x = null;
         this._y = null;
+        this._isHighlighted = false;
 
         /**
          * @protected
@@ -62,18 +63,36 @@ export default class FieldObjectView extends EventEmitter {
     }
 
 
-    addClickHandler() {
+    addHandlers() {
         this._sprite.inputEnabled = true;
-        this._sprite.events.onInputDown.add(this.onClick, this);
+        this._sprite.events.onInputDown.add(this._onClick, this);
+        this._sprite.events.onInputOver.add(this._onOver, this);
+        this._sprite.events.onInputOut.add(this._onOut, this);
     }
 
 
-    onClick(event, pointer) {
+    highlightOn() {}
+
+
+    highlightOff() {}
+
+
+    _onClick(event, pointer) {
         if (PhaserWrapper.game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)) {
             this.emit(FiledObjectsViewEvent.CTRL_CLICK);
         } else {
             this.emit(FiledObjectsViewEvent.CLICK);
         }
+    }
+
+
+    _onOver(event) {
+        this.emit(FiledObjectsViewEvent.OVER);
+    }
+
+
+    _onOut(event) {
+        this.emit(FiledObjectsViewEvent.OUT);
     }
 
 

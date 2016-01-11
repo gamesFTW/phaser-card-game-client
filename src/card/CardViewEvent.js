@@ -4,5 +4,6 @@ export default class CardViewEvent {
     static get DBL_CLICK() { return 'CardViewEvent:doubleClick'}
 
     static get STOP_DRAG() { return 'CardViewEvent:stopDrag' }
-    static get START_DRAG() { return 'CardViewEvent:startDrag' }
+    static get OVER() { return 'CardViewEvent:over' }
+    static get OUT() { return 'CardViewEvent:out' }
 }

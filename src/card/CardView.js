@@ -52,6 +52,7 @@ export default class CardView extends EventEmitter {
 
         this._sprite = null;
         this._data = data;
+        this._isHighlighted = false;
 
         this._faceUp = true;
 
@@ -59,7 +60,7 @@ export default class CardView extends EventEmitter {
         if (data.isTapped) {
             this.tap();
         }
-        this._addClickHandler();
+        this._addHandlers();
     }
 
 
@@ -99,9 +100,29 @@ export default class CardView extends EventEmitter {
     }
 
 
-    _addClickHandler() {
+    highlightOn() {
+        if (this._isHighlighted == false) {
+            this._isHighlighted = true;
+            this._sprite.width = this._sprite.width * 1.05;
+            this._sprite.height = this._sprite.height * 1.05;
+        }
+    }
+
+
+    highlightOff() {
+        if (this._isHighlighted == true) {
+            this._isHighlighted = false;
+            this._sprite.width = this._sprite.width / 1.05;
+            this._sprite.height = this._sprite.height / 1.05;
+        }
+    }
+
+
+    _addHandlers() {
         this._sprite.inputEnabled = true;
         this._sprite.events.onInputDown.add(this._onClick, this);
+        this._sprite.events.onInputOver.add(this._onOver, this);
+        this._sprite.events.onInputOut.add(this._onOut, this);
     }
 
 
@@ -111,6 +132,16 @@ export default class CardView extends EventEmitter {
         } else {
             this.emit(CardViewEvent.CLICK);
         }
+    }
+
+
+    _onOver(event) {
+        this.emit(CardViewEvent.OVER);
+    }
+
+
+    _onOut(event) {
+        this.emit(CardViewEvent.OUT);
     }
 
 

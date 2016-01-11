@@ -12,6 +12,6 @@ export default class TileView extends FieldObjectView {
 
         PhaserWrapper.addToGroup('tiles', this._sprite);
 
-        this.addClickHandler();
+        this.addHandlers();
     }
 }
