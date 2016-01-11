@@ -123,6 +123,22 @@ export default class Card extends EventEmitter {
     }
 
 
+    _highlightOn() {
+        if (this._fieldView) {
+            this._fieldView.highlightOn();
+        }
+        this._cardView.highlightOn();
+    }
+
+
+    _highlightOff() {
+        if (this._fieldView) {
+            this._fieldView.highlightOff();
+        }
+        this._cardView.highlightOff();
+    }
+
+
     _createCardView(data) {
         this._cardView = new CardView(data);
         this._cardView.parent = this;
@@ -170,14 +186,12 @@ export default class Card extends EventEmitter {
 
 
     _onFieldViewOver(event) {
-        this._fieldView.highlightOn();
-        this._cardView.highlightOn();
+        this._highlightOn();
     }
 
 
     _onFieldViewOut(event) {
-        this._fieldView.highlightOff();
-        this._cardView.highlightOff();
+        this._highlightOff();
     }
 
 
@@ -188,14 +202,12 @@ export default class Card extends EventEmitter {
 
 
     _onCardViewOver(event) {
-        this._fieldView.highlightOn();
-        this._cardView.highlightOn();
+        this._highlightOn();
     }
 
 
     _onCardViewOut(event) {
-        this._fieldView.highlightOff();
-        this._cardView.highlightOff();
+        this._highlightOff();
     }
 
 
