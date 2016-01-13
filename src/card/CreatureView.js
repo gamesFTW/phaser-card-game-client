@@ -8,13 +8,19 @@ export default class CreatureView extends FieldObjectView {
 
         this._color = color;
 
-        this._sprite = PhaserWrapper.game.add.sprite(
-            x * FieldObjectView.SIZE, y * FieldObjectView.SIZE, 'orc'
+        this._containerSprite = PhaserWrapper.game.make.sprite(
+            x * FieldObjectView.SIZE, y * FieldObjectView.SIZE
         );
 
-        this._sprite.tint = color;
+        this._creatureSprite = PhaserWrapper.game.add.sprite(
+            0, 0, 'orc'
+        );
 
-        PhaserWrapper.addToGroup('creatures', this._sprite);
+        this._creatureShadow = this._createCreatureShadow(color);
+        this._containerSprite.addChild(this._creatureShadow);
+        this._containerSprite.addChild(this._creatureSprite);
+
+        PhaserWrapper.addToGroup('creatures', this._containerSprite);
 
         this.addHandlers();
     }
@@ -23,7 +29,8 @@ export default class CreatureView extends FieldObjectView {
     highlightOn() {
         if (this._isHighlighted == false) {
             this._isHighlighted = true;
-            this._sprite.tint = '0xffffff';
+            var darker = '0xdddddd';
+            this._creatureSprite.tint = darker;
         }
     }
 
@@ -31,7 +38,20 @@ export default class CreatureView extends FieldObjectView {
     highlightOff() {
         if (this._isHighlighted == true) {
             this._isHighlighted = false;
-            this._sprite.tint = this._color;
+            var defaultColor = '0xffffff';
+            this._creatureSprite.tint = defaultColor;
         }
+    }
+
+
+    _createCreatureShadow(color) {
+        var modifier = 0.08;
+        var creatureShadow = PhaserWrapper.game.add.sprite(
+            -(this._creatureSprite.width * modifier), -(this._creatureSprite.height * modifier), 'orc'
+        );
+        creatureShadow.width = creatureShadow.width * (modifier * 2 + 1);
+        creatureShadow.height = creatureShadow.height * (modifier * 2 + 1);
+        creatureShadow.tint = color;
+        return creatureShadow;
     }
 }

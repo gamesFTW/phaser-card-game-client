@@ -51,6 +51,7 @@ export default class CardView extends EventEmitter {
         super();
 
         this._sprite = null;
+        this._background = null;
         this._data = data;
         this._isHighlighted = false;
 
@@ -103,8 +104,7 @@ export default class CardView extends EventEmitter {
     highlightOn() {
         if (this._isHighlighted == false) {
             this._isHighlighted = true;
-            this._sprite.width = this._sprite.width * 1.05;
-            this._sprite.height = this._sprite.height * 1.05;
+            this._background.tint = '0xffcccc';
         }
     }
 
@@ -112,8 +112,7 @@ export default class CardView extends EventEmitter {
     highlightOff() {
         if (this._isHighlighted == true) {
             this._isHighlighted = false;
-            this._sprite.width = this._sprite.width / 1.05;
-            this._sprite.height = this._sprite.height / 1.05;
+            this._background.tint = '0xffffff';
         }
     }
 
@@ -161,11 +160,11 @@ export default class CardView extends EventEmitter {
     _addBg() {
         let bgImg = this.faceUp ? 'card_bg' : 'card_bg_facedown';
 
-        let bg = PhaserWrapper.game.make.sprite(
+        this._background = PhaserWrapper.game.make.sprite(
             0, 0, bgImg
         );
 
-        this._sprite.addChild(bg);
+        this._sprite.addChild(this._background);
 
         return this;
     }

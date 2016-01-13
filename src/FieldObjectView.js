@@ -32,9 +32,9 @@ export default class FieldObjectView extends EventEmitter {
         this._x = point.x;
         this._y = point.y;
 
-        if (this._sprite) {
-            this._sprite.x = point.x * FieldObjectView.SIZE;
-            this._sprite.y = point.y * FieldObjectView.SIZE;
+        if (this._containerSprite) {
+            this._containerSprite.x = point.x * FieldObjectView.SIZE;
+            this._containerSprite.y = point.y * FieldObjectView.SIZE;
         }
 
         this.emit(FiledObjectsViewEvent.MOVED);
@@ -51,7 +51,7 @@ export default class FieldObjectView extends EventEmitter {
         /**
          * @protected
          */
-        this._sprite = null;
+        this._containerSprite = null;
 
 
         this.position = {x: x, y: y};
@@ -59,15 +59,15 @@ export default class FieldObjectView extends EventEmitter {
 
 
     dispose() {
-        this._sprite.kill();
+        this._containerSprite.kill();
     }
 
 
     addHandlers() {
-        this._sprite.inputEnabled = true;
-        this._sprite.events.onInputDown.add(this._onClick, this);
-        this._sprite.events.onInputOver.add(this._onOver, this);
-        this._sprite.events.onInputOut.add(this._onOut, this);
+        this._containerSprite.inputEnabled = true;
+        this._containerSprite.events.onInputDown.add(this._onClick, this);
+        this._containerSprite.events.onInputOver.add(this._onOver, this);
+        this._containerSprite.events.onInputOut.add(this._onOut, this);
     }
 
 
