@@ -34,6 +34,8 @@ export default class CardManager extends EventEmitter {
         Backend.on(Backend.CARD_TAPPED, this._onCardTapped.bind(this));
         Backend.on(Backend.CARD_UNTAPPED, this._onCardUntapped.bind(this));
         Backend.on(Backend.CARD_PLAYED, this._onCardPlayed.bind(this));
+        Backend.on(Backend.CARD_DIED, this._onCardDied.bind(this));
+        Backend.on(Backend.CARD_HEALTH_CHANGED, this._onCardHealthChanged.bind(this));
     }
 
 
@@ -103,6 +105,20 @@ export default class CardManager extends EventEmitter {
     }
 
 
+    _dieCard(id, ownerId) {
+        let card = this.findById(id);
+
+        this._players[ownerId].moveCardFromTableToGraveyard(card);
+        card.die();
+    }
+
+
+    _changeCardHealth(id, health) {
+        let card = this.findById(id);
+        card.health = health;
+    }
+
+
     _addCard(card) {
         this._cards[card.id] = card;
     }
@@ -151,5 +167,17 @@ export default class CardManager extends EventEmitter {
     //TODO: remove it to MoveAction class
     _onCardPlayed(event) {
         this._playCard(event.id, event.ownerId, event.position);
+    }
+
+
+    //TODO: remove it to MoveAction class
+    _onCardDied(event) {
+        this._dieCard(event.id, event.ownerId);
+    }
+
+
+    //TODO: remove it to MoveAction class
+    _onCardHealthChanged(event) {
+        this._changeCardHealth(event.id, event.health);
     }
 }

@@ -36,6 +36,7 @@ class Main {
 
 
     _init() {
+        this._disableRightClick();
         this._tileManager = new TileManager();
         this._cardManager = new CardManager();
         this._tileCardManager = new TileCardManager(
@@ -43,6 +44,13 @@ class Main {
         );
 
         this._loadSavedGame();
+    }
+
+
+    _disableRightClick() {
+        document.oncontextmenu = function(e) {
+            return false;
+        };
     }
 
 

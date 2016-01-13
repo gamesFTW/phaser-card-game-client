@@ -4,6 +4,7 @@ import CreatureView from 'card/CreatureView';
 import CardEvent from 'card/CardEvent';
 import CardViewEvent from 'card/CardViewEvent';
 import FiledObjectsViewEvent from 'FiledObjectsViewEvent';
+import Backend from 'Backend';
 
 
 export default class Card extends EventEmitter {
@@ -94,6 +95,14 @@ export default class Card extends EventEmitter {
     }
 
 
+    /**
+     * @param {Number} value
+     */
+    set health(value) {
+        this._cardView.health = value;
+    }
+
+
     dispose() {
         this._cardView.dispose();
 
@@ -120,6 +129,11 @@ export default class Card extends EventEmitter {
     play(position) {
         this._createFieldView();
         this.position = position;
+    }
+
+
+    die() {
+        this._fieldView.dispose();
     }
 
 
@@ -157,6 +171,14 @@ export default class Card extends EventEmitter {
 
         this._cardView.on(
             CardViewEvent.OUT, this._onCardViewOut.bind(this)
+        );
+
+        this._cardView.on(
+            CardViewEvent.HEALTH_LEFT_CLICK, this._onCardViewHealthLeftClick.bind(this)
+        );
+
+        this._cardView.on(
+            CardViewEvent.HEALTH_RIGHT_CLICK, this._onCardViewHealthRightClick.bind(this)
         );
     }
 
@@ -217,5 +239,15 @@ export default class Card extends EventEmitter {
         } else {
             this.emit(CardEvent.PRESS_TAP);
         }
+    }
+
+
+    _onCardViewHealthLeftClick(event) {
+        Backend.addHealth(this._id, 1);
+    }
+
+
+    _onCardViewHealthRightClick(event) {
+        Backend.addHealth(this._id, -1);
     }
 }

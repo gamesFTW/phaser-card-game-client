@@ -36,8 +36,8 @@ export default class PlayerCards extends EventEmitter {
         this._table = new Table(decksViewsProperties.table);
         this._table.parent = this;
 
-        //this.graveyard = new Graveyard();
-        //this.graveyard.parent = this;
+        this._graveyard = new Graveyard(decksViewsProperties.graveyard);
+        this._graveyard.parent = this;
     }
 
 
@@ -87,6 +87,12 @@ export default class PlayerCards extends EventEmitter {
     moveCardFromHandToTable(card) {
         this._hand.removeCard(card);
         this._table.addCard(card);
+    }
+
+
+    moveCardFromTableToGraveyard(card) {
+        this._table.removeCard(card);
+        this._graveyard.addCard(card);
     }
 
 

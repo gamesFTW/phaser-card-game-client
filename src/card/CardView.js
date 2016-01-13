@@ -47,6 +47,15 @@ export default class CardView extends EventEmitter {
     }
 
 
+    /**
+     * @param {Number} value
+     */
+    set health(value) {
+        this._data.health = value;
+        this.render();
+    }
+
+
     constructor(data) {
         super();
 
@@ -125,25 +134,6 @@ export default class CardView extends EventEmitter {
     }
 
 
-    _onClick(event, pointer) {
-        if (PhaserWrapper.game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)) {
-            this.emit(CardViewEvent.CTRL_CLICK);
-        } else {
-            this.emit(CardViewEvent.CLICK);
-        }
-    }
-
-
-    _onOver(event) {
-        this.emit(CardViewEvent.OVER);
-    }
-
-
-    _onOut(event) {
-        this.emit(CardViewEvent.OUT);
-    }
-
-
     _createContainerSprite() {
         this._sprite = PhaserWrapper.game.make.sprite(
             0, 0
@@ -212,19 +202,56 @@ export default class CardView extends EventEmitter {
         );
 
         var hp = PhaserWrapper.game.make.text(
-            CardView.CARD_WIDTH - 25, CardView.CARD_HEIGHT - 25,
-            this._data.health,
+            CardView.CARD_WIDTH - 50, CardView.CARD_HEIGHT - 25,
+            this._data.health + '/' + this._data.maxHealth,
             {
                 font: "18px Arial",
                 align: "center",
-                fill: 'red'
+                fill: 'black'
             }
         );
+        hp.inputEnabled = true;
+        hp.input.priorityID = 1;
 
         this._sprite.addChild(dmg);
         this._sprite.addChild(hp);
 
+        hp.events.onInputDown.add(this._onHpClick, this);
+
         return this;
+    }
+
+
+    // Handlers
+    _onClick(event, pointer) {
+        if (PhaserWrapper.game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)) {
+            this.emit(CardViewEvent.CTRL_CLICK);
+        } else {
+            this.emit(CardViewEvent.CLICK);
+        }
+    }
+
+
+    _onHpClick(event, pointer) {
+        var button = event.game.input.mouse.button;
+        var LEFT_MOUSE = 0;
+        var RIGHT_MOUSE = 2;
+
+        if (button == LEFT_MOUSE) {
+            this.emit(CardViewEvent.HEALTH_LEFT_CLICK);
+        } else if (button == RIGHT_MOUSE) {
+            this.emit(CardViewEvent.HEALTH_RIGHT_CLICK);
+        }
+    }
+
+
+    _onOver(event) {
+        this.emit(CardViewEvent.OVER);
+    }
+
+
+    _onOut(event) {
+        this.emit(CardViewEvent.OUT);
     }
 
 

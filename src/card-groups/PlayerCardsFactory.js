@@ -24,6 +24,10 @@ export default class PlayerCardsFactory {
                 deck: {
                     x: 1050, y: 750, faceUp: false,
                     draggable: false
+                },
+                graveyard: {
+                    x: 50, y: 550, faceUp: true,
+                    draggable: true
                 }
             },
 
@@ -39,6 +43,10 @@ export default class PlayerCardsFactory {
                 deck: {
                     x: 1050, y: 50, faceUp: false,
                     draggable: false
+                },
+                graveyard: {
+                    x: 200, y: 550, faceUp: true,
+                    draggable: true
                 }
             }
         };
