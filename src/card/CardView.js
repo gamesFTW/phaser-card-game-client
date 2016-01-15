@@ -1,7 +1,9 @@
 import _ from 'lodash';
 import Phaser from 'phaser';
-import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
 
+import inputHelpers from 'lib/input';
+
+import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
 
 import EventEmitter from 'external/EventEmitter';
 
@@ -224,22 +226,26 @@ export default class CardView extends EventEmitter {
 
     // Handlers
     _onClick(event, pointer) {
+        var button = inputHelpers.getMouseButton(event);
+
         if (PhaserWrapper.game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)) {
             this.emit(CardViewEvent.CTRL_CLICK);
         } else {
-            this.emit(CardViewEvent.CLICK);
+            if (button == Phaser.Mouse.LEFT_BUTTON) {
+                this.emit(CardViewEvent.CLICK);
+            } else if (button == Phaser.Mouse.RIGHT_BUTTON) {
+                this.emit(CardViewEvent.RIGHT_CLICK);
+            }
         }
     }
 
 
     _onHpClick(event, pointer) {
-        var button = event.game.input.mouse.button;
-        var LEFT_MOUSE = 0;
-        var RIGHT_MOUSE = 2;
+        var button = inputHelpers.getMouseButton(event);
 
-        if (button == LEFT_MOUSE) {
+        if (button == Phaser.Mouse.LEFT_BUTTON) {
             this.emit(CardViewEvent.HEALTH_LEFT_CLICK);
-        } else if (button == RIGHT_MOUSE) {
+        } else if (button == Phaser.Mouse.RIGHT_BUTTON) {
             this.emit(CardViewEvent.HEALTH_RIGHT_CLICK);
         }
     }

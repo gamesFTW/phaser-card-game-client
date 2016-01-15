@@ -10,6 +10,7 @@ import Hand from './Hand/Hand';
 import Deck from './Deck/Deck';
 import Graveyard from './Graveyard/Graveyard';
 import Table  from './Table/Table';
+import ManaPool from './ManaPool/ManaPool';
 
 
 export default class PlayerCards extends EventEmitter {
@@ -38,6 +39,9 @@ export default class PlayerCards extends EventEmitter {
 
         this._graveyard = new Graveyard(decksViewsProperties.graveyard);
         this._graveyard.parent = this;
+
+        this._manaPool = new ManaPool(decksViewsProperties.manaPool);
+        this._manaPool.parent = this;
     }
 
 
@@ -60,6 +64,9 @@ export default class PlayerCards extends EventEmitter {
            case 'graveyard':
                this.addCardToGraveyard(card);
                break;
+           case 'manaPool':
+               this.addCardToManaPool(card);
+               break;
         }
     }
 
@@ -79,6 +86,11 @@ export default class PlayerCards extends EventEmitter {
     }
 
 
+    addCardToManaPool(card) {
+        this._manaPool.addCard(card);
+    }
+
+
     addCardToHand(card) {
         this._hand.addCard(card);
     }
@@ -87,6 +99,12 @@ export default class PlayerCards extends EventEmitter {
     moveCardFromHandToTable(card) {
         this._hand.removeCard(card);
         this._table.addCard(card);
+    }
+
+
+    moveCardFromHandToManaPool(card) {
+        this._hand.removeCard(card);
+        this._manaPool.addCard(card);
     }
 
 

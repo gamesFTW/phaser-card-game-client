@@ -162,6 +162,10 @@ export default class Card extends EventEmitter {
         );
 
         this._cardView.on(
+            CardViewEvent.RIGHT_CLICK, this._onCardViewRightClick.bind(this)
+        );
+
+        this._cardView.on(
             CardViewEvent.CTRL_CLICK, this._onCardViewCtrlClick.bind(this)
         );
 
@@ -222,6 +226,10 @@ export default class Card extends EventEmitter {
         this.emit(CardEvent.CARD_CLICK);
     }
 
+
+    _onCardViewRightClick(event) {
+        this.emit(CardEvent.PLAY_AS_MANA);
+    }
 
     _onCardViewOver(event) {
         this._highlightOn();

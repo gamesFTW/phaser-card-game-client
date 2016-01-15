@@ -12,6 +12,7 @@ class Backend extends EventEmitter {
     get CARD_PLAYED() { return 'Backend:cardPlayed'}
     get CARD_HEALTH_CHANGED() { return 'Backend:cardHealthChanged'}
     get CARD_DIED() { return 'Backend:cardDied'}
+    get CARD_PLAYED_AS_MANA() { return 'Backend:cardPlayedAsMana'}
 
 
     constructor() {
@@ -75,6 +76,11 @@ class Backend extends EventEmitter {
 
     untapCard(id) {
         Meteor.call('untapCard', id);
+    }
+
+
+    playAsMana(id) {
+        Meteor.call('playAsMana', id);
     }
 
 

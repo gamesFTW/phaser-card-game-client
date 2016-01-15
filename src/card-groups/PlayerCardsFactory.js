@@ -28,6 +28,10 @@ export default class PlayerCardsFactory {
                 graveyard: {
                     x: 50, y: 550, faceUp: true,
                     draggable: true
+                },
+                manaPool: {
+                    x: 1050, y: 500, faceUp: false,
+                    draggable: false, padding: -120
                 }
             },
 
@@ -47,6 +51,10 @@ export default class PlayerCardsFactory {
                 graveyard: {
                     x: 200, y: 550, faceUp: true,
                     draggable: true
+                },
+                manaPool: {
+                    x: 1050, y: 300, faceUp: false,
+                    draggable: false, padding: -120
                 }
             }
         };
