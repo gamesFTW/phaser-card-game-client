@@ -40,6 +40,11 @@ export default class Card extends EventEmitter {
         this._y = data.y;
 
         /**
+         * @type {String}
+         */
+        this._imageName = data.imageName;
+
+        /**
          * @type {Boolean}
          */
         this._isOnField = data.isOnField;
@@ -188,7 +193,7 @@ export default class Card extends EventEmitter {
 
 
     _createFieldView() {
-        this._fieldView = new CreatureView(this._x, this._y, this._color);
+        this._fieldView = new CreatureView(this._x, this._y, this._imageName, this._color);
         this._fieldView.parent = this;
         this._isOnField = true;
 

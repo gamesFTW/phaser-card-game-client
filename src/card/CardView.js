@@ -13,12 +13,12 @@ import CardViewEvent from './CardViewEvent';
 
 export default class CardView extends EventEmitter {
     static get CARD_WIDTH() {
-        return 150;
+        return 90;
     }
 
 
     static get CARD_HEIGHT() {
-        return 200;
+        return 120;
     }
 
 
@@ -163,7 +163,7 @@ export default class CardView extends EventEmitter {
 
     _addHeader() {
         var text = PhaserWrapper.game.make.text(
-            5, 5,
+            8, 0,
             this._data.title,
             {
                 font: "12px Arial",
@@ -178,7 +178,7 @@ export default class CardView extends EventEmitter {
 
     _addMiddle() {
         var text= PhaserWrapper.game.make.text(
-            5, CardView.CARD_HEIGHT / 2,
+            5, 20,
             this._data.text,
             {
                 font: "10px Arial",
@@ -194,7 +194,7 @@ export default class CardView extends EventEmitter {
 
     _addFooter() {
         var dmg = PhaserWrapper.game.make.text(
-            25, CardView.CARD_HEIGHT - 25,
+            10, CardView.CARD_HEIGHT - 23,
             this._data.dmg,
             {
                 font: "18px Arial",
@@ -204,7 +204,7 @@ export default class CardView extends EventEmitter {
         );
 
         var hp = PhaserWrapper.game.make.text(
-            CardView.CARD_WIDTH - 50, CardView.CARD_HEIGHT - 25,
+            CardView.CARD_WIDTH - 35, CardView.CARD_HEIGHT - 23,
             this._data.health + '/' + this._data.maxHealth,
             {
                 font: "18px Arial",

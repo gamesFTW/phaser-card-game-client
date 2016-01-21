@@ -3,7 +3,7 @@ import EventEmitter from 'external/EventEmitter';
 
 
 export default class TileManager extends EventEmitter {
-    constructor(width = 10, height = 10) {
+    constructor(width = 24, height = 24) {
         super();
 
 

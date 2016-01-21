@@ -13,7 +13,7 @@ export default class FieldObjectView extends EventEmitter {
      * @returns {number}
      * @const
      */
-    static get SIZE() { return 50; }
+    static get SIZE() { return 30; }
 
 
     /**
