@@ -14,47 +14,47 @@ export default class PlayerCardsFactory {
         return {
             you: {
                 hand: {
-                    x: 50, y: 750, faceUp: true,
+                    x: 750, y: 700, faceUp: true,
                     draggable: false, padding: -50
                 },
                 table: {
-                    x: 550, y: 500, faceUp: true,
-                    draggable: true, scale: 1, padding: -100
+                    x: 750, y: 440, faceUp: true,
+                    draggable: true, padding: -70
                 },
                 deck: {
-                    x: 1050, y: 750, faceUp: false,
+                    x: 1200, y: 700, faceUp: false,
                     draggable: false
                 },
                 graveyard: {
-                    x: 50, y: 550, faceUp: true,
+                    x: 1200, y: 570, faceUp: true,
                     draggable: true
                 },
                 manaPool: {
-                    x: 1050, y: 500, faceUp: false,
-                    draggable: false, padding: -120
+                    x: 750, y: 570, faceUp: false,
+                    draggable: false, padding: -50
                 }
             },
 
             enemy: {
                 hand: {
-                    x: 550, y: 50, faceUp: false,
-                    draggable: false, padding: -100
+                    x: 750, y: 20, faceUp: false,
+                    draggable: false, padding: -50
                 },
                 table: {
-                    x: 550, y: 300, faceUp: true,
-                    draggable: false, scale: 1, padding: -100
+                    x: 750, y: 280, faceUp: true,
+                    draggable: false, padding: -70
                 },
                 deck: {
-                    x: 1050, y: 50, faceUp: false,
+                    x: 1200, y: 20, faceUp: false,
                     draggable: false
                 },
                 graveyard: {
-                    x: 200, y: 550, faceUp: true,
+                    x: 1200, y: 150, faceUp: true,
                     draggable: true
                 },
                 manaPool: {
-                    x: 1050, y: 300, faceUp: false,
-                    draggable: false, padding: -120
+                    x: 750, y: 150, faceUp: false,
+                    draggable: false, padding: -50
                 }
             }
         };
