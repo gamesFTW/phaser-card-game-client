@@ -14,7 +14,7 @@ export default class CardViewManager extends EventEmitter {
      * @param {Number} scale
      * @param {Number} padding
      */
-    constructor({x: x, y: y, faceUp: faceUp, draggable: draggable = false, scale: scale = 1, padding: padding = 5}) {
+    constructor({x: x, y: y, faceUp: faceUp, scale: scale = 1, padding: padding = 5}) {
         super();
 
         this._x = x;
@@ -23,7 +23,6 @@ export default class CardViewManager extends EventEmitter {
         this._padding = padding;
         this._faceUp = faceUp;
 
-        this._draggable = draggable;
     }
 
 
@@ -43,11 +42,6 @@ export default class CardViewManager extends EventEmitter {
      */
     placeCard(cardView, x, y) {
         cardView.position = { x: x, y: y };
-
-        // Наверное нужно делать только еще не делали до этого
-        if (this._draggable) {
-            cardView.enableDragAndDrop();
-        }
 
         cardView.faceUp = this._faceUp;
     }

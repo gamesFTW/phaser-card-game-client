@@ -15,46 +15,42 @@ export default class PlayerCardsFactory {
             you: {
                 hand: {
                     x: 750, y: 700, faceUp: true,
-                    draggable: false, padding: -50
+                     padding: -50
                 },
                 table: {
                     x: 750, y: 440, faceUp: true,
-                    draggable: true, padding: -70
+                     padding: -70
                 },
                 deck: {
-                    x: 1200, y: 700, faceUp: false,
-                    draggable: false
+                    x: 1200, y: 700, faceUp: false
                 },
                 graveyard: {
-                    x: 1200, y: 570, faceUp: true,
-                    draggable: true
+                    x: 1200, y: 570, faceUp: true
                 },
                 manaPool: {
                     x: 750, y: 570, faceUp: false,
-                    draggable: false, padding: -50
+                    padding: -50
                 }
             },
 
             enemy: {
                 hand: {
                     x: 750, y: 20, faceUp: false,
-                    draggable: false, padding: -50
+                    padding: -50
                 },
                 table: {
                     x: 750, y: 280, faceUp: true,
-                    draggable: false, padding: -70
+                    padding: -70
                 },
                 deck: {
-                    x: 1200, y: 20, faceUp: false,
-                    draggable: false
+                    x: 1200, y: 20, faceUp: false
                 },
                 graveyard: {
-                    x: 1200, y: 150, faceUp: true,
-                    draggable: true
+                    x: 1200, y: 150, faceUp: true
                 },
                 manaPool: {
                     x: 750, y: 150, faceUp: false,
-                    draggable: false, padding: -50
+                    padding: -50
                 }
             }
         };

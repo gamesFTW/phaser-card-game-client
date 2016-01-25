@@ -93,15 +93,6 @@ export default class CardView extends EventEmitter {
     }
 
 
-    enableDragAndDrop() {
-        this._sprite.inputEnabled = true;
-        this._sprite.input.enableDrag();
-        this._sprite.events.onDragStart.add(this._onDragStart, this);
-        this._sprite.events.onDragStop.add(this._onDragStop, this);
-        //this._sprite.events.onDragUpdate.add(this._onDragUpdate, this);
-    }
-
-
     tap() {
         this._sprite.angle = 90;
     }
