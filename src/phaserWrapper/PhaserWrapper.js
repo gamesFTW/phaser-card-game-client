@@ -50,16 +50,31 @@ class PhaserWrapper {
 
 
     refreshAllGroupsSorting() {
-       _.forEach(['creatures', 'areas', 'tiles'], name => this.refreshGroupSorting(name));
+        _.forEach(['creatures', 'areas', 'tiles'], name => this._sortGroupZByY(name));
+        _.forEach(['cards'], name => this._sortGroupZByHoverAndX(name));
     }
 
 
-    /**
-     * @param {String} name
-     * @link _sortGroupZByY
-     */
-    refreshGroupSorting(name) {
-        this._sortGroupZByY(name);
+    _sortGroupZByHoverAndX(name) {
+        this._groups[name].customSort(function(a, b) {
+            var result;
+            var hoverA = a.input.pointerOver();
+            var hoverB = b.input.pointerOver();
+            if (hoverA) {
+                result = 1;
+            } else if (hoverB) {
+                result = -1;
+            } else {
+                if (a.x > b.x) {
+                    result = 1;
+                } else if (a.x < b.x) {
+                    result = -1;
+                } else {
+                    result = 0;
+                }
+            }
+            return result;
+        })
     }
 
 
