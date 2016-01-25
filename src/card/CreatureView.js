@@ -55,6 +55,7 @@ export default class CreatureView extends FieldObjectView {
 }
 
 
+//TODO MOVE IT TO /lib
 var OutlineFilter = function (viewWidth, viewHeight, thickness, color) {
     PIXI.AbstractFilter.call(this);
 

@@ -8,6 +8,6 @@ export default class CardViewEvent {
     static get OVER() { return 'CardViewEvent:over' }
     static get OUT() { return 'CardViewEvent:out' }
 
-    static get HEALTH_LEFT_CLICK() { return 'CardViewEvent:healthLeftClick' }
-    static get HEALTH_RIGHT_CLICK() { return 'CardViewEvent:healthRightClick' }
+    static get DOWN_PRESS() { return 'CardViewEvent:downPress' }
+    static get UP_PRESS() { return 'CardViewEvent:upPress' }
 }

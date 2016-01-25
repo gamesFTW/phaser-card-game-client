@@ -114,11 +114,26 @@ export default class PlayerCards extends EventEmitter {
     }
 
 
+    moveCardFromDeckToHand(card) {
+        this._deck.removeCard(card);
+        this._hand.addCard(card);
+    }
+
+
     /**
      * @param {Card} card
      * @return {Boolean}
      */
     checkCardInHand(card) {
         return this._hand.findById(card.id) !== undefined;
+    }
+
+
+    /**
+     * @param {Card} card
+     * @return {Boolean}
+     */
+    checkCardInDeck(card) {
+        return this._deck.findById(card.id) !== undefined;
     }
 }

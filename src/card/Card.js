@@ -183,11 +183,11 @@ export default class Card extends EventEmitter {
         );
 
         this._cardView.on(
-            CardViewEvent.HEALTH_LEFT_CLICK, this._onCardViewHealthLeftClick.bind(this)
+            CardViewEvent.UP_PRESS, this._onCardViewUpPress.bind(this)
         );
 
         this._cardView.on(
-            CardViewEvent.HEALTH_RIGHT_CLICK, this._onCardViewHealthRightClick.bind(this)
+            CardViewEvent.DOWN_PRESS, this._onCardViewDownPress.bind(this)
         );
     }
 
@@ -255,12 +255,12 @@ export default class Card extends EventEmitter {
     }
 
 
-    _onCardViewHealthLeftClick(event) {
+    _onCardViewUpPress(event) {
         Backend.addHealth(this._id, 1);
     }
 
 
-    _onCardViewHealthRightClick(event) {
+    _onCardViewDownPress(event) {
         Backend.addHealth(this._id, -1);
     }
 }

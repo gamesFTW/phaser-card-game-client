@@ -120,6 +120,11 @@ export default class CardView extends EventEmitter {
 
 
     _addHandlers() {
+        var upKey = PhaserWrapper.game.input.keyboard.addKey(Phaser.Keyboard.UP);
+        var downKey = PhaserWrapper.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+        downKey.onDown.add(this._onDownKeyPress, this);
+        upKey.onDown.add(this._onUpKeyPress, this);
+
         this._sprite.inputEnabled = true;
         this._sprite.events.onInputDown.add(this._onClick, this);
         this._sprite.events.onInputOver.add(this._onOver, this);
@@ -203,13 +208,9 @@ export default class CardView extends EventEmitter {
                 fill: 'black'
             }
         );
-        hp.inputEnabled = true;
-        hp.input.priorityID = 1;
 
         this._sprite.addChild(dmg);
         this._sprite.addChild(hp);
-
-        hp.events.onInputDown.add(this._onHpClick, this);
 
         return this;
     }
@@ -231,13 +232,16 @@ export default class CardView extends EventEmitter {
     }
 
 
-    _onHpClick(event, pointer) {
-        var button = inputHelpers.getMouseButton(event);
+    _onDownKeyPress(event) {
+        if (this._isHighlighted) {
+            this.emit(CardViewEvent.DOWN_PRESS);
+        }
+    }
 
-        if (button == Phaser.Mouse.LEFT_BUTTON) {
-            this.emit(CardViewEvent.HEALTH_LEFT_CLICK);
-        } else if (button == Phaser.Mouse.RIGHT_BUTTON) {
-            this.emit(CardViewEvent.HEALTH_RIGHT_CLICK);
+
+    _onUpKeyPress(event) {
+        if (this._isHighlighted) {
+            this.emit(CardViewEvent.UP_PRESS);
         }
     }
 

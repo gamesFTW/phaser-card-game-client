@@ -6,6 +6,7 @@ var Action = MeteorApp.Action;
 
 class Backend extends EventEmitter {
     get CARD_MOVED() { return 'Backend:cardMoved'}
+    get CARD_DRAWN() { return 'Backend:cardDrawn'}
     get CARD_REMOVED() { return 'Backend:cardRemoved'}
     get CARD_TAPPED() { return 'Backend:cardTapped'}
     get CARD_UNTAPPED() { return 'Backend:cardUntapped'}
@@ -71,6 +72,11 @@ class Backend extends EventEmitter {
 
     tapCard(id) {
         Meteor.call('tapCard', id);
+    }
+
+
+    drawCard(id) {
+        Meteor.call('drawCard', id);
     }
 
 
