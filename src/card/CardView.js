@@ -107,6 +107,9 @@ export default class CardView extends EventEmitter {
         if (this._isHighlighted == false) {
             this._isHighlighted = true;
             this._background.tint = '0xffcccc';
+
+            // Нужно для сортировки в PhaserWrapper
+            this._sprite.highlight = true;
         }
     }
 
@@ -115,6 +118,9 @@ export default class CardView extends EventEmitter {
         if (this._isHighlighted == true) {
             this._isHighlighted = false;
             this._background.tint = '0xffffff';
+
+            // Нужно для сортировки в PhaserWrapper
+            this._sprite.highlight = false;
         }
     }
 
@@ -247,7 +253,9 @@ export default class CardView extends EventEmitter {
 
 
     _onOver(event) {
-        this.emit(CardViewEvent.OVER);
+        if (this.faceUp) {
+            this.emit(CardViewEvent.OVER);
+        }
     }
 
 
