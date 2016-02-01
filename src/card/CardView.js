@@ -107,6 +107,9 @@ export default class CardView extends EventEmitter {
         if (this._isHighlighted == false) {
             this._isHighlighted = true;
             this._background.tint = '0xffcccc';
+
+            // Нужно для сортировки в PhaserWrapper
+            this._sprite.highlight = true;
         }
     }
 
@@ -115,6 +118,9 @@ export default class CardView extends EventEmitter {
         if (this._isHighlighted == true) {
             this._isHighlighted = false;
             this._background.tint = '0xffffff';
+
+            // Нужно для сортировки в PhaserWrapper
+            this._sprite.highlight = false;
         }
     }
 
@@ -159,29 +165,40 @@ export default class CardView extends EventEmitter {
 
     _addHeader() {
         var text = PhaserWrapper.game.make.text(
-            8, 0,
+            8, 1,
             this._data.title,
             {
-                font: "12px Arial",
+                font: "9px Arial",
+                align: "center"
+            }
+        );
+        var mana = PhaserWrapper.game.make.text(
+            CardView.CARD_WIDTH - 14, 0,
+            this._data.mana,
+            {
+                font: "bold 14px Arial",
+                fill: "blue",
                 align: "center"
             }
         );
 
+        this._sprite.addChild(mana);
         this._sprite.addChild(text);
 
         return this;
     }
 
     _addMiddle() {
-        var text= PhaserWrapper.game.make.text(
-            5, 20,
+        var text = PhaserWrapper.game.make.text(
+            3, 20,
             this._data.text,
             {
-                font: "10px Arial",
-                align: "center",
-                fontStyle: "italic"
+                font: "9px Arial"
             }
         );
+        text.wordWrap = true;
+        text.wordWrapWidth = CardView.CARD_WIDTH - 6;
+        text.lineSpacing = -8;
 
         this._sprite.addChild(text);
 
@@ -190,20 +207,20 @@ export default class CardView extends EventEmitter {
 
     _addFooter() {
         var dmg = PhaserWrapper.game.make.text(
-            10, CardView.CARD_HEIGHT - 23,
+            6, CardView.CARD_HEIGHT - 18,
             this._data.dmg,
             {
-                font: "18px Arial",
+                font: "bold 14px Arial",
                 align: "center",
                 fill: 'black'
             }
         );
 
         var hp = PhaserWrapper.game.make.text(
-            CardView.CARD_WIDTH - 35, CardView.CARD_HEIGHT - 23,
+            CardView.CARD_WIDTH - 26, CardView.CARD_HEIGHT - 18,
             this._data.health + '/' + this._data.maxHealth,
             {
-                font: "18px Arial",
+                font: "bold 14px Arial",
                 align: "center",
                 fill: 'black'
             }
@@ -247,7 +264,9 @@ export default class CardView extends EventEmitter {
 
 
     _onOver(event) {
-        this.emit(CardViewEvent.OVER);
+        if (this.faceUp) {
+            this.emit(CardViewEvent.OVER);
+        }
     }
 
 

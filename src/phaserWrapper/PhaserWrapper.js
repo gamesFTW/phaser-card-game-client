@@ -58,8 +58,8 @@ class PhaserWrapper {
     _sortGroupZByHoverAndX(name) {
         this._groups[name].customSort(function(a, b) {
             var result;
-            var hoverA = a.input.pointerOver();
-            var hoverB = b.input.pointerOver();
+            var hoverA = a.highlight;
+            var hoverB = b.highlight;
             if (hoverA) {
                 result = 1;
             } else if (hoverB) {
