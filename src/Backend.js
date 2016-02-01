@@ -12,6 +12,7 @@ class Backend extends EventEmitter {
     get CARD_UNTAPPED() { return 'Backend:cardUntapped'}
     get CARD_PLAYED() { return 'Backend:cardPlayed'}
     get CARD_HEALTH_CHANGED() { return 'Backend:cardHealthChanged'}
+    get CARD_COUNTER_CHANGED() { return 'Backend:cardCounterChanged'}
     get CARD_DIED() { return 'Backend:cardDied'}
     get CARD_PLAYED_AS_MANA() { return 'Backend:cardPlayedAsMana'}
 
@@ -97,6 +98,10 @@ class Backend extends EventEmitter {
 
     addHealth(id, health) {
         Meteor.call('addHealth', id, health);
+    }
+
+    addCounter(id, counter) {
+        Meteor.call('addCounter', id, counter);
     }
 }
 

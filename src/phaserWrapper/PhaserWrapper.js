@@ -85,7 +85,9 @@ class PhaserWrapper {
 
     _preload() {
         this._game.load.image('tile', '../assets/tile.png');
-        
+
+        this._game.load.image('counter', '../assets/counter.png');
+
         MeteorApp.imageFileNames.forEach(function(imageFileName) {
             this._game.load.image(imageFileName, '../assets/creatures/' + imageFileName + '.png');
         }.bind(this));

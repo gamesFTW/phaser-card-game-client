@@ -108,6 +108,14 @@ export default class Card extends EventEmitter {
     }
 
 
+    /**
+     * @param {Number} value
+     */
+    set counter(value) {
+        this._cardView.counter = value;
+    }
+
+
     dispose() {
         this._cardView.dispose();
 
@@ -189,6 +197,14 @@ export default class Card extends EventEmitter {
         this._cardView.on(
             CardViewEvent.DOWN_PRESS, this._onCardViewDownPress.bind(this)
         );
+
+        this._cardView.on(
+            CardViewEvent.LEFT_PRESS, this._onCardViewLeftPress.bind(this)
+        );
+
+        this._cardView.on(
+            CardViewEvent.RIGHT_PRESS, this._onCardViewRightPress.bind(this)
+        );
     }
 
 
@@ -262,5 +278,15 @@ export default class Card extends EventEmitter {
 
     _onCardViewDownPress(event) {
         Backend.addHealth(this._id, -1);
+    }
+
+
+    _onCardViewLeftPress(event) {
+        Backend.addCounter(this._id, -1);
+    }
+
+
+    _onCardViewRightPress(event) {
+        Backend.addCounter(this._id, +1);
     }
 }

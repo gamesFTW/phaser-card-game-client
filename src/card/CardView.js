@@ -58,6 +58,15 @@ export default class CardView extends EventEmitter {
     }
 
 
+    /**
+     * @param {Number} value
+     */
+    set counter(value) {
+        this._data.counter = value;
+        this.render();
+    }
+
+
     constructor(data) {
         super();
 
@@ -126,11 +135,18 @@ export default class CardView extends EventEmitter {
 
 
     _addHandlers() {
+        // Keyboard input
         var upKey = PhaserWrapper.game.input.keyboard.addKey(Phaser.Keyboard.UP);
         var downKey = PhaserWrapper.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+        var leftKey = PhaserWrapper.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+        var rightKey = PhaserWrapper.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+
         downKey.onDown.add(this._onDownKeyPress, this);
         upKey.onDown.add(this._onUpKeyPress, this);
+        leftKey.onDown.add(this._onLeftKeyPress, this);
+        rightKey.onDown.add(this._onRightKeyPress, this);
 
+        // Mouse input
         this._sprite.inputEnabled = true;
         this._sprite.events.onInputDown.add(this._onClick, this);
         this._sprite.events.onInputOver.add(this._onOver, this);
@@ -216,6 +232,15 @@ export default class CardView extends EventEmitter {
             }
         );
 
+        //counters
+        var countersQuantity = this._data.counter || 0;
+        var counters = _.range(countersQuantity).map(function(n) {
+            var padding = n * 5;
+            return PhaserWrapper.game.make.sprite(
+                padding + (CardView.CARD_WIDTH / 2) - 25, CardView.CARD_HEIGHT - 25, 'counter'
+            );
+        });
+
         var hp = PhaserWrapper.game.make.text(
             CardView.CARD_WIDTH - 26, CardView.CARD_HEIGHT - 18,
             this._data.health + '/' + this._data.maxHealth,
@@ -228,6 +253,7 @@ export default class CardView extends EventEmitter {
 
         this._sprite.addChild(dmg);
         this._sprite.addChild(hp);
+        counters.forEach(c => this._sprite.addChild(c), this);
 
         return this;
     }
@@ -256,6 +282,20 @@ export default class CardView extends EventEmitter {
     }
 
 
+    _onLeftKeyPress(event) {
+        if (this._isHighlighted) {
+            this.emit(CardViewEvent.LEFT_PRESS);
+        }
+    }
+
+
+    _onRightKeyPress(event) {
+        if (this._isHighlighted) {
+            this.emit(CardViewEvent.RIGHT_PRESS);
+        }
+    }
+
+
     _onUpKeyPress(event) {
         if (this._isHighlighted) {
             this.emit(CardViewEvent.UP_PRESS);
@@ -272,20 +312,5 @@ export default class CardView extends EventEmitter {
 
     _onOut(event) {
         this.emit(CardViewEvent.OUT);
-    }
-
-
-    _onDragStart() {
-        this.emit(CardViewEvent.START_DRAG);
-    }
-
-
-    _onDragStop() {
-        this.emit(CardViewEvent.STOP_DRAG);
-    }
-
-
-    _onDragUpdate(sprite, pointer, dragX, dragY, snapPoint) {
-
     }
 }
