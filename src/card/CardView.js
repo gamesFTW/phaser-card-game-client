@@ -241,9 +241,13 @@ export default class CardView extends EventEmitter {
             );
         });
 
+        var hpValue = this._data.health === this._data.maxHealth
+            ? '  ' + this._data.health
+            : this._data.health + '/' + this._data.maxHealth;
+
         var hp = PhaserWrapper.game.make.text(
             CardView.CARD_WIDTH - 26, CardView.CARD_HEIGHT - 18,
-            this._data.health + '/' + this._data.maxHealth,
+            hpValue,
             {
                 font: "bold 14px Arial",
                 align: "center",
