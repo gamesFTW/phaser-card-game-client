@@ -13,7 +13,8 @@ export default class TileView extends FieldObjectView {
         this._isHovered = false;
 
         this._containerSprite = PhaserWrapper.game.add.sprite(
-            x * FieldObjectView.SIZE, y * FieldObjectView.SIZE, 'tile'
+            x * FieldObjectView.SIZE, y * FieldObjectView.SIZE,
+            'field_bg', 's' + x + '_' + y
         );
 
         PhaserWrapper.addToGroup('tiles', this._containerSprite);
