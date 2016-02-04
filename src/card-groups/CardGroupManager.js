@@ -4,16 +4,14 @@ import _ from 'lodash';
 
 export default class CardGroupManager extends EventEmitter {
     get _cardViews() {
-        return _.values(this._cards).map(x => x._cardView);
+        return this._cards.map(x => x._cardView);
     }
 
 
     constructor(cards = [], view = null) {
         super();
 
-        this._cards = _.transform(cards, function(obj, card) {
-            obj[card.id] = card;
-        }, {});
+        this._cards = cards;
         this._view = view;
 
         // TODO event names via class and getter
@@ -25,7 +23,18 @@ export default class CardGroupManager extends EventEmitter {
      * @param {Card} card
      */
     addCard(card) {
-        this._cards[card.id] = card;
+        this._cards.push(card);
+
+        // TODO нормальные эвенты
+        this.emit('change');
+    }
+
+
+    /**
+     * @param {Card} card
+     */
+    addCardToTop(card) {
+        this._cards.unshift(card);
 
         // TODO нормальные эвенты
         this.emit('change');
@@ -36,7 +45,7 @@ export default class CardGroupManager extends EventEmitter {
      * @param {Card} card
      */
     removeCard(card) {
-        delete this._cards[card.id];
+        this._cards = _.reject(this._cards, {id: card.id });
 
         // TODO нормальные эвенты
         this.emit('change');
@@ -47,7 +56,7 @@ export default class CardGroupManager extends EventEmitter {
      * @param {Number} id
      */
     findById(id) {
-        return this._cards[id];
+        return _.find(this._cards, { id: id });
     }
 
 

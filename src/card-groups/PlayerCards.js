@@ -120,6 +120,24 @@ export default class PlayerCards extends EventEmitter {
     }
 
 
+    moveCardFromHandToDeck(card) {
+        this._hand.removeCard(card);
+        this._deck.addCardToTop(card);
+    }
+
+
+    moveCardFromTableToHand(card) {
+        this._table.removeCard(card);
+        this._hand.addCard(card);
+    }
+
+
+    moveCardFromGraveyardToTable(card) {
+        this._graveyard.removeCard(card);
+        this._table.addCard(card);
+    }
+
+
     /**
      * @param {Card} card
      * @return {Boolean}

@@ -1,10 +1,20 @@
 import EventEmitter from 'external/EventEmitter';
+import Phaser from 'phaser';
+
+
+import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
+
+
 import Card from 'card/Card';
 import CardEvent from 'card/CardEvent';
 import CardInFieldManager from 'card/CardInFieldManager';
 import CardManagerEvent from 'card/CardManagerEvent';
+
+
 import PlayerCards from 'card-groups/PlayerCards';
 import PlayerCardsFactory from 'card-groups/PlayerCardsFactory';
+
+
 import Backend from 'Backend';
 
 
@@ -40,6 +50,7 @@ export default class CardManager extends EventEmitter {
         Backend.on(Backend.CARD_COUNTER_CHANGED, this._onCardCounterChanged.bind(this));
         Backend.on(Backend.CARD_PLAYED_AS_MANA, this._onCardPlayedAsMana.bind(this));
         Backend.on(Backend.CARD_DRAWN, this._onCardDrawn.bind(this));
+        Backend.on(Backend.CARD_MOVED_TO_PREVIOUS_GROUP, this._onCardMovedToPreviousGroup.bind(this));
     }
 
 
@@ -81,6 +92,28 @@ export default class CardManager extends EventEmitter {
     checkCardInHand(card) {
         var playerCards = this._players[Backend.getPlayerId()];
         return playerCards.checkCardInHand(card);
+    }
+
+    /**
+     *
+     * @param {String} id
+     * @param {String} ownerId
+     * @param {String} oldCardGroup
+     * @param {String} newCardGroup
+     * @private
+     */
+    _moveCardToPreviousGroup(id, ownerId, oldCardGroup, newCardGroup) {
+        let card = this.findById(id);
+        var player = this._players[ownerId];
+
+        if (oldCardGroup === 'hand') {
+            player.moveCardFromHandToDeck(card)
+        } else if (oldCardGroup === 'table') {
+            player.moveCardFromTableToHand(card);
+        } else if (oldCardGroup === 'graveyard') {
+            player.moveCardFromGraveyardToTable(card);
+            card.play(card.position);
+        }
     }
 
 
@@ -172,6 +205,14 @@ export default class CardManager extends EventEmitter {
     _onCardClick(event) {
         var card = event.currentTarget;
         var playerCards = this._players[Backend.getPlayerId()];
+
+        // Если игрок хочет отменить draw/die/play
+        var isCardPlayUndo = PhaserWrapper.game.input.keyboard.isDown(Phaser.Keyboard.Z);
+        if (isCardPlayUndo) {
+            Backend.moveCardToPreviousGroup(card.id);
+            return;
+        }
+
         if (playerCards.checkCardInDeck(card)) {
             Backend.drawCard(card.id);
         } else {
@@ -237,5 +278,11 @@ export default class CardManager extends EventEmitter {
     //TODO: remove it to MoveAction class
     _onCardCounterChanged(event) {
         this._changeCardCounter(event.id, event.counter);
+    }
+
+
+    //TODO: remove it to MoveAction class
+    _onCardMovedToPreviousGroup(event) {
+        this._moveCardToPreviousGroup(event.id, event.ownerId, event.oldCardGroup, event.newCardGroup);
     }
 }

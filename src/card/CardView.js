@@ -1,11 +1,14 @@
 import _ from 'lodash';
 import Phaser from 'phaser';
 
-import inputHelpers from 'lib/input';
-
-import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
 
 import EventEmitter from 'external/EventEmitter';
+
+
+import inputHelpers from 'lib/input';
+
+
+import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
 
 
 import CardViewEvent from './CardViewEvent';
