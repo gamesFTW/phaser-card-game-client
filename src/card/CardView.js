@@ -37,8 +37,8 @@ export default class CardView extends EventEmitter {
     get faceUp () { return this._faceUp; }
 
 
-    set visible (value) { this._sprite.visible = value; }
-    get visible () { return this._sprite.visible; }
+    set visible (value) { this._container.visible = value; }
+    get visible () { return this._container.visible; }
 
 
     /**
@@ -47,8 +47,9 @@ export default class CardView extends EventEmitter {
      * @param {Number} point.y
      */
     set position(point) {
-        this._sprite.x = point.x;
-        this._sprite.y = point.y;
+        PhaserWrapper.game.add.tween(this._container).to( { x: point.x, y: point.y }, 500).start();
+        //this._container.x = point.x;
+        //this._container.y = point.y;
     }
 
 
@@ -73,6 +74,9 @@ export default class CardView extends EventEmitter {
     constructor(data) {
         super();
 
+        this._container = PhaserWrapper.game.add.sprite();
+        PhaserWrapper.addToGroup('cards', this._container);
+
         this._sprite = null;
         this._background = null;
         this._data = data;
@@ -80,7 +84,7 @@ export default class CardView extends EventEmitter {
 
         this._faceUp = true;
 
-        this._createContainerSprite();
+        this._createSprite();
         if (data.isTapped) {
             this.tap();
         }
@@ -89,7 +93,7 @@ export default class CardView extends EventEmitter {
 
 
     render() {
-        this._sprite.removeChild();
+        this._container.removeChild();
 
         this._addBg();
         if (this.faceUp) {
@@ -101,17 +105,18 @@ export default class CardView extends EventEmitter {
 
 
     dispose() {
-        this._sprite.kill();
+        this._container.kill();
     }
 
 
     tap() {
-        this._sprite.angle = 90;
+        // 88 потому что долго считали и из ебучей анки все так плохо, надо переделать
+        PhaserWrapper.game.add.tween(this._sprite).to( { x: 88, angle: 90 }, 300).start();
     }
 
 
     untap() {
-        this._sprite.angle = 0;
+        PhaserWrapper.game.add.tween(this._sprite).to( { x: 0, angle: 0 }, 300).start();
     }
 
 
@@ -121,7 +126,7 @@ export default class CardView extends EventEmitter {
             this._background.tint = '0xffcccc';
 
             // Нужно для сортировки в PhaserWrapper
-            this._sprite.highlight = true;
+            this._container.highlight = true;
         }
     }
 
@@ -132,7 +137,7 @@ export default class CardView extends EventEmitter {
             this._background.tint = '0xffffff';
 
             // Нужно для сортировки в PhaserWrapper
-            this._sprite.highlight = false;
+            this._container.highlight = false;
         }
     }
 
@@ -157,14 +162,15 @@ export default class CardView extends EventEmitter {
     }
 
 
-    _createContainerSprite() {
+    _createSprite() {
         this._sprite = PhaserWrapper.game.make.sprite(
             0, 0
         );
         this._sprite.pivot.x = this._sprite.width * .5;
         this._sprite.pivot.y = this._sprite.height * .5;
 
-        PhaserWrapper.addToGroup('cards', this._sprite);
+
+        this._container.addChild(this._sprite);
 
         this.render();
     }

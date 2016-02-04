@@ -1,7 +1,11 @@
-import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
-import FieldObjectView from 'FieldObjectView';
-import Phaser from 'Phaser';
 import PIXI from 'pixi.js';
+import Phaser from 'Phaser';
+
+
+import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
+
+
+import FieldObjectView from 'FieldObjectView';
 
 
 export default class CreatureView extends FieldObjectView {

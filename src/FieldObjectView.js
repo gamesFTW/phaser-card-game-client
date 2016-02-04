@@ -33,8 +33,12 @@ export default class FieldObjectView extends EventEmitter {
         this._y = point.y;
 
         if (this._containerSprite) {
-            this._containerSprite.x = point.x * FieldObjectView.SIZE;
-            this._containerSprite.y = point.y * FieldObjectView.SIZE;
+            var newX = point.x * FieldObjectView.SIZE;
+            var newY = point.y * FieldObjectView.SIZE;
+            PhaserWrapper.game.add.tween(this._containerSprite).to( { x: newX, y: newY }, 500).start()
+
+            //this._containerSprite.x = point.x * FieldObjectView.SIZE;
+            //this._containerSprite.y = point.y * FieldObjectView.SIZE;
         }
 
         this.emit(FiledObjectsViewEvent.MOVED);

@@ -51,7 +51,7 @@ class PhaserWrapper {
 
     refreshAllGroupsSorting() {
         _.forEach(['creatures', 'areas', 'tiles'], name => this._sortGroupZByY(name));
-        this._sortGroupZByHoverAndX('cards');
+        //this._sortGroupZByHoverAndX('cards');
     }
 
 
