@@ -2,6 +2,7 @@ import EventEmitter from 'external/EventEmitter';
 import Card from 'card/Card';
 import CardEvent from 'card/CardEvent';
 import CardInFieldManager from 'card/CardInFieldManager';
+import CardManagerEvent from 'card/CardManagerEvent';
 import PlayerCards from 'card-groups/PlayerCards';
 import PlayerCardsFactory from 'card-groups/PlayerCardsFactory';
 import Backend from 'Backend';
@@ -173,6 +174,8 @@ export default class CardManager extends EventEmitter {
         var playerCards = this._players[Backend.getPlayerId()];
         if (playerCards.checkCardInDeck(card)) {
             Backend.drawCard(card.id);
+        } else {
+            this.emit(CardManagerEvent.CARD_IN_GAME_CLICK, {card: card});
         }
     }
 

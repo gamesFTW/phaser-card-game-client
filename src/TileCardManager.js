@@ -2,6 +2,7 @@ import Backend from 'Backend';
 
 import TileManager from 'tile/TileManager';
 import CardManager from 'card/CardManager';
+import CardManagerEvent from 'card/CardManagerEvent';
 
 import CardEvent from 'card/CardEvent';
 import FiledObjectsViewEvent from 'FiledObjectsViewEvent';
@@ -43,7 +44,7 @@ export default class TileCardManager {
 
     _initFieldObjectManager() {
         this._cardManager.on(
-            CardEvent.CARD_CLICK, this._onCardClick.bind(this)
+            CardManagerEvent.CARD_IN_GAME_CLICK, this._onCardClick.bind(this)
         );
 
         this._cardManager.on(
@@ -66,7 +67,7 @@ export default class TileCardManager {
 
 
     _onCardClick(event) {
-        var card = event.currentTarget;
+        var card = event.card;
 
         if (this._cardManager.checkCardInHand(card)) {
             this._selectedCardOnHand = card;
