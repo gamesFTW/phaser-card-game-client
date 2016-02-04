@@ -88,6 +88,7 @@ class PhaserWrapper {
 
         this._game.load.image('counter', '../assets/counter.png');
 
+        this._game.load.image('lines', '../assets/bg/lines.png');
         this._game.load.atlas('field_bg', '../assets/bg/field.jpg', null, getFieldBgAtlasData(24, 24));
 
         MeteorApp.imageFileNames.forEach(function(imageFileName) {
