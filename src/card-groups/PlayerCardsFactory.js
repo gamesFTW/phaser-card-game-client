@@ -11,15 +11,18 @@ export default class PlayerCardsFactory {
 
 
     static getDecksViewsProperties() {
+        // Не уверен что у нас правильные maxWidth
         return {
             you: {
                 hand: {
                     x: 750, y: 700, faceUp: true,
-                     padding: -50
+                    padding: 5, adaptive: true,
+                    maxWidth: 400
                 },
                 table: {
                     x: 750, y: 440, faceUp: true,
-                     padding: -70
+                    padding: 5, adaptive:true,
+                    maxWidth: 500
                 },
                 deck: {
                     x: 1200, y: 700, faceUp: false
@@ -29,18 +32,21 @@ export default class PlayerCardsFactory {
                 },
                 manaPool: {
                     x: 750, y: 570, faceUp: false,
-                    padding: -50
+                    padding: 5, adaptive: true,
+                    maxWidth: 400
                 }
             },
 
             enemy: {
                 hand: {
                     x: 750, y: 20, faceUp: false,
-                    padding: -50
+                    padding: -50, adaptive: true,
+                    maxWidth: 400
                 },
                 table: {
                     x: 750, y: 280, faceUp: true,
-                    padding: -70
+                    padding: 5, adaptive: true,
+                    maxWidth: 500
                 },
                 deck: {
                     x: 1200, y: 20, faceUp: false
@@ -50,7 +56,8 @@ export default class PlayerCardsFactory {
                 },
                 manaPool: {
                     x: 750, y: 150, faceUp: false,
-                    padding: -50
+                    padding: 5, adaptive: true,
+                    maxWidth: 400
                 }
             }
         };
