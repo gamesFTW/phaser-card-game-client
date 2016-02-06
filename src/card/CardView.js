@@ -41,15 +41,22 @@ export default class CardView extends EventEmitter {
     get visible () { return this._container.visible; }
 
 
+    get postion() {
+        return { x: this._container.x, y: this._container.y };
+    }
+
     /**
      * @param {Object} point
      * @param {Number} point.x
      * @param {Number} point.y
      */
     set position(point) {
-        PhaserWrapper.game.add.tween(this._container).to( { x: point.x, y: point.y }, 500).start();
-        //this._container.x = point.x;
-        //this._container.y = point.y;
+        if(this._container.x == 0 && this._container.y == 0 ) {
+            this._container.x = point.x;
+            this._container.y = point.y;
+        } else {
+            PhaserWrapper.game.add.tween(this._container).to( { x: point.x, y: point.y }, 500).start();
+        }
     }
 
 
