@@ -249,7 +249,11 @@ export default class Card extends EventEmitter {
 
 
     _onCardViewRightClick(event) {
-        this.emit(CardEvent.PLAY_AS_MANA);
+        if (this._isTapped) {
+            this.emit(CardEvent.PRESS_UNTAP);
+        } else {
+            this.emit(CardEvent.PRESS_TAP);
+        }
     }
 
     _onCardViewOver(event) {
@@ -263,11 +267,7 @@ export default class Card extends EventEmitter {
 
 
     _onCardViewCtrlClick(event) {
-        if (this._isTapped) {
-            this.emit(CardEvent.PRESS_UNTAP);
-        } else {
-            this.emit(CardEvent.PRESS_TAP);
-        }
+        this.emit(CardEvent.PLAY_AS_MANA);
     }
 
 
