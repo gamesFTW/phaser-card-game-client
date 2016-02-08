@@ -113,6 +113,8 @@ export default class CardManager extends EventEmitter {
         } else if (oldCardGroup === 'graveyard') {
             player.moveCardFromGraveyardToTable(card);
             card.play(card.position);
+        } else if (oldCardGroup === 'manaPool') {
+            player.moveCardFromManaPoolToHand(card);
         }
     }
 
@@ -283,6 +285,9 @@ export default class CardManager extends EventEmitter {
 
     //TODO: remove it to MoveAction class
     _onCardMovedToPreviousGroup(event) {
-        this._moveCardToPreviousGroup(event.id, event.ownerId, event.oldCardGroup, event.newCardGroup);
+        this._moveCardToPreviousGroup(
+            event.id, event.ownerId, event.oldCardGroup, event.newCardGroup
+        );
     }
 }
+

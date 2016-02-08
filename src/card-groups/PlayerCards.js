@@ -138,6 +138,12 @@ export default class PlayerCards extends EventEmitter {
     }
 
 
+    moveCardFromManaPoolToHand(card) {
+        this._manaPool.removeCard(card);
+        this._hand.addCard(card);
+    }
+
+
     /**
      * @param {Card} card
      * @return {Boolean}
