@@ -110,6 +110,7 @@ export default class CardManager extends EventEmitter {
             player.moveCardFromHandToDeck(card)
         } else if (oldCardGroup === 'table') {
             player.moveCardFromTableToHand(card);
+            card.die();
         } else if (oldCardGroup === 'graveyard') {
             player.moveCardFromGraveyardToTable(card);
             card.play(card.position);
