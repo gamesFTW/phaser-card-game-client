@@ -48,10 +48,6 @@ export default class TileCardManager {
         );
 
         this._cardManager.on(
-            CardEvent.FIELD_CLICK, this._onCardFieldClick.bind(this)
-        );
-
-        this._cardManager.on(
             CardEvent.DISPOSE, this._onCardDisposed.bind(this)
         );
     }
@@ -62,6 +58,14 @@ export default class TileCardManager {
 
         this._tileManager.on(
             FiledObjectsViewEvent.CLICK, this._onTileClick.bind(this)
+        );
+
+        this._tileManager.on(
+            FiledObjectsViewEvent.OVER, this._onTileOver.bind(this)
+        );
+
+        this._tileManager.on(
+            FiledObjectsViewEvent.OUT, this._onTileOut.bind(this)
         );
     }
 
@@ -76,11 +80,6 @@ export default class TileCardManager {
     }
 
 
-    _onCardFieldClick(event) {
-        this._selectedCardOnField = event.currentTarget;
-    }
-
-
     _onCardDisposed(event) {
         if (this._selectedCardOnField === event.currentTarget) {
             this._selectedCardOnField = null;
@@ -90,19 +89,42 @@ export default class TileCardManager {
 
     _onTileClick(event) {
         var clickedTile = event.currentTarget;
+        var creatureOnTile = this._cardManager.getCreatureByPoint(clickedTile.position);
 
-        if (this._selectedCardOnHand) {
-            Backend.playCard(
-                this._selectedCardOnHand.id, clickedTile.position
-            );
+        if (creatureOnTile) {
+            this._selectedCardOnField = creatureOnTile;
+        } else {
+            if (this._selectedCardOnHand) {
+                Backend.playCard(
+                    this._selectedCardOnHand.id, clickedTile.position
+                );
 
-            this._selectedCardOnHand = null;
+                this._selectedCardOnHand = null;
+            }
+
+            if (this._selectedCardOnField) {
+                Backend.moveCardTo(
+                    this._selectedCardOnField.id, clickedTile.position
+                );
+            }
         }
+    }
 
-        if (this._selectedCardOnField) {
-            Backend.moveCardTo(
-                this._selectedCardOnField.id, clickedTile.position
-            );
+
+    _onTileOver(event) {
+        var tile = event.currentTarget;
+        var card = this._cardManager.getCreatureByPoint(tile.position);
+        if (card) {
+            card.highlightOn();
+        }
+    }
+
+
+    _onTileOut(event) {
+        var tile = event.currentTarget;
+        var card = this._cardManager.getCreatureByPoint(tile.position);
+        if (card) {
+            card.highlightOff();
         }
     }
 }
