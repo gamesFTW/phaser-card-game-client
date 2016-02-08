@@ -85,6 +85,7 @@ export default class CardManager extends EventEmitter {
         return card;
     }
 
+
     /**
      * @param {Card} card
      * @return {Boolean}
@@ -93,6 +94,29 @@ export default class CardManager extends EventEmitter {
         var playerCards = this._players[Backend.getPlayerId()];
         return playerCards.checkCardInHand(card);
     }
+
+
+    /**
+     * @param {Object} point
+     * @param {Number} point.x
+     * @param {Number} point.y
+     * @return {Card}
+     */
+    getCreatureByPoint(point) {
+        var resultedCard = null;
+        var cards = _.values(this._cards);
+
+        _.forEach(cards, function(card) {
+            var cardPosition = card.position;
+            if (cardPosition.x == point.x && cardPosition.y == point.y) {
+                resultedCard = card;
+                return false;
+            }
+        });
+
+        return resultedCard;
+    }
+
 
     /**
      *

@@ -18,6 +18,7 @@ export default class TileView extends FieldObjectView {
             x * size, y * size,
             'field_bg', 's' + x + '_' + y
         );
+        this._containerSprite.inputEnabled = true;
 
         var lines = PhaserWrapper.game.make.sprite(
             0, 0,
@@ -53,7 +54,7 @@ export default class TileView extends FieldObjectView {
 
 
     _onOut(event) {
-        super._onOver(event);
+        super._onOut(event);
         this._removeHover();
     }
 

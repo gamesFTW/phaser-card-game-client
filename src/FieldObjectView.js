@@ -68,7 +68,6 @@ export default class FieldObjectView extends EventEmitter {
 
 
     addHandlers() {
-        this._containerSprite.inputEnabled = true;
         this._containerSprite.events.onInputDown.add(this._onClick, this);
         this._containerSprite.events.onInputOver.add(this._onOver, this);
         this._containerSprite.events.onInputOut.add(this._onOut, this);

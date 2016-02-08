@@ -150,7 +150,7 @@ export default class Card extends EventEmitter {
     }
 
 
-    _highlightOn() {
+    highlightOn() {
         if (this._fieldView) {
             this._fieldView.highlightOn();
         }
@@ -158,7 +158,7 @@ export default class Card extends EventEmitter {
     }
 
 
-    _highlightOff() {
+    highlightOff() {
         if (this._fieldView) {
             this._fieldView.highlightOff();
         }
@@ -233,12 +233,12 @@ export default class Card extends EventEmitter {
 
 
     _onFieldViewOver(event) {
-        this._highlightOn();
+        this.highlightOn();
     }
 
 
     _onFieldViewOut(event) {
-        this._highlightOff();
+        this.highlightOff();
     }
 
 
@@ -257,12 +257,12 @@ export default class Card extends EventEmitter {
     }
 
     _onCardViewOver(event) {
-        this._highlightOn();
+        this.highlightOn();
     }
 
 
     _onCardViewOut(event) {
-        this._highlightOff();
+        this.highlightOff();
     }
 
 
