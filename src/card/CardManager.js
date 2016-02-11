@@ -47,10 +47,11 @@ export default class CardManager extends EventEmitter {
         Backend.on(Backend.CARD_TAPPED, this._onCardTapped.bind(this));
         Backend.on(Backend.CARD_UNTAPPED, this._onCardUntapped.bind(this));
         Backend.on(Backend.CARD_PLAYED, this._onCardPlayed.bind(this));
+        Backend.on(Backend.CARD_PLAYED_AS_SPELL, this._onCardPlayedAsSpell.bind(this));
+        Backend.on(Backend.CARD_PLAYED_AS_MANA, this._onCardPlayedAsMana.bind(this));
         Backend.on(Backend.CARD_DIED, this._onCardDied.bind(this));
         Backend.on(Backend.CARD_HEALTH_CHANGED, this._onCardHealthChanged.bind(this));
         Backend.on(Backend.CARD_COUNTER_CHANGED, this._onCardCounterChanged.bind(this));
-        Backend.on(Backend.CARD_PLAYED_AS_MANA, this._onCardPlayedAsMana.bind(this));
         Backend.on(Backend.CARD_DRAWN, this._onCardDrawn.bind(this));
         Backend.on(Backend.CARD_MOVED_TO_PREVIOUS_GROUP, this._onCardMovedToPreviousGroup.bind(this));
     }
@@ -184,6 +185,23 @@ export default class CardManager extends EventEmitter {
     }
 
 
+    _playCard(id, ownerId, position) {
+        let card = this.findById(id);
+
+        this._players[ownerId].moveCardFromHandToTable(card);
+        card.play(position);
+    }
+
+
+    _playCardAsSpell(playedCardId, targetCardId, ownerId) {
+        let playedCard = this.findById(playedCardId);
+        let targetCard = this.findById(targetCardId);
+
+        this._players[ownerId].moveCardFromHandToTable(playedCard);
+        //card.play(position);
+    }
+
+
     _playCardAsMana(id, ownerId) {
         let card = this.findById(id);
 
@@ -296,6 +314,12 @@ export default class CardManager extends EventEmitter {
     //TODO: remove it to MoveAction class
     _onCardPlayed(event) {
         this._playCard(event.id, event.ownerId, event.position);
+    }
+
+
+    //TODO: remove it to MoveAction class
+    _onCardPlayedAsSpell(event) {
+        this._playCardAsSpell(event.playedCardId, event.targetCardId, event.ownerId);
     }
 
 

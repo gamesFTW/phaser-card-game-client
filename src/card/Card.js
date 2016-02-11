@@ -94,6 +94,12 @@ export default class Card extends EventEmitter {
 
 
     /**
+     * @returns {CardView}
+     */
+    get cardView() { return this._cardView; }
+
+
+    /**
      * @param {Object} point
      */
     set position(point) {

@@ -14,10 +14,11 @@ export default class CardStackViewManager extends CardViewManager {
 
 
     /**
-     *
-     * @param {CardView[]} cardsViews
+     * @param {Card[]} cards
      */
-    reorderCards(cardsViews) {
+    reorderCards(cards) {
+        var cardsViews = cards.map(card => card.cardView);
+
         var firstCardView = _.first(cardsViews);
         if (firstCardView) {
             firstCardView.visible = true;

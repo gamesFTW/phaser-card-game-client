@@ -3,15 +3,11 @@ import CardView from './../card/CardView';
 
 
 export default class CardRowViewManager extends CardViewManager {
-
-
-
-
     /**
-     *
-     * @param {CardView[]} cardsViews
+     * @param {Card[]} cards
      */
-    reorderCards(cardsViews) {
+    reorderCards(cards) {
+        var cardsViews = cards.map(card => card.cardView);
         var nextX = this._x;
 
         if (this._adaptive && this._maxWidth) {

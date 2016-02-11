@@ -77,7 +77,12 @@ export default class TileCardManager {
     _onCardClick(event) {
         var card = event.card;
 
-        if (this._cardManager.checkCardInHand(card)) {
+        if (this._selectedCardOnHand) {
+            Backend.playCardAsSpell(
+                this._selectedCardOnHand.id, card.id
+            );
+            this._selectedCardOnHand = null;
+        } else if (this._cardManager.checkCardInHand(card)) {
             this._selectedCardOnHand = card;
             this._selectedCardOnField = null;
         }
@@ -107,7 +112,6 @@ export default class TileCardManager {
                 Backend.playCard(
                     this._selectedCardOnHand.id, clickedTile.position
                 );
-
                 this._selectedCardOnHand = null;
             }
 
