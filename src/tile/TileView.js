@@ -15,7 +15,7 @@ export default class TileView extends FieldObjectView {
 
         var position = isometric.pointerToIcometric({x: x, y: y});
         this._containerSprite = PhaserWrapper.game.add.sprite(
-            position.x, position.y, 'izometric-tile'
+            position.x, position.y, 'isometric-tile'
         );
 
         this._containerSprite.inputEnabled = true;

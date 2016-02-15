@@ -97,7 +97,7 @@ class PhaserWrapper {
 
 
     _preload() {
-        this._game.load.image('izometric-tile', '../assets/izometric-tile.png');
+        this._game.load.image('isometric-tile', '../assets/isometric-tile.png');
         this._game.load.image('tile', '../assets/tile.png');
 
         this._game.load.image('counter', '../assets/counter.png');
