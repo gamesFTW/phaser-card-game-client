@@ -16,7 +16,7 @@ class PhaserWrapper {
 
     constructor() {
         this._game = new Phaser.Game(
-            1300, 960, Phaser.AUTO, 'gameView', null, true, true
+            1366, 660, Phaser.AUTO, 'gameView', null, false, true
         );
 
         // Объект из Phaser.Group, где ключ название группы. @see this._createGroups
@@ -97,6 +97,7 @@ class PhaserWrapper {
 
 
     _preload() {
+        this._game.load.image('izometric-tile', '../assets/izometric-tile.png');
         this._game.load.image('tile', '../assets/tile.png');
 
         this._game.load.image('counter', '../assets/counter.png');

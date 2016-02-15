@@ -6,6 +6,7 @@ import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
 
 
 import FieldObjectView from 'FieldObjectView';
+import isometric from 'lib/isometric';
 
 
 export default class CreatureView extends FieldObjectView {
@@ -15,13 +16,13 @@ export default class CreatureView extends FieldObjectView {
         this._color = color;
         this._imageName = imageName;
 
+        var position = isometric.pointerToIcometric({x: x, y: y});
         this._containerSprite = PhaserWrapper.game.add.sprite(
-            x * FieldObjectView.SIZE,
-            y * FieldObjectView.SIZE
+            position.x, position.y
         );
 
         this._creatureSprite = PhaserWrapper.game.add.sprite(
-            -9, -20, this._imageName
+            5, -28, this._imageName
         );
 
         var filter = new OutlineFilter(PhaserWrapper.game.width, PhaserWrapper.game.height, 1, color);

@@ -6,6 +6,7 @@ import FiledObjectsViewEvent from 'FiledObjectsViewEvent';
 
 
 import EventEmitter from 'external/EventEmitter';
+import isometric from 'lib/isometric';
 
 
 export default class FieldObjectView extends EventEmitter {
@@ -33,8 +34,10 @@ export default class FieldObjectView extends EventEmitter {
         this._y = point.y;
 
         if (this._containerSprite) {
-            var newX = point.x * FieldObjectView.SIZE;
-            var newY = point.y * FieldObjectView.SIZE;
+            var position = isometric.pointerToIcometric(point);
+
+            var newX = position.x;
+            var newY = position.y;
             PhaserWrapper.game.add.tween(this._containerSprite).to( { x: newX, y: newY }, 500).start();
 
             //this._containerSprite.x = point.x * FieldObjectView.SIZE;

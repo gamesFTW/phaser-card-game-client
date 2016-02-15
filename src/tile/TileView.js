@@ -1,5 +1,6 @@
 import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
 import FieldObjectView from 'FieldObjectView';
+import isometric from 'lib/isometric';
 
 
 export default class TileView extends FieldObjectView {
@@ -12,20 +13,13 @@ export default class TileView extends FieldObjectView {
          */
         this._isHovered = false;
 
-        var size = FieldObjectView.SIZE;
-
+        var position = isometric.pointerToIcometric({x: x, y: y});
         this._containerSprite = PhaserWrapper.game.add.sprite(
-            x * size, y * size,
-            'field_bg', 's' + x + '_' + y
+            position.x, position.y, 'izometric-tile'
         );
+
         this._containerSprite.inputEnabled = true;
-
-        var lines = PhaserWrapper.game.make.sprite(
-            0, 0,
-            'lines'
-        );
-
-        this._containerSprite.addChild(lines);
+        this._containerSprite.input.pixelPerfectOver = true;
 
         PhaserWrapper.addToGroup('tiles', this._containerSprite);
 
