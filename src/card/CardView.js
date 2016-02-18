@@ -16,12 +16,12 @@ import CardViewEvent from './CardViewEvent';
 
 export default class CardView extends EventEmitter {
     static get CARD_WIDTH() {
-        return 90;
+        return 60;
     }
 
 
     static get CARD_HEIGHT() {
-        return 120;
+        return 80;
     }
 
 
@@ -118,7 +118,7 @@ export default class CardView extends EventEmitter {
 
     tap() {
         // 88 потому что долго считали и из ебучей анки все так плохо, надо переделать
-        PhaserWrapper.game.add.tween(this._sprite).to( { x: 88, angle: 90 }, 300).start();
+        PhaserWrapper.game.add.tween(this._sprite).to( { x: 48, angle: 90 }, 300).start();
     }
 
 
@@ -197,15 +197,20 @@ export default class CardView extends EventEmitter {
 
     _addHeader() {
         var text = PhaserWrapper.game.make.text(
-            8, 1,
+            0, 12,
             this._data.title,
             {
-                font: "9px Arial",
+                font: "11px Arial",
+                boundsAlignH: "center",
                 align: "center"
             }
         );
+        text.setTextBounds(0, 0, CardView.CARD_WIDTH, 40);
+        text.wordWrap = true;
+        text.lineSpacing = -6;
+
         var mana = PhaserWrapper.game.make.text(
-            CardView.CARD_WIDTH - 14, 0,
+            6, 0,
             this._data.mana,
             {
                 font: "bold 14px Arial",
@@ -221,18 +226,18 @@ export default class CardView extends EventEmitter {
     }
 
     _addMiddle() {
-        var text = PhaserWrapper.game.make.text(
-            3, 20,
-            this._data.text,
-            {
-                font: "9px Arial"
-            }
-        );
-        text.wordWrap = true;
-        text.wordWrapWidth = CardView.CARD_WIDTH - 6;
-        text.lineSpacing = -8;
-
-        this._sprite.addChild(text);
+        //var text = PhaserWrapper.game.make.text(
+        //    3, 20,
+        //    this._data.text,
+        //    {
+        //        font: "9px Arial"
+        //    }
+        //);
+        //text.wordWrap = true;
+        //text.wordWrapWidth = CardView.CARD_WIDTH - 6;
+        //text.lineSpacing = -8;
+        //
+        //this._sprite.addChild(text);
 
         return this;
     }
@@ -243,7 +248,7 @@ export default class CardView extends EventEmitter {
             this._data.dmg,
             {
                 font: "bold 14px Arial",
-                align: "center",
+                align: "left",
                 fill: 'black'
             }
         );
@@ -253,12 +258,12 @@ export default class CardView extends EventEmitter {
         var counters = _.range(countersQuantity).map(function(n) {
             var padding = n * 5;
             return PhaserWrapper.game.make.sprite(
-                padding + (CardView.CARD_WIDTH / 2) - 25, CardView.CARD_HEIGHT - 25, 'counter'
+                padding + (CardView.CARD_WIDTH / 2) - 20, CardView.CARD_HEIGHT - 30, 'counter'
             );
         });
 
         var hpValue = this._data.health === this._data.maxHealth
-            ? '  ' + this._data.health
+            ? this._data.health
             : this._data.health + '/' + this._data.maxHealth;
 
         var hp = PhaserWrapper.game.make.text(
@@ -266,10 +271,12 @@ export default class CardView extends EventEmitter {
             hpValue,
             {
                 font: "bold 14px Arial",
-                align: "center",
+                align: "right",
+                boundsAlignH: "right",
                 fill: 'black'
             }
         );
+        hp.setTextBounds(0, 0, 20, 10);
 
         this._sprite.addChild(dmg);
         this._sprite.addChild(hp);
@@ -286,9 +293,9 @@ export default class CardView extends EventEmitter {
         if (PhaserWrapper.game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)) {
             this.emit(CardViewEvent.CTRL_CLICK);
         } else {
-            if (button == Phaser.Mouse.LEFT_BUTTON) {
+            if (pointer.leftButton.isDown) {
                 this.emit(CardViewEvent.CLICK);
-            } else if (button == Phaser.Mouse.RIGHT_BUTTON) {
+            } else if (pointer.rightButton.isDown) {
                 this.emit(CardViewEvent.RIGHT_CLICK);
             }
         }

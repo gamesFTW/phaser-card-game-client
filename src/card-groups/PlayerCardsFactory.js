@@ -15,25 +15,25 @@ export default class PlayerCardsFactory {
         return {
             you: {
                 hand: {
-                    x: 750, y: 700, faceUp: true,
+                    x: 910, y: 593, faceUp: true,
                     padding: 5, adaptive: true,
-                    maxWidth: 400
+                    maxWidth: 380
                 },
                 table: {
-                    x: 750, y: 440, faceUp: true,
+                    x: 1090, y: 510, faceUp: true,
                     padding: 5, adaptive:true,
-                    maxWidth: 500
+                    maxWidth: 250
                 },
                 deck: {
-                    x: 1200, y: 700, faceUp: false
+                    x: 1320, y: 593, faceUp: false
                 },
                 graveyard: {
-                    x: 1200, y: 570, faceUp: true
+                    x: 1308, y: 345, faceUp: true
                 },
                 manaPool: {
-                    x: 750, y: 570, faceUp: false,
+                    x: 1250, y: 427, faceUp: false,
                     padding: 5, adaptive: true,
-                    maxWidth: 400
+                    maxWidth: 100
                 }
             },
 
@@ -49,7 +49,7 @@ export default class PlayerCardsFactory {
                     maxWidth: 500
                 },
                 deck: {
-                    x: 1200, y: 20, faceUp: false
+                    x: 1320, y: 20, faceUp: false
                 },
                 graveyard: {
                     x: 1200, y: 150, faceUp: true
