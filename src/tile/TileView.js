@@ -22,6 +22,9 @@ export default class TileView extends FieldObjectView {
         this._containerSprite.input.pixelPerfectOver = true;
         this._containerSprite.input.pixelPerfectClick = true;
 
+        this._containerSprite.anchor.x = 0.5;
+        this._containerSprite.anchor.y = 0.5;
+
         PhaserWrapper.addToGroup('tiles', this._containerSprite);
 
         this.addHandlers();

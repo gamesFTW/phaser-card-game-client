@@ -22,8 +22,10 @@ export default class CreatureView extends FieldObjectView {
         );
 
         this._creatureSprite = PhaserWrapper.game.add.sprite(
-            5, -28, this._imageName
+            0, 0, this._imageName
         );
+        this._creatureSprite.anchor.x = 0.5;
+        this._creatureSprite.anchor.y = 0.5;
 
         var filter = new OutlineFilter(PhaserWrapper.game.width, PhaserWrapper.game.height, 1, color);
 

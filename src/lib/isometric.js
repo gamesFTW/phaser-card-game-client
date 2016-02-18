@@ -6,8 +6,8 @@ export default {
         var TILE_WIDTH = 60;
         var TILE_HEIGHT = 30;
 
-        var xOffset = 540;
-        var yOffset = -75;
+        var xOffset = 680;
+        var yOffset = -20;
 
         return {
             x: (x - y) * (TILE_WIDTH / 2) + xOffset,
