@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-global.PIXI = require('pixi.js');
+global.PIXI = require('pixi');
 global.p2 = require('p2');
 
 var Phaser = require('phaser');

@@ -14,6 +14,7 @@ module.exports = {
         alias: {
             "phaser": path.join(__dirname, "node_modules/phaser/dist/phaser.js"),
             "p2": path.join(__dirname, "node_modules/p2/build/p2.js"),
+            "pixi": path.join(__dirname, "src/external/pixi.js"),
             "phaser-debug": path.join(__dirname, "node_modules/phaser-debug/dist/phaser-debug.js")
         },
         extensions: ["", ".js"]
