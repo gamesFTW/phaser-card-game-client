@@ -111,6 +111,7 @@ class PhaserWrapper {
         
         this._game.load.image('card_bg', '../assets/card1.png');
         this._game.load.image('card_bg_facedown', '../assets/card2.png');
+        this._game.load.image('card_bg_big', '../assets/card3.png');
     }
 
 
