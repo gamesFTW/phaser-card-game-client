@@ -7,7 +7,7 @@ export default {
         var TILE_HEIGHT = 30;
 
         var xOffset = 680;
-        var yOffset = -20;
+        var yOffset = -14;
 
         return {
             x: (x - y) * (TILE_WIDTH / 2) + xOffset,

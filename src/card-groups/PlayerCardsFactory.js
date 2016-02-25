@@ -15,23 +15,23 @@ export default class PlayerCardsFactory {
         return {
             you: {
                 hand: {
-                    x: 910, y: 593, faceUp: true,
+                    x: 920, y: 596, faceUp: true,
                     padding: 5, adaptive: true,
                     maxWidth: 380
                 },
                 table: {
-                    x: 1090, y: 510, faceUp: true,
+                    x: 1090, y: 513, faceUp: true,
                     padding: 5, adaptive:true,
                     maxWidth: 250
                 },
                 deck: {
-                    x: 1320, y: 593, faceUp: false
+                    x: 1320, y: 596, faceUp: false
                 },
                 graveyard: {
-                    x: 1308, y: 345, faceUp: true
+                    x: 1308, y: 348, faceUp: true
                 },
                 manaPool: {
-                    x: 1250, y: 427, faceUp: false,
+                    x: 1250, y: 430, faceUp: false,
                     padding: 5, adaptive: true,
                     maxWidth: 100
                 }
@@ -39,25 +39,25 @@ export default class PlayerCardsFactory {
 
             enemy: {
                 hand: {
-                    x: 750, y: 20, faceUp: false,
-                    padding: -50, adaptive: true,
-                    maxWidth: 400
+                    x: 920, y: 17, faceUp: false,
+                    padding: 5, adaptive: true,
+                    maxWidth: 380
                 },
                 table: {
-                    x: 750, y: 280, faceUp: true,
+                    x: 1090, y: 101, faceUp: true,
                     padding: 5, adaptive: true,
-                    maxWidth: 500
+                    maxWidth: 250
                 },
                 deck: {
-                    x: 1320, y: 20, faceUp: false
+                    x: 1320, y: 17, faceUp: false
                 },
                 graveyard: {
-                    x: 1200, y: 150, faceUp: true
+                    x: 1308, y: 267, faceUp: true
                 },
                 manaPool: {
-                    x: 750, y: 150, faceUp: false,
+                    x: 1250, y: 185, faceUp: false,
                     padding: 5, adaptive: true,
-                    maxWidth: 400
+                    maxWidth: 100
                 }
             }
         };
