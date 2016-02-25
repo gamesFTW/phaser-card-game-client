@@ -88,7 +88,6 @@ export default class TileCardManager {
 
 
     _onTileClick(event) {
-        console.log('click');
         var clickedTile = event.currentTarget;
         var creatureOnTile = this._cardManager.getCreatureByPoint(clickedTile.position);
 
@@ -96,7 +95,6 @@ export default class TileCardManager {
             this._selectedCardOnField = creatureOnTile;
         } else {
             if (this._selectedCardOnHand) {
-                console.log('click play');
                 Backend.playCard(
                     this._selectedCardOnHand.id, clickedTile.position
                 );

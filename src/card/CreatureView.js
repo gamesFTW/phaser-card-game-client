@@ -100,8 +100,6 @@ var OutlineFilter = function (viewWidth, viewHeight, thickness, color) {
         '    gl_FragColor = vec4((ownColor.rgb + outlineColor.rgb * (1. - ownColor.a)) * resultAlpha, resultAlpha);',
         '}'
     ];
-
-    //console.log(this.fragmentSrc.join(''));
 };
 
 OutlineFilter.prototype = Object.create(PIXI.AbstractFilter.prototype);
