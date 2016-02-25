@@ -87,6 +87,9 @@ Card *-- CreatureView
 Card *-- AreaView
 Card *-- CardView
 
+abstract class CardFullView #CAD0E8
+Card *-- CardFullView
+
 
 abstract class CardView #CAD0E8
 CardView --> PhaserWrapper

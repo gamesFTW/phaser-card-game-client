@@ -140,7 +140,8 @@ class PhaserWrapper {
             'tiles',
             'areas',
             'creatures',
-            'cards'
+            'cards',
+            'fullCards'
         ];
 
         this._groups = _.reduce(groupNames, function (obj, name) {

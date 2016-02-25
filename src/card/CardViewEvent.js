@@ -10,4 +10,7 @@ export default class CardViewEvent {
     static get UP_PRESS() { return 'CardViewEvent:upPress' }
     static get LEFT_PRESS() { return 'CardViewEvent:leftPress' }
     static get RIGHT_PRESS() { return 'CardViewEvent:rightPress' }
+
+    static get ZOOM_IN() { return 'CardViewEvent:zoomIn' }
+    static get ZOOM_OUT() { return 'CardViewEvent:zoomOut' }
 }

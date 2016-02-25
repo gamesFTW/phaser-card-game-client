@@ -134,6 +134,8 @@ export default class CardView extends EventEmitter {
 
             // Нужно для сортировки в PhaserWrapper
             this._container.highlight = true;
+
+            PhaserWrapper.game.input.mouse.mouseWheelCallback = this._onZoom.bind(this);
         }
     }
 
@@ -145,6 +147,8 @@ export default class CardView extends EventEmitter {
 
             // Нужно для сортировки в PhaserWrapper
             this._container.highlight = false;
+
+            PhaserWrapper.game.input.mouse.mouseWheelCallback = null;
         }
     }
 
@@ -166,6 +170,8 @@ export default class CardView extends EventEmitter {
         this._sprite.events.onInputDown.add(this._onClick, this);
         this._sprite.events.onInputOver.add(this._onOver, this);
         this._sprite.events.onInputOut.add(this._onOut, this);
+
+
     }
 
 
@@ -339,5 +345,14 @@ export default class CardView extends EventEmitter {
 
     _onOut(event) {
         this.emit(CardViewEvent.OUT);
+    }
+
+
+    _onZoom(event) {
+        if (PhaserWrapper.game.input.mouse.wheelDelta === Phaser.Mouse.WHEEL_UP) {
+            this.emit(CardViewEvent.ZOOM_IN);
+        } else {
+            this.emit(CardViewEvent.ZOOM_OUT);
+        }
     }
 }

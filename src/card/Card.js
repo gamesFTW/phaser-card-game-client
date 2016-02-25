@@ -1,5 +1,6 @@
 import EventEmitter from 'external/EventEmitter';
 import CardView from 'card/CardView';
+import CardFullView from 'card/CardFullView';
 import CreatureView from 'card/CreatureView';
 import CardEvent from 'card/CardEvent';
 import CardViewEvent from 'card/CardViewEvent';
@@ -61,15 +62,24 @@ export default class Card extends EventEmitter {
         this._cardView = null;
 
         /**
+         * @type {CardFullView}
+         * @protected
+         */
+        this._cardFullView = null;
+
+        /**
          * @type {FieldObjectView}
          * @protected
          */
         this._fieldView = null;
 
-
         this._cardView = null;
 
+        this._data = data;
+
         this._createCardView(data);
+
+
         if (this._isOnField) {
             this._createFieldView();
         }
@@ -212,8 +222,24 @@ export default class Card extends EventEmitter {
         this._cardView.on(
             CardViewEvent.RIGHT_PRESS, this._onCardViewRightPress.bind(this)
         );
+
+        this._cardView.on(
+            CardViewEvent.ZOOM_IN, this._onCardViewZoomIn.bind(this)
+        );
+
+        this._cardView.on(
+            CardViewEvent.ZOOM_OUT, this._onCardFullViewZoomOut.bind(this)
+        );
     }
 
+    _createCardFullView() {
+        this._cardFullView = new CardFullView(this._data);
+        this._cardFullView.parent = this;
+
+        this._cardFullView.on(
+            CardViewEvent.CLICK, this._onCardFullViewZoomOut.bind(this)
+        );
+    }
 
     _createFieldView() {
         this._fieldView = new CreatureView(this._x, this._y, this._imageName, this._color);
@@ -295,5 +321,18 @@ export default class Card extends EventEmitter {
 
     _onCardViewRightPress(event) {
         Backend.addCounter(this._id, +1);
+    }
+
+
+    _onCardViewZoomIn(event) {
+        if (!this._cardFullView) {
+            this._createCardFullView();
+        }
+        this._cardFullView.visible = true;
+    }
+
+
+    _onCardFullViewZoomOut(event) {
+        this._cardFullView.visible = false;
     }
 }
