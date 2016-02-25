@@ -160,4 +160,13 @@ export default class PlayerCards extends EventEmitter {
     checkCardInDeck(card) {
         return this._deck.findById(card.id) !== undefined;
     }
+
+
+    /**
+     * @param {Card} card
+     * @return {Boolean}
+     */
+    checkCardInTable(card) {
+        return this._table.findById(card.id) !== undefined;
+    }
 }

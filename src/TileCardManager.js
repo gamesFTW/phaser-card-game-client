@@ -50,6 +50,10 @@ export default class TileCardManager {
         this._cardManager.on(
             CardEvent.DISPOSE, this._onCardDisposed.bind(this)
         );
+
+        this._cardManager.on(
+            CardEvent.PLAY_AS_MANA, this._onCardPlayedAsMana.bind(this)
+        );
     }
 
 
@@ -84,6 +88,11 @@ export default class TileCardManager {
         if (this._selectedCardOnField === event.currentTarget) {
             this._selectedCardOnField = null;
         }
+    }
+
+
+    _onCardPlayedAsMana(event) {
+        this._selectedCardOnHand = null;
     }
 
 

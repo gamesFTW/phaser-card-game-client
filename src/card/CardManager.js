@@ -108,7 +108,8 @@ export default class CardManager extends EventEmitter {
 
         _.forEach(cards, function(card) {
             var cardPosition = card.position;
-            if (cardPosition.x == point.x && cardPosition.y == point.y) {
+            var isOnPoint = cardPosition.x == point.x && cardPosition.y == point.y;
+            if (isOnPoint && card.isOnField) {
                 resultedCard = card;
                 return false;
             }
@@ -118,29 +119,24 @@ export default class CardManager extends EventEmitter {
     }
 
 
-    /**
-     *
-     * @param {String} id
-     * @param {String} ownerId
-     * @param {String} oldCardGroup
-     * @param {String} newCardGroup
-     * @private
-     */
-    _moveCardToPreviousGroup(id, ownerId, oldCardGroup, newCardGroup) {
+    _playCard(id, ownerId, position) {
         let card = this.findById(id);
-        var player = this._players[ownerId];
 
-        if (oldCardGroup === 'hand') {
-            player.moveCardFromHandToDeck(card)
-        } else if (oldCardGroup === 'table') {
-            player.moveCardFromTableToHand(card);
-            card.die();
-        } else if (oldCardGroup === 'graveyard') {
-            player.moveCardFromGraveyardToTable(card);
-            card.play(card.position);
-        } else if (oldCardGroup === 'manaPool') {
-            player.moveCardFromManaPoolToHand(card);
-        }
+        this._players[ownerId].moveCardFromHandToTable(card);
+        card.play(position);
+    }
+
+
+    _addCard(card) {
+        this._cards[card.id] = card;
+    }
+
+
+    _dieCard(id, ownerId) {
+        let card = this.findById(id);
+
+        this._players[ownerId].moveCardFromTableToGraveyard(card);
+        card.die();
     }
 
 
@@ -170,26 +166,10 @@ export default class CardManager extends EventEmitter {
     }
 
 
-    _playCard(id, ownerId, position) {
-        let card = this.findById(id);
-
-        this._players[ownerId].moveCardFromHandToTable(card);
-        card.play(position);
-    }
-
-
     _playCardAsMana(id, ownerId) {
         let card = this.findById(id);
 
         this._players[ownerId].moveCardFromHandToManaPool(card);
-    }
-
-
-    _dieCard(id, ownerId) {
-        let card = this.findById(id);
-
-        this._players[ownerId].moveCardFromTableToGraveyard(card);
-        card.die();
     }
 
 
@@ -205,16 +185,39 @@ export default class CardManager extends EventEmitter {
     }
 
 
-    _addCard(card) {
-        this._cards[card.id] = card;
-    }
-
-
     _giveCardToPlayer(card, cardData) {
         this._players[cardData.ownerId].addCard(card, cardData.cardGroup);
     }
 
 
+    /**
+     *
+     * @param {String} id
+     * @param {String} ownerId
+     * @param {String} oldCardGroup
+     * @param {String} newCardGroup
+     * @private
+     */
+    _moveCardToPreviousGroup(id, ownerId, oldCardGroup, newCardGroup) {
+        let card = this.findById(id);
+        var player = this._players[ownerId];
+
+        if (oldCardGroup === 'hand') {
+            player.moveCardFromHandToDeck(card)
+        } else if (oldCardGroup === 'table') {
+            player.moveCardFromTableToHand(card);
+            card.die();
+        } else if (oldCardGroup === 'graveyard') {
+            player.moveCardFromGraveyardToTable(card);
+            card.play(card.position);
+        } else if (oldCardGroup === 'manaPool') {
+            player.moveCardFromManaPoolToHand(card);
+        }
+    }
+
+    /**
+     * HANDLERS
+     */
     _onPressTap(event) {
         Backend.tapCard(event.currentTarget.id);
     }

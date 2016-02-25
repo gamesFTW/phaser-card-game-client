@@ -83,6 +83,12 @@ export default class Card extends EventEmitter {
 
 
     /**
+     * @returns {Boolean}
+     */
+    get isOnField() { return this._isOnField; }
+
+
+    /**
      * @returns {Object}
      */
     get position() { return {x: this._x, y: this._y}; }
@@ -147,6 +153,7 @@ export default class Card extends EventEmitter {
 
     die() {
         this._fieldView.dispose();
+        this._isOnField = false;
     }
 
 
