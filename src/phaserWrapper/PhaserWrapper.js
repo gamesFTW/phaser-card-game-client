@@ -97,21 +97,21 @@ class PhaserWrapper {
 
 
     _preload() {
-        this._game.load.image('isometric-tile', '../assets/isometric-tile.png');
-        this._game.load.image('tile', '../assets/tile.png');
+        this._game.load.image('isometric-tile', '/assets/isometric-tile.png');
+        this._game.load.image('tile', '/assets/tile.png');
 
-        this._game.load.image('counter', '../assets/counter.png');
+        this._game.load.image('counter', '/assets/counter.png');
 
-        this._game.load.image('lines', '../assets/bg/lines.png');
-        this._game.load.atlas('field_bg', '../assets/bg/field.jpg', null, getFieldBgAtlasData(24, 24));
+        this._game.load.image('lines', '/assets/bg/lines.png');
+        this._game.load.atlas('field_bg', '/assets/bg/field.jpg', null, getFieldBgAtlasData(24, 24));
 
         MeteorApp.imageFileNames.forEach(function(imageFileName) {
-            this._game.load.image(imageFileName, '../assets/creatures/' + imageFileName + '.png');
+            this._game.load.image(imageFileName, '/assets/creatures/' + imageFileName + '.png');
         }.bind(this));
         
-        this._game.load.image('card_bg', '../assets/card1.png');
-        this._game.load.image('card_bg_facedown', '../assets/card2.png');
-        this._game.load.image('card_bg_big', '../assets/card3.png');
+        this._game.load.image('card_bg', '/assets/card1.png');
+        this._game.load.image('card_bg_facedown', '/assets/card2.png');
+        this._game.load.image('card_bg_big', '/assets/card3.png');
     }
 
 

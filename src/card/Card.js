@@ -16,7 +16,6 @@ import Backend from 'Backend';
  * @property {Boolean} isOnField
  * @property {Boolean} isTapped
  * @property {Number} mana
- * @property {dmg} health
  * @property {Number} health
  * @property {Number} maxHealth
  * @property {Number} counter

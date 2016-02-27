@@ -14,18 +14,13 @@ import ManaPool from './ManaPool/ManaPool';
 
 
 export default class PlayerCards extends EventEmitter {
-    constructor(id, type, decksViewsProperties) {
+    constructor(id, decksViewsProperties) {
         super();
 
         /**
          * @type {String}
          */
         this._id = id;
-
-        /**
-         * @type {String} - you|friend|enemy
-         */
-        this._type = type;
 
         this._hand = new Hand(decksViewsProperties.hand);
         this._hand.parent = this;

@@ -60,6 +60,11 @@ class Backend extends EventEmitter {
     }
 
 
+    getPlayersIds() {
+        return MeteorApp.data.gameType == 'solo' ? ['1', '2'] : ['1', '2', '3', '4'];
+    }
+
+
     // ----------------------- Setters -----------------------
     // TODO: move it to class.
     removeCard(id) {

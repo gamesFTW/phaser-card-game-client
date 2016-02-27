@@ -33,7 +33,9 @@ export default class CardManager extends EventEmitter {
         /**
          * @type {Object}
          */
-        this._players = PlayerCardsFactory.createPlayerCards(['1', '2'], Backend.getPlayerId());
+        this._players = PlayerCardsFactory.createPlayerCards(
+            Backend.getPlayersIds(), Backend.getPlayerId()
+        );
 
 
         this._cards = {};
