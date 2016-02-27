@@ -8,52 +8,39 @@ import FiledObjectsViewEvent from 'FiledObjectsViewEvent';
 import Backend from 'Backend';
 
 
+/**
+ * @typedef {Object} CardData
+ * @property {Number} id
+ * @property {Number} x
+ * @property {Number} y
+ * @property {Boolean} isOnField
+ * @property {Boolean} isTapped
+ * @property {Number} mana
+ * @property {dmg} health
+ * @property {Number} health
+ * @property {Number} maxHealth
+ * @property {Number} counter
+ * @property {String} title
+ * @property {String} text
+ * @property {String} imageName
+ * @property {String} color
+ */
+
+
 export default class Card extends EventEmitter {
     /**
-     *
-     * @param {Object} data
-     * @param {Number} data.x
-     * @param {Number} data.y
-     * @param {String} data.id
-     * @param {Boolean} data.isOnField
+     * @param {CardData} data
      */
     constructor(data) {
         super();
 
-        /**
-         * @type {String}
-         */
-        this._color = data.color;
 
         /**
-         * @type {String}
+         * @type {CardData}
+         * @private
          */
-        this._id = data.id;
+        this._data = data;
 
-        /**
-         * @type {int}
-         */
-        this._x = data.x;
-
-        /**
-         * @type {int}
-         */
-        this._y = data.y;
-
-        /**
-         * @type {String}
-         */
-        this._imageName = data.imageName;
-
-        /**
-         * @type {Boolean}
-         */
-        this._isOnField = data.isOnField;
-
-        /**
-         * @type {Boolean}
-         */
-        this._isTapped = data.isTapped;
 
         /**
          * @type {CardView}
@@ -61,54 +48,52 @@ export default class Card extends EventEmitter {
          */
         this._cardView = null;
 
+
         /**
          * @type {CardFullView}
          * @protected
          */
         this._cardFullView = null;
 
+
         /**
-         * @type {FieldObjectView}
+         * @type {CreatureView}
          * @protected
          */
         this._fieldView = null;
 
-        this._cardView = null;
 
-        this._data = data;
-
-        this._createCardView(data);
-
-
-        if (this._isOnField) {
+        this._createCardView(this._data);
+        if (this._data.isOnField) {
             this._createFieldView();
         }
     }
 
 
     /**
-     * @returns {String}
+     * @returns {Number}
      */
-    get id() { return this._id; }
+    get id() { return this._data.id; }
 
 
     /**
      * @returns {Boolean}
      */
-    get isOnField() { return this._isOnField; }
+    get isOnField() { return this._data.isOnField; }
 
 
     /**
      * @returns {Object}
      */
-    get position() { return {x: this._x, y: this._y}; }
+    get position() { return {x: this._data.x, y: this._data.y}; }
 
 
     /**
      * @param {Object} point
      */
     set position(point) {
-        [this._x, this._y] = [point.x, point.y];
+        //TODO: WTF?!?!
+        [this._data.x, this._data.y] = [point.x, point.y];
 
         if (this._fieldView) {
             this._fieldView.position = point;
@@ -120,7 +105,12 @@ export default class Card extends EventEmitter {
      * @param {Number} value
      */
     set health(value) {
-        this._cardView.health = value;
+        this._data.health = value;
+        this._cardView.render();
+
+        if (this._cardFullView) {
+            this._cardFullView.render();
+        }
     }
 
 
@@ -128,7 +118,8 @@ export default class Card extends EventEmitter {
      * @param {Number} value
      */
     set counter(value) {
-        this._cardView.counter = value;
+        this._data.counter = value;
+        this._cardView.render();
     }
 
 
@@ -144,13 +135,13 @@ export default class Card extends EventEmitter {
 
 
     tap() {
-        this._isTapped = true;
+        this._data.isTapped = true;
         this._cardView.tap();
     }
 
 
     untap() {
-        this._isTapped = false;
+        this._data.isTapped = false;
         this._cardView.untap();
     }
 
@@ -163,7 +154,7 @@ export default class Card extends EventEmitter {
 
     die() {
         this._fieldView.dispose();
-        this._isOnField = false;
+        this._data.isOnField = false;
     }
 
 
@@ -242,9 +233,12 @@ export default class Card extends EventEmitter {
     }
 
     _createFieldView() {
-        this._fieldView = new CreatureView(this._x, this._y, this._imageName, this._color);
+        var data = this._data;
+        this._fieldView = new CreatureView(
+            data.x, data.y, data.imageName, data.color
+        );
         this._fieldView.parent = this;
-        this._isOnField = true;
+        this._data.isOnField = true;
 
         this._fieldView.on(
             FiledObjectsViewEvent.CLICK, this._onFieldViewClick.bind(this)
@@ -282,7 +276,7 @@ export default class Card extends EventEmitter {
 
 
     _onCardViewRightClick(event) {
-        if (this._isTapped) {
+        if (this._data.isTapped) {
             this.emit(CardEvent.PRESS_UNTAP);
         } else {
             this.emit(CardEvent.PRESS_TAP);
@@ -305,22 +299,22 @@ export default class Card extends EventEmitter {
 
 
     _onCardViewUpPress(event) {
-        Backend.addHealth(this._id, 1);
+        Backend.addHealth(this._data.id, 1);
     }
 
 
     _onCardViewDownPress(event) {
-        Backend.addHealth(this._id, -1);
+        Backend.addHealth(this._data.id, -1);
     }
 
 
     _onCardViewLeftPress(event) {
-        Backend.addCounter(this._id, -1);
+        Backend.addCounter(this._data.id, -1);
     }
 
 
     _onCardViewRightPress(event) {
-        Backend.addCounter(this._id, +1);
+        Backend.addCounter(this._data.id, +1);
     }
 
 

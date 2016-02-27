@@ -61,35 +61,37 @@ export default class CardView extends EventEmitter {
 
 
     /**
-     * @param {Number} value
+     * @param {CardData} data
      */
-    set health(value) {
-        this._data.health = value;
-        this.render();
-    }
-
-
-    /**
-     * @param {Number} value
-     */
-    set counter(value) {
-        this._data.counter = value;
-        this.render();
-    }
-
-
     constructor(data) {
         super();
+
+        /**
+         * @type {CardData}
+         * @private
+         */
+        this._data = data;
+
+
+        /**
+         * @type {boolean}
+         * @private
+         */
+        this._isHighlighted = false;
+
+
+        /**
+         * @type {boolean}
+         * @private
+         */
+        this._faceUp = true;
+
 
         this._container = PhaserWrapper.game.add.sprite();
         PhaserWrapper.addToGroup('cards', this._container);
 
         this._sprite = null;
         this._background = null;
-        this._data = data;
-        this._isHighlighted = false;
-
-        this._faceUp = true;
 
         this._createSprite();
         if (data.isTapped) {

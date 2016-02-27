@@ -45,25 +45,16 @@ export default class CardFullView extends EventEmitter {
 
 
     /**
-     * @param {Number} value
+     * @param {CardData} data
      */
-    set health(value) {
-        this._data.health = value;
-        this.render();
-    }
-
-
-    /**
-     * @param {Number} value
-     */
-    set counter(value) {
-        this._data.counter = value;
-        this.render();
-    }
-
-
     constructor(data) {
         super();
+
+        /**
+         * @type {CardData}
+         * @private
+         */
+        this._data = data;
 
         this._container = PhaserWrapper.game.make.sprite();
         PhaserWrapper.addToGroup('fullCards', this._container);
@@ -71,7 +62,7 @@ export default class CardFullView extends EventEmitter {
 
         this._sprite = null;
         this._background = null;
-        this._data = data;
+
 
         this._createSprite();
         this._addHandlers();
