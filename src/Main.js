@@ -76,11 +76,9 @@ class Main {
 
 
     _loadSavedGame() {
-        var cards = Backend.getCards();
+        var cardsData = Backend.getCards();
 
-        cards.forEach(function(cardData) {
-            this._cardManager.createCard(cardData);
-        }.bind(this));
+        this._cardManager.createCardsFromData(cardsData);
     }
 }
 

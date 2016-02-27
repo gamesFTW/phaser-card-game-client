@@ -12,10 +12,10 @@ class Backend extends EventEmitter {
     get CARD_UNTAPPED() { return 'Backend:cardUntapped'}
     get CARD_PLAYED() { return 'Backend:cardPlayed'}
     get CARD_PLAYED_AS_SPELL() { return 'Backend:cardPlayedAsSpell'}
+    get CARD_PLAYED_AS_MANA() { return 'Backend:cardPlayedAsMana'}
     get CARD_HEALTH_CHANGED() { return 'Backend:cardHealthChanged'}
     get CARD_COUNTER_CHANGED() { return 'Backend:cardCounterChanged'}
     get CARD_DIED() { return 'Backend:cardDied'}
-    get CARD_PLAYED_AS_MANA() { return 'Backend:cardPlayedAsMana'}
     get CARD_MOVED_TO_PREVIOUS_GROUP() { return 'Backend:cardMovedToPreviousGroup'}
 
 

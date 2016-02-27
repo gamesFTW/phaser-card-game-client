@@ -70,9 +70,14 @@ export default class CardGroupManager extends EventEmitter {
     }
 
 
-    _onChange() {
+    redraw() {
         if (this._view) {
             this._view.reorderCards(this._cards);
         }
+    }
+
+
+    _onChange() {
+        this.redraw();
     }
 }

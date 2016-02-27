@@ -23,6 +23,7 @@ import Backend from 'Backend';
  * @property {String} text
  * @property {String} imageName
  * @property {String} color
+ * @property {String[]} attachedCards
  */
 
 
@@ -39,6 +40,13 @@ export default class Card extends EventEmitter {
          * @private
          */
         this._data = data;
+
+
+        /**
+         * @type {Card[]}
+         * @private
+         */
+        this._attachedCards = [];
 
 
         /**
@@ -85,6 +93,18 @@ export default class Card extends EventEmitter {
      * @returns {Boolean}
      */
     get tapped() { return this._data.tapped; }
+
+
+    /**
+     * @returns {String[]}
+     */
+    get attachedCardsIds() { return this._data.attachedCards; }
+
+
+    /**
+     * @returns {Card[]}
+     */
+    get attachedCards() { return _.clone(this._attachedCards); }
 
 
     /**
@@ -186,6 +206,17 @@ export default class Card extends EventEmitter {
             this._fieldView.highlightOff();
         }
         this._cardView.highlightOff();
+    }
+
+
+    /**
+     * @param {Card} card
+     */
+    attachCard(card) {
+        this._attachedCards.push(card);
+        if (!_.contains(this._data.attachedCards)) {
+            this._data.attachedCards.push(card.id);
+        }
     }
 
 

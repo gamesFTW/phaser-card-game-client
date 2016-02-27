@@ -83,7 +83,13 @@ class PhaserWrapper {
                 } else if (a.x < b.x) {
                     result = -1;
                 } else {
-                    result = 0;
+                    if (a.y > b.y) {
+                        result = 1;
+                    } else if(a.y < b.y) {
+                        result = -1;
+                    } else {
+                        result = 0;
+                    }
                 }
             }
             return result;

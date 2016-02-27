@@ -63,6 +63,24 @@ export default class CardManager extends EventEmitter {
 
 
     /**
+     * Загрузка игры
+     * @param cardsData
+     */
+    createCardsFromData(cardsData) {
+        cardsData.forEach(c => this.createCard(c));
+
+        var allCards = this._cards;
+
+        _.values(this._cards).forEach(function(card) {
+            card.attachedCardsIds.forEach(function(attachedCardId) {
+                card.attachCard(allCards[attachedCardId]);
+            });
+        });
+
+        _.values(this._players).forEach(pc => pc._table.redraw());
+    }
+
+    /**
      *
      * @param cardData
      * @returns {Card}
@@ -197,8 +215,8 @@ export default class CardManager extends EventEmitter {
         let playedCard = this.findById(playedCardId);
         let targetCard = this.findById(targetCardId);
 
+        targetCard.attachCard(playedCard);
         this._players[ownerId].moveCardFromHandToTable(playedCard);
-        //card.play(position);
     }
 
 
