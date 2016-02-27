@@ -120,6 +120,10 @@ export default class Card extends EventEmitter {
     set counter(value) {
         this._data.counter = value;
         this._cardView.render();
+
+        if (this._cardFullView) {
+            this._cardFullView.render();
+        }
     }
 
 

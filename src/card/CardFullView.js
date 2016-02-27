@@ -16,12 +16,12 @@ import CardViewEvent from './CardViewEvent';
 
 export default class CardFullView extends EventEmitter {
     static get CARD_WIDTH() {
-        return 60;
+        return 300;
     }
     
     
     static get CARD_HEIGHT() {
-        return 80;
+        return 400;
     }
 
 
@@ -121,23 +121,18 @@ export default class CardFullView extends EventEmitter {
 
     _addHeader() {
         var text = PhaserWrapper.game.make.text(
-            0, 12,
+            30, 5,
             this._data.title,
             {
-                font: "11px Arial",
-                boundsAlignH: "center",
-                align: "center"
+                font: "20px Arial"
             }
         );
-        text.setTextBounds(0, 0, CardFullView.CARD_WIDTH, 40);
-        text.wordWrap = true;
-        text.lineSpacing = -6;
 
         var mana = PhaserWrapper.game.make.text(
-            6, 0,
+            6, 2,
             this._data.mana,
             {
-                font: "bold 14px Arial",
+                font: "bold 26px Arial",
                 fill: "blue",
                 align: "center"
             }
@@ -152,15 +147,15 @@ export default class CardFullView extends EventEmitter {
 
     _addMiddle() {
         var text = PhaserWrapper.game.make.text(
-            3, 20,
+            10, 200,
             this._data.text,
             {
-                font: "9px Arial"
+                font: "14px Arial"
             }
         );
         text.wordWrap = true;
         text.wordWrapWidth = CardFullView.CARD_WIDTH - 6;
-        text.lineSpacing = -8;
+        text.lineSpacing = -7;
 
         this._sprite.addChild(text);
 
@@ -170,10 +165,10 @@ export default class CardFullView extends EventEmitter {
 
     _addFooter() {
         var dmg = PhaserWrapper.game.make.text(
-            6, CardFullView.CARD_HEIGHT - 18,
+            6, CardFullView.CARD_HEIGHT - 32,
             this._data.dmg,
             {
-                font: "bold 14px Arial",
+                font: "bold 26px Arial",
                 align: "left",
                 fill: 'black'
             }
@@ -193,10 +188,10 @@ export default class CardFullView extends EventEmitter {
             : this._data.health + '/' + this._data.maxHealth;
 
         var hp = PhaserWrapper.game.make.text(
-            CardFullView.CARD_WIDTH - 26, CardFullView.CARD_HEIGHT - 18,
+            CardFullView.CARD_WIDTH - 26, CardFullView.CARD_HEIGHT - 32,
             hpValue,
             {
-                font: "bold 14px Arial",
+                font: "bold 26px Arial",
                 align: "right",
                 boundsAlignH: "right",
                 fill: 'black'
