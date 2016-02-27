@@ -157,6 +157,21 @@ export default class PlayerCards extends EventEmitter {
     }
 
 
+    getNCardsFromTopDeck(n) {
+        return this._deck.getNCardsFromTop(n);
+    }
+
+
+    getAllCardsFromTable() {
+        return this._table.cards;
+    }
+
+
+    getTappedCardsFromManaPool() {
+        return _.filter(this._manaPool.cards, c => c.tapped);
+    }
+
+
     /**
      * @param {Card} card
      * @return {Boolean}

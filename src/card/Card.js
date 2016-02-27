@@ -13,8 +13,8 @@ import Backend from 'Backend';
  * @property {Number} id
  * @property {Number} x
  * @property {Number} y
- * @property {Boolean} isOnField
- * @property {Boolean} isTapped
+ * @property {Boolean} onField
+ * @property {Boolean} tapped
  * @property {Number} mana
  * @property {Number} health
  * @property {Number} maxHealth
@@ -63,7 +63,7 @@ export default class Card extends EventEmitter {
 
 
         this._createCardView(this._data);
-        if (this._data.isOnField) {
+        if (this._data.onField) {
             this._createFieldView();
         }
     }
@@ -78,7 +78,13 @@ export default class Card extends EventEmitter {
     /**
      * @returns {Boolean}
      */
-    get isOnField() { return this._data.isOnField; }
+    get onField() { return this._data.onField; }
+
+
+    /**
+     * @returns {Boolean}
+     */
+    get tapped() { return this._data.tapped; }
 
 
     /**
@@ -138,13 +144,13 @@ export default class Card extends EventEmitter {
 
 
     tap() {
-        this._data.isTapped = true;
+        this._data.tapped = true;
         this._cardView.tap();
     }
 
 
     untap() {
-        this._data.isTapped = false;
+        this._data.tapped = false;
         this._cardView.untap();
     }
 
@@ -157,7 +163,7 @@ export default class Card extends EventEmitter {
 
     die() {
         this._fieldView.dispose();
-        this._data.isOnField = false;
+        this._data.onField = false;
     }
 
 
@@ -241,7 +247,7 @@ export default class Card extends EventEmitter {
             data.x, data.y, data.imageName, data.color
         );
         this._fieldView.parent = this;
-        this._data.isOnField = true;
+        this._data.onField = true;
 
         this._fieldView.on(
             FiledObjectsViewEvent.CLICK, this._onFieldViewClick.bind(this)
@@ -279,7 +285,7 @@ export default class Card extends EventEmitter {
 
 
     _onCardViewRightClick(event) {
-        if (this._data.isTapped) {
+        if (this._data.tapped) {
             this.emit(CardEvent.PRESS_UNTAP);
         } else {
             this.emit(CardEvent.PRESS_TAP);

@@ -68,7 +68,7 @@ export default class CardManager extends EventEmitter {
      */
     createCard(cardData) {
         if (cardData.cardGroup == 'table') {
-            cardData.isOnField = true;
+            cardData.onField = true;
         }
 
         let card = new Card(cardData);
@@ -111,13 +111,29 @@ export default class CardManager extends EventEmitter {
         _.forEach(cards, function(card) {
             var cardPosition = card.position;
             var isOnPoint = cardPosition.x == point.x && cardPosition.y == point.y;
-            if (isOnPoint && card.isOnField) {
+            if (isOnPoint && card.onField) {
                 resultedCard = card;
                 return false;
             }
         });
 
         return resultedCard;
+    }
+
+
+    endOfTurn() {
+        var ownerId = Backend.getPlayerId();
+        var playerCards = this._players[ownerId];
+        // Draw 2 cards
+        var cardsToDraw = playerCards.getNCardsFromTopDeck(2);
+        cardsToDraw.forEach(c => Backend.drawCard(c.id));
+
+        //Untap creatures
+        var cardsToUntap = playerCards.getAllCardsFromTable();
+        cardsToUntap.forEach(c => Backend.untapCard(c.id));
+
+        var manaToUntap = playerCards.getTappedCardsFromManaPool();
+        _.slice(manaToUntap,0, 2).forEach(c => Backend.untapCard(c.id));
     }
 
 

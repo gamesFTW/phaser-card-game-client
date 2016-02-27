@@ -94,7 +94,7 @@ export default class CardView extends EventEmitter {
         this._background = null;
 
         this._createSprite();
-        if (data.isTapped) {
+        if (data.tapped) {
             this.tap();
         }
         this._addHandlers();

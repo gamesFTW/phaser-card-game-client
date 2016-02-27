@@ -8,6 +8,11 @@ export default class CardGroupManager extends EventEmitter {
     }
 
 
+    get cards() {
+        return _.clone(this._cards);
+    }
+
+
     constructor(cards = [], view = null) {
         super();
 
@@ -57,6 +62,11 @@ export default class CardGroupManager extends EventEmitter {
      */
     findById(id) {
         return _.find(this._cards, { id: id });
+    }
+
+
+    getNCardsFromTop(n) {
+        return _.slice(this._cards, 0, n);
     }
 
 

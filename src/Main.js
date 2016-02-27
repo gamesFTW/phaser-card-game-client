@@ -3,6 +3,7 @@ import TileManager from 'tile/TileManager';
 import CardManager from 'card/CardManager';
 import TileCardManager from 'TileCardManager';
 import Backend from 'Backend';
+import InterfaceManager from 'InterfaceManager';
 
 
 /**
@@ -25,6 +26,13 @@ class Main {
 
 
         /**
+         * type {InterfaceManager}
+         * @private
+         */
+        this._interfaceManager = null;
+
+
+        /**
          * type {TileCardManager}
          * @private
          */
@@ -39,11 +47,24 @@ class Main {
         this._disableRightClick();
         this._tileManager = new TileManager();
         this._cardManager = new CardManager();
+
+        this._interfaceManager = new InterfaceManager();
+        this._interfaceManager.on(
+            InterfaceManager.END_OF_TURN_CLICKED,
+            this._onEndOfTurnClicked.bind(this)
+        );
+
+
         this._tileCardManager = new TileCardManager(
             this._tileManager, this._cardManager
         );
 
         this._loadSavedGame();
+    }
+
+
+    _onEndOfTurnClicked(e) {
+        this._cardManager.endOfTurn();
     }
 
 

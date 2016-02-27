@@ -67,6 +67,10 @@ class Backend extends EventEmitter {
 
     // ----------------------- Setters -----------------------
     // TODO: move it to class.
+    endTurn() {
+        Meteor.call('endTurn', this.getPlayerId());
+    }
+
     removeCard(id) {
         Meteor.call('removeCard', id);
     }

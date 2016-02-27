@@ -108,10 +108,14 @@ class PhaserWrapper {
         MeteorApp.imageFileNames.forEach(function(imageFileName) {
             this._game.load.image(imageFileName, '/assets/creatures/' + imageFileName + '.png');
         }.bind(this));
-        
+
+        // Card view
         this._game.load.image('card_bg', '/assets/card1.png');
         this._game.load.image('card_bg_facedown', '/assets/card2.png');
         this._game.load.image('card_bg_big', '/assets/card3.png');
+
+        // Buttons
+        this._game.load.image('button_eot', '/assets/button_eot.png');
     }
 
 
