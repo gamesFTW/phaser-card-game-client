@@ -154,7 +154,7 @@ export default class CardFullView extends EventEmitter {
             }
         );
         text.wordWrap = true;
-        text.wordWrapWidth = CardFullView.CARD_WIDTH - 6;
+        text.wordWrapWidth = CardFullView.CARD_WIDTH - 12;
         text.lineSpacing = -7;
 
         this._sprite.addChild(text);

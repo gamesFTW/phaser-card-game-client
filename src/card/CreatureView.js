@@ -45,7 +45,7 @@ export default class CreatureView extends FieldObjectView {
     highlightOn() {
         if (this._isHighlighted == false) {
             this._isHighlighted = true;
-            var darker = '0xdddddd';
+            var darker = '0xaaaaaa';
             this._creatureSprite.tint = darker;
         }
     }
