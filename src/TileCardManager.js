@@ -25,17 +25,25 @@ export default class TileCardManager {
          */
         this._cardManager = cardManager;
 
+
         /**
          * Card selected by player.
          * @type {Card}
          */
         this._selectedCardOnHand = null;
 
+
         /**
          * Card selected by player.
          * @type {Card}
          */
         this._selectedCardOnField = null;
+
+        /**
+         * Highlighted card.
+         * @type {Card}
+         */
+        this._highlightedCard = null;
 
         this._initFieldObjectManager();
         this._initTileManager();
@@ -54,6 +62,14 @@ export default class TileCardManager {
         this._cardManager.on(
             CardEvent.PLAY_AS_MANA, this._onCardPlayedAsMana.bind(this)
         );
+
+        this._cardManager.on(
+            CardEvent.OVER, this._onCardOver.bind(this)
+        );
+
+        this._cardManager.on(
+            CardEvent.OUT, this._onCardOut.bind(this)
+        );
     }
 
 
@@ -71,6 +87,14 @@ export default class TileCardManager {
         this._tileManager.on(
             FiledObjectsViewEvent.OUT, this._onTileOut.bind(this)
         );
+    }
+
+
+    _chooseHighlightedCard(card) {
+        if (this._highlightedCard) {
+            this._highlightedCard.highlightOff();
+        }
+        this._highlightedCard = card;
     }
 
 
@@ -101,6 +125,16 @@ export default class TileCardManager {
     }
 
 
+    _onCardOver(event) {
+        this._chooseHighlightedCard(event.currentTarget);
+    }
+
+
+    _onCardOut(event) {
+        this._highlightedCard = null;
+    }
+
+
     _onTileClick(event) {
         var clickedTile = event.currentTarget;
         var creatureOnTile = this._cardManager.getCreatureByPoint(clickedTile.position);
@@ -127,7 +161,9 @@ export default class TileCardManager {
     _onTileOver(event) {
         var tile = event.currentTarget;
         var card = this._cardManager.getCreatureByPoint(tile.position);
+
         if (card) {
+            this._chooseHighlightedCard(card);
             card.highlightOn();
         }
     }
@@ -136,6 +172,7 @@ export default class TileCardManager {
     _onTileOut(event) {
         var tile = event.currentTarget;
         var card = this._cardManager.getCreatureByPoint(tile.position);
+
         if (card) {
             card.highlightOff();
         }

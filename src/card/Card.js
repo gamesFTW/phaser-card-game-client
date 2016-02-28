@@ -331,11 +331,13 @@ export default class Card extends EventEmitter {
 
     _onCardViewOver(event) {
         this.highlightOn();
+        this.emit(CardEvent.OVER);
     }
 
 
     _onCardViewOut(event) {
         this.highlightOff();
+        this.emit(CardEvent.OUT);
     }
 
 

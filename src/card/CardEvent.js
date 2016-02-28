@@ -6,4 +6,7 @@ export default class CardEvent {
     static get MOVED() { return 'CardEvent:moved' }
     static get PRESS_TAP() { return 'CardEvent:pressTap' }
     static get PRESS_UNTAP() { return 'CardEvent:pressUntap' }
+
+    static get OVER() { return 'CardEvent:over' }
+    static get OUT() { return 'CardEvent:out' }
 }
