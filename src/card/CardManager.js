@@ -261,9 +261,21 @@ export default class CardManager extends EventEmitter {
         } else if (oldCardGroup === 'table') {
             player.moveCardFromTableToHand(card);
             card.die();
+
+            if (card.type == 'spell') {
+                _.values(this._cards).forEach(function(maybeParentCard) {
+                    if (_.contains(maybeParentCard.attachedCardsIds, card.id)) {
+                        maybeParentCard.deattachCard(card);
+                    }
+                });
+            }
         } else if (oldCardGroup === 'graveyard') {
-            player.moveCardFromGraveyardToTable(card);
-            card.play(card.position);
+            if (newCardGroup === 'table') {
+                player.moveCardFromGraveyardToTable(card);
+                card.play(card.position);
+            } else if (newCardGroup === 'hand') {
+                player.moveCardFromGraveyardToHand(card);
+            }
         } else if (oldCardGroup === 'manaPool') {
             player.moveCardFromManaPoolToHand(card);
         }

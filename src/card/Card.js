@@ -21,6 +21,7 @@ import Backend from 'Backend';
  * @property {Number} counter
  * @property {String} title
  * @property {String} text
+ * @property {String} type
  * @property {String} imageName
  * @property {String} color
  * @property {String[]} attachedCards
@@ -120,10 +121,15 @@ export default class Card extends EventEmitter {
 
 
     /**
+     * @returns {String}
+     */
+    get type() { return this._data.type; }
+
+
+    /**
      * @param {Object} point
      */
     set position(point) {
-        //TODO: WTF?!?!
         [this._data.x, this._data.y] = [point.x, point.y];
 
         if (this._fieldView) {
@@ -188,8 +194,11 @@ export default class Card extends EventEmitter {
 
 
     die() {
-        this._fieldView.dispose();
+        if (this._fieldView) {
+            this._fieldView.dispose();
+        }
         this._data.onField = false;
+        this.deattachCards();
     }
 
 
@@ -217,6 +226,23 @@ export default class Card extends EventEmitter {
         if (!_.contains(this._data.attachedCards)) {
             this._data.attachedCards.push(card.id);
         }
+    }
+
+
+    /**
+     * @param {Card} card
+     */
+    deattachCard(card) {
+        _.remove(this._data.attachedCards, card.id);
+        _.remove(this._attachedCards, c => c.id == card.id);
+    }
+
+
+    /**
+     */
+    deattachCards() {
+        this._data.attachedCards = [];
+        this._attachedCards = [];
     }
 
 

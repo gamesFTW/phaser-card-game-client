@@ -22,7 +22,7 @@ export default class PlayerCardsFactory {
                 table: {
                     x: 1090, y: 513, faceUp: true,
                     padding: 5, adaptive:true,
-                    maxWidth: 250
+                    maxWidth: 250, verticalPadding: - 15
                 },
                 deck: {
                     x: 1320, y: 596, faceUp: false
@@ -46,7 +46,7 @@ export default class PlayerCardsFactory {
                 table: {
                     x: 1090, y: 101, faceUp: true,
                     padding: 5, adaptive: true,
-                    maxWidth: 250
+                    maxWidth: 250, verticalPadding: 15
                 },
                 deck: {
                     x: 1320, y: 17, faceUp: false
@@ -70,7 +70,7 @@ export default class PlayerCardsFactory {
                 table: {
                     x: 18, y: 513, faceUp: true,
                     padding: 5, adaptive: true,
-                    maxWidth: 250
+                    maxWidth: 250, verticalPadding: - 15
                 },
                 deck: {
                     x: 413, y: 596, faceUp: false
@@ -94,7 +94,7 @@ export default class PlayerCardsFactory {
                 table: {
                     x: 18, y: 101, faceUp: true,
                     padding: 5, adaptive: true,
-                    maxWidth: 250
+                    maxWidth: 250, verticalPadding: 15
                 },
                 deck: {
                     x: 413, y: 17, faceUp: false

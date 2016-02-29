@@ -3,6 +3,27 @@ import CardView from 'card/CardView';
 
 
 export default class TableView extends CardRowViewManager {
+    /**
+     * @param {Number} x
+     * @param {Number} y
+     * @param {Boolean} faceUp
+     * @param {Boolean} adaptive
+     * @param {Number} scale - не работает
+     * @param {Number} padding
+     * @param {Number} maxWidth - если 0 то не ограничено, используется только с adaptive
+     * @param {Number} verticalPadding
+     */
+    constructor({
+            x: x, y: y, faceUp: faceUp, adaptive: adaptive = false, scale: scale = 1,
+            padding: padding = 5, maxWidth = maxWidth = 0, verticalPadding: verticalPadding}) {
+        super(...arguments);
+
+
+        /**
+         * @type {Number}
+         */
+        this._verticalPadding = verticalPadding;
+    }
 
 
     /**
@@ -22,10 +43,10 @@ export default class TableView extends CardRowViewManager {
             this.placeCard(card.cardView, nextX, this._y);
 
             if(card.attachedCards.length) {
-                var y = this._y - 15;
+                var y = this._y + this._verticalPadding;
                 card.attachedCards.forEach(function(attachedCard) {
                     this.placeCard(attachedCard.cardView, nextX, y);
-                    y += -15;
+                    y += this._verticalPadding;
                 }.bind(this));
             }
 

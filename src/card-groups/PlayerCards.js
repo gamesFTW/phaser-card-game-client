@@ -133,6 +133,12 @@ export default class PlayerCards extends EventEmitter {
     }
 
 
+    moveCardFromGraveyardToHand(card) {
+        this._graveyard.removeCard(card);
+        this._hand.addCard(card);
+    }
+
+
     moveCardFromManaPoolToHand(card) {
         this._manaPool.removeCard(card);
         this._hand.addCard(card);

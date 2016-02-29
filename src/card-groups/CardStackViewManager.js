@@ -6,10 +6,13 @@ import CardViewManager from './CardViewManager';
 
 export default class CardStackViewManager extends CardViewManager {
     /**
-     *
+     * @param {Number} x
+     * @param {Number} y
+     * @param {Boolean} faceUp
+     * @param {Number} scale - не работает
      */
-    constructor(properties) {
-        super(properties);
+    constructor({x: x, y: y, faceUp: faceUp, scale: scale = 1}) {
+        super(...arguments);
     }
 
 
