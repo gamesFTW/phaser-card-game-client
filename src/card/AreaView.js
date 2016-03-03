@@ -10,7 +10,7 @@ import isometric from 'lib/isometric';
 import filters from 'lib/filters';
 
 
-export default class CreatureView extends FieldObjectView {
+export default class AreaView extends FieldObjectView {
     constructor(x, y, imageName, color) {
         super(x, y);
 
@@ -22,22 +22,22 @@ export default class CreatureView extends FieldObjectView {
             position.x, position.y
         );
 
-        this._creatureSprite = PhaserWrapper.game.add.sprite(
-            0, 0, 'creature_' + this._imageName
+        this._areaSprite = PhaserWrapper.game.add.sprite(
+            -30, -45, this._imageName
         );
-        this._creatureSprite.anchor.x = 0.5;
-        this._creatureSprite.anchor.y = 0.5;
+        //this._areaSprite.anchor.x = 0.5;
+        //this._areaSprite.anchor.y = 0.5;
 
         var filter = new filters.OutlineFilter(PhaserWrapper.game.width, PhaserWrapper.game.height, 1, color);
 
-        this._creatureSprite.filters = [filter];
+        this._areaSprite.filters = [filter];
         // Никто не знает зачем это, вроде как дает ускорение, но ломает божественный tint
-        //this._creatureSprite.shader = filter;
+        //this._areaSprite.shader = filter;
 
 
-        this._containerSprite.addChild(this._creatureSprite);
+        this._containerSprite.addChild(this._areaSprite);
 
-        PhaserWrapper.addToGroup('creatures', this._containerSprite);
+        PhaserWrapper.addToGroup('areas', this._containerSprite);
 
         this.addHandlers();
     }
@@ -47,7 +47,7 @@ export default class CreatureView extends FieldObjectView {
         if (this._isHighlighted == false) {
             this._isHighlighted = true;
             var darker = '0xaaaaaa';
-            this._creatureSprite.tint = darker;
+            this._areaSprite.tint = darker;
         }
     }
 
@@ -56,8 +56,9 @@ export default class CreatureView extends FieldObjectView {
         if (this._isHighlighted == true) {
             var defaultColor = 0xffffff;
             this._isHighlighted = false;
-            this._creatureSprite.tint = defaultColor;
+            this._areaSprite.tint = defaultColor;
         }
     }
 
 }
+

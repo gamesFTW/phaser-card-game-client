@@ -111,9 +111,19 @@ export default class CardManager extends EventEmitter {
      * @param {Card} card
      * @return {Boolean}
      */
-    checkCardInHand(card) {
+    checkCardIn(type, card) {
+        if (!card) {
+            return false;
+        }
         var playerCards = this._players[Backend.getPlayerId()];
-        return playerCards.checkCardInHand(card);
+        if (type == 'hand') {
+            return playerCards.checkCardInHand(card);
+        }
+
+        if (type == 'table') {
+            return playerCards.checkCardInTable(card);
+        }
+
     }
 
 
@@ -208,6 +218,8 @@ export default class CardManager extends EventEmitter {
 
         this._players[ownerId].moveCardFromHandToTable(card);
         card.play(position);
+
+        this._deattachCard(card, ownerId);
     }
 
 
@@ -262,13 +274,7 @@ export default class CardManager extends EventEmitter {
             player.moveCardFromTableToHand(card);
             card.die();
 
-            if (card.type == 'spell') {
-                _.values(this._cards).forEach(function(maybeParentCard) {
-                    if (_.contains(maybeParentCard.attachedCardsIds, card.id)) {
-                        maybeParentCard.deattachCard(card);
-                    }
-                });
-            }
+            this._deattachCard(card, ownerId);
         } else if (oldCardGroup === 'graveyard') {
             if (newCardGroup === 'table') {
                 player.moveCardFromGraveyardToTable(card);
@@ -278,6 +284,22 @@ export default class CardManager extends EventEmitter {
             }
         } else if (oldCardGroup === 'manaPool') {
             player.moveCardFromManaPoolToHand(card);
+        }
+    }
+
+
+    _deattachCard(card, ownerId) {
+        if (card.attachable) {
+            var player = this._players[ownerId];
+
+            _.values(this._cards).forEach(function(maybeParentCard) {
+                if (_.contains(maybeParentCard.attachedCardsIds, card.id)) {
+                    maybeParentCard.deattachCard(card);
+                }
+            });
+
+            // не ну это пиздец
+            player._table.redraw();
         }
     }
 

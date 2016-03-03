@@ -11,13 +11,6 @@ import isometric from 'lib/isometric';
 
 export default class FieldObjectView extends EventEmitter {
     /**
-     * @returns {number}
-     * @const
-     */
-    static get SIZE() { return 30; }
-
-
-    /**
      */
     get position() {
         return {x: this._x, y: this._y};

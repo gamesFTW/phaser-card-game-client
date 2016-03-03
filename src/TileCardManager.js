@@ -30,14 +30,8 @@ export default class TileCardManager {
          * Card selected by player.
          * @type {Card}
          */
-        this._selectedCardOnHand = null;
+        this._selectedCard = null;
 
-
-        /**
-         * Card selected by player.
-         * @type {Card}
-         */
-        this._selectedCardOnField = null;
 
         /**
          * Highlighted card.
@@ -99,29 +93,32 @@ export default class TileCardManager {
 
 
     _onCardClick(event) {
-        var card = event.card;
+        var clickedCard = event.card;
 
-        if (this._selectedCardOnHand) {
+        var isSelectedCardInHand = this._cardManager.checkCardIn('hand', this._selectedCard);
+        var isClickedCardInHand = this._cardManager.checkCardIn('hand', clickedCard);
+        var isClickedCardInTable = this._cardManager.checkCardIn('table', clickedCard);
+
+        if (isSelectedCardInHand) {
             Backend.playCardAsSpell(
-                this._selectedCardOnHand.id, card.id
+                this._selectedCard.id, clickedCard.id
             );
-            this._selectedCardOnHand = null;
-        } else if (this._cardManager.checkCardInHand(card)) {
-            this._selectedCardOnHand = card;
-            this._selectedCardOnField = null;
+            this._selectedCard = null;
+        } else if (isClickedCardInHand || isClickedCardInTable) {
+            this._selectedCard = clickedCard;
         }
     }
 
 
     _onCardDisposed(event) {
-        if (this._selectedCardOnField === event.currentTarget) {
-            this._selectedCardOnField = null;
+        if (this._selectedCard === event.currentTarget) {
+            this._selectedCard = null;
         }
     }
 
 
     _onCardPlayedAsMana(event) {
-        this._selectedCardOnHand = null;
+        this._selectedCard = null;
     }
 
 
@@ -137,21 +134,30 @@ export default class TileCardManager {
 
     _onTileClick(event) {
         var clickedTile = event.currentTarget;
-        var creatureOnTile = this._cardManager.getCreatureByPoint(clickedTile.position);
+        var cardOnTile = this._cardManager.getCreatureByPoint(clickedTile.position);
+        var isSelectedCardInHand = this._cardManager.checkCardIn('hand', this._selectedCard);
+        var isSelectedCardInTable = this._cardManager.checkCardIn('table', this._selectedCard);
 
-        if (creatureOnTile) {
-            this._selectedCardOnField = creatureOnTile;
+        if (cardOnTile && cardOnTile.type == 'creature') {
+            this._selectedCard = cardOnTile;
         } else {
-            if (this._selectedCardOnHand) {
+            if (isSelectedCardInHand) {
+
                 Backend.playCard(
-                    this._selectedCardOnHand.id, clickedTile.position
+                    this._selectedCard.id, clickedTile.position
                 );
-                this._selectedCardOnHand = null;
+                this._selectedCard = null;
             }
 
-            if (this._selectedCardOnField) {
+            if (isSelectedCardInTable && this._selectedCard.onField) {
                 Backend.moveCardTo(
-                    this._selectedCardOnField.id, clickedTile.position
+                    this._selectedCard.id, clickedTile.position
+                );
+            }
+
+            if (isSelectedCardInTable && !this._selectedCard.onField) {
+                Backend.playCard(
+                    this._selectedCard.id, clickedTile.position
                 );
             }
         }

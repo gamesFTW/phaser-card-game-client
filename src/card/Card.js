@@ -1,10 +1,15 @@
 import EventEmitter from 'external/EventEmitter';
+
+
 import CardView from 'card/CardView';
 import CardFullView from 'card/CardFullView';
 import CreatureView from 'card/CreatureView';
+import AreaView from 'card/AreaView';
 import CardEvent from 'card/CardEvent';
 import CardViewEvent from 'card/CardViewEvent';
 import FiledObjectsViewEvent from 'FiledObjectsViewEvent';
+
+
 import Backend from 'Backend';
 
 
@@ -15,6 +20,7 @@ import Backend from 'Backend';
  * @property {Number} y
  * @property {Boolean} onField
  * @property {Boolean} tapped
+ * @property {Boolean} attachable
  * @property {Number} mana
  * @property {Number} health
  * @property {Number} maxHealth
@@ -88,6 +94,12 @@ export default class Card extends EventEmitter {
      * @returns {Boolean}
      */
     get onField() { return this._data.onField; }
+
+
+    /**
+     * @returns {Boolean}
+     */
+    get attachable() { return this._data.attachable; }
 
 
     /**
@@ -306,9 +318,16 @@ export default class Card extends EventEmitter {
 
     _createFieldView() {
         var data = this._data;
-        this._fieldView = new CreatureView(
-            data.x, data.y, data.imageName, data.color
-        );
+
+        if (this.type == 'creature') {
+            this._fieldView = new CreatureView(
+                data.x, data.y, data.imageName, data.color
+            );
+        } else if (this.type == 'area') {
+            this._fieldView = new AreaView(
+                data.x, data.y, data.imageName, data.color
+            );
+        }
         this._fieldView.parent = this;
         this._data.onField = true;
 

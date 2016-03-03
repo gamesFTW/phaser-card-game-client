@@ -109,10 +109,14 @@ class PhaserWrapper {
         this._game.load.image('counter', '/assets/counter.png');
 
         this._game.load.image('lines', '/assets/bg/lines.png');
-        this._game.load.atlas('field_bg', '/assets/bg/field.jpg', null, getFieldBgAtlasData(24, 24));
+
+        // Card Areas
+        this._game.load.image('area_forest', '/assets/areas/forest.png');
+
+        //this._game.load.atlas('field_bg', '/assets/bg/field.jpg', null, getFieldBgAtlasData(24, 24));
 
         MeteorApp.imageFileNames.forEach(function(imageFileName) {
-            this._game.load.image(imageFileName, '/assets/creatures/' + imageFileName + '.png');
+            this._game.load.image('creature_' + imageFileName, '/assets/creatures/' + imageFileName + '.png');
         }.bind(this));
 
         // Card view
@@ -162,28 +166,28 @@ class PhaserWrapper {
 }
 
 
-function getFieldBgAtlasData(w, h) {
-    var FieldObjectView = require('FieldObjectView');
-
-    var frames = [];
-    var size = FieldObjectView.SIZE;
-    _.range(w).forEach(function(x) {
-        _.range(h).forEach(function(y) {
-            frames.push({
-                "filename": 's' + x + '_' + y,
-                "frame": {"x": x*size, "y": y*size ,"w":size,"h":size},
-                "rotated": false,
-                "trimmed": false,
-                "spriteSourceSize": {"x":0, "y":0, "w":size, "h":size},
-                "sourceSize": {"w": size,"h":size}
-            });
-        });
-    });
-
-    return JSON.stringify({
-        frames: frames
-    });
-}
+//function getFieldBgAtlasData(w, h) {
+//    var FieldObjectView = require('FieldObjectView');
+//
+//    var frames = [];
+//    var size = FieldObjectView.SIZE;
+//    _.range(w).forEach(function(x) {
+//        _.range(h).forEach(function(y) {
+//            frames.push({
+//                "filename": 's' + x + '_' + y,
+//                "frame": {"x": x*size, "y": y*size ,"w":size,"h":size},
+//                "rotated": false,
+//                "trimmed": false,
+//                "spriteSourceSize": {"x":0, "y":0, "w":size, "h":size},
+//                "sourceSize": {"w": size,"h":size}
+//            });
+//        });
+//    });
+//
+//    return JSON.stringify({
+//        frames: frames
+//    });
+//}
 
 // Всегда отдает один инстанс
 export default new PhaserWrapper();
