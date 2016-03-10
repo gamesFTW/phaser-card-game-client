@@ -75,7 +75,7 @@ export default class TileManager extends EventEmitter {
      * @returns {TileView}
      */
     createTile(x, y) {
-        var tile = new TileView(x, y);
+        var tile = new TileView({x: x, y: y});
         tile.parent = this;
 
         return tile;

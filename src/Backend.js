@@ -16,6 +16,7 @@ class Backend extends EventEmitter {
     get CARD_HEALTH_CHANGED() { return 'Backend:cardHealthChanged'}
     get CARD_COUNTER_CHANGED() { return 'Backend:cardCounterChanged'}
     get CARD_DIED() { return 'Backend:cardDied'}
+    get CARD_ROTATED() { return 'Backend:cardRotated'}
     get CARD_MOVED_TO_PREVIOUS_GROUP() { return 'Backend:cardMovedToPreviousGroup'}
 
 
@@ -125,6 +126,11 @@ class Backend extends EventEmitter {
 
     addCounter(id, counter) {
         Meteor.call('addCounter', id, counter);
+    }
+
+
+    rotateCard(id) {
+        Meteor.call('rotateCard', id);
     }
 }
 

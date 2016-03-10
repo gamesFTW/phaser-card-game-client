@@ -4,8 +4,8 @@ import isometric from 'lib/isometric';
 
 
 export default class TileView extends FieldObjectView {
-    constructor(x, y) {
-        super(x, y);
+    constructor(data) {
+        super(data);
 
         /**
          * @type {boolean}
@@ -13,7 +13,7 @@ export default class TileView extends FieldObjectView {
          */
         this._isHovered = false;
 
-        var position = isometric.pointerToIcometric({x: x, y: y});
+        var position = isometric.pointerToIcometric({x: data.x, y: data.y});
         this._containerSprite = PhaserWrapper.game.add.sprite(
             position.x, position.y, 'isometric-tile'
         );

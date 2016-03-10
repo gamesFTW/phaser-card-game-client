@@ -21,6 +21,7 @@ import Backend from 'Backend';
  * @property {Boolean} onField
  * @property {Boolean} tapped
  * @property {Boolean} attachable
+ * @property {Boolean} rotated
  * @property {Number} mana
  * @property {Number} health
  * @property {Number} maxHealth
@@ -145,7 +146,7 @@ export default class Card extends EventEmitter {
         [this._data.x, this._data.y] = [point.x, point.y];
 
         if (this._fieldView) {
-            this._fieldView.position = point;
+            this._fieldView.renderPosition();
         }
     }
 
@@ -176,6 +177,18 @@ export default class Card extends EventEmitter {
     }
 
 
+    /**
+     * @param {Boolean} value
+     */
+    set rotated(value) {
+        this._data.rotated = value;
+
+        if (this._fieldView) {
+            this._fieldView.renderRotate();
+        }
+    }
+
+
     dispose() {
         this._cardView.dispose();
 
@@ -200,8 +213,8 @@ export default class Card extends EventEmitter {
 
 
     play(position) {
-        this._createFieldView();
         this.position = position;
+        this._createFieldView();
     }
 
 
@@ -271,7 +284,7 @@ export default class Card extends EventEmitter {
         );
 
         this._cardView.on(
-            CardViewEvent.CTRL_CLICK, this._onCardViewCtrlClick.bind(this)
+            CardViewEvent.MIDDLE_CLICK, this._onCardViewMiddleClick.bind(this)
         );
 
         this._cardView.on(
@@ -320,13 +333,9 @@ export default class Card extends EventEmitter {
         var data = this._data;
 
         if (this.type == 'creature') {
-            this._fieldView = new CreatureView(
-                data.x, data.y, data.imageName, data.color
-            );
+            this._fieldView = new CreatureView(data);
         } else if (this.type == 'area') {
-            this._fieldView = new AreaView(
-                data.x, data.y, data.imageName, data.color
-            );
+            this._fieldView = new AreaView(data);
         }
         this._fieldView.parent = this;
         this._data.onField = true;
@@ -386,8 +395,12 @@ export default class Card extends EventEmitter {
     }
 
 
-    _onCardViewCtrlClick(event) {
-        this.emit(CardEvent.PLAY_AS_MANA);
+    _onCardViewMiddleClick(event) {
+        if (this.onField) {
+            this.emit(CardEvent.ROTATE);
+        } else {
+            this.emit(CardEvent.PLAY_AS_MANA);
+        }
     }
 
 

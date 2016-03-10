@@ -1,7 +1,7 @@
 export default class CardViewEvent {
     static get CLICK() { return 'CardViewEvent:click' }
+    static get MIDDLE_CLICK() { return 'CardViewEvent:middleClick' }
     static get RIGHT_CLICK() { return 'CardViewEvent:rightClick' }
-    static get CTRL_CLICK() { return 'CardViewEvent:ctrlClick' }
 
     static get OVER() { return 'CardViewEvent:over' }
     static get OUT() { return 'CardViewEvent:out' }

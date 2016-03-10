@@ -13,48 +13,58 @@ export default class FieldObjectView extends EventEmitter {
     /**
      */
     get position() {
-        return {x: this._x, y: this._y};
+        return {x: this._data.x, y: this._data.y};
     }
 
 
     /**
-     * @param {Object} point
-     * @param {Number} point.x
-     * @param {Number} point.y
+     * @param {CardData} data
      */
-    set position(point) {
-        this._x = point.x;
-        this._y = point.y;
-
-        if (this._containerSprite) {
-            var position = isometric.pointerToIcometric(point);
-
-            var newX = position.x;
-            var newY = position.y;
-            PhaserWrapper.game.add.tween(this._containerSprite).to( { x: newX, y: newY }, 500).start();
-
-            //this._containerSprite.x = point.x * FieldObjectView.SIZE;
-            //this._containerSprite.y = point.y * FieldObjectView.SIZE;
-        }
-
-        this.emit(FiledObjectsViewEvent.MOVED);
-    }
-
-
-    constructor(x, y) {
+    constructor(data) {
         super();
 
-        this._x = null;
-        this._y = null;
+
+        /**
+         * @type {CardData}
+         * @private
+         */
+        this._data = data;
+
+
         this._isHighlighted = false;
 
         /**
          * @protected
          */
         this._containerSprite = null;
+    }
 
 
-        this.position = {x: x, y: y};
+    /**
+     */
+    renderPosition() {
+        if (this._containerSprite) {
+            var position = isometric.pointerToIcometric(
+                {x: this._data.x, y: this._data.y}
+            );
+
+            var newX = position.x;
+            var newY = position.y;
+            PhaserWrapper.game.add.tween(this._containerSprite)
+                .to( { x: newX, y: newY }, 500)
+                .start();
+        }
+
+        this.emit(FiledObjectsViewEvent.MOVED);
+    }
+
+
+    renderRotate() {
+        if (this._data.rotated) {
+            this._containerSprite.scale.x = -1;
+        } else {
+            this._containerSprite.scale.x = 1;
+        }
     }
 
 
@@ -93,9 +103,4 @@ export default class FieldObjectView extends EventEmitter {
     _onOut(event) {
         this.emit(FiledObjectsViewEvent.OUT);
     }
-
-
-    //onDblClick() {
-    //    this.emit(FiledObjectsViewEvent.DBL_CLICK);
-    //}
 }

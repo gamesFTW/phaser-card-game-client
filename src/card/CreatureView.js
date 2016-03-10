@@ -11,24 +11,23 @@ import filters from 'lib/filters';
 
 
 export default class CreatureView extends FieldObjectView {
-    constructor(x, y, imageName, color) {
-        super(x, y);
+    constructor(data) {
+        super(data);
 
-        this._color = color;
-        this._imageName = imageName;
-
-        var position = isometric.pointerToIcometric({x: x, y: y});
+        var position = isometric.pointerToIcometric({x: data.x, y: data.y});
         this._containerSprite = PhaserWrapper.game.add.sprite(
             position.x, position.y
         );
 
         this._creatureSprite = PhaserWrapper.game.add.sprite(
-            0, 0, 'creature_' + this._imageName
+            0, 0, 'creature_' + data.imageName
         );
         this._creatureSprite.anchor.x = 0.5;
         this._creatureSprite.anchor.y = 0.5;
 
-        var filter = new filters.OutlineFilter(PhaserWrapper.game.width, PhaserWrapper.game.height, 1, color);
+        var filter = new filters.OutlineFilter(
+            PhaserWrapper.game.width, PhaserWrapper.game.height, 1, data.color
+        );
 
         this._creatureSprite.filters = [filter];
         // Никто не знает зачем это, вроде как дает ускорение, но ломает божественный tint
@@ -40,6 +39,8 @@ export default class CreatureView extends FieldObjectView {
         PhaserWrapper.addToGroup('creatures', this._containerSprite);
 
         this.addHandlers();
+        this.renderPosition();
+        this.renderRotate();
     }
 
 

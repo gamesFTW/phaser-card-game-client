@@ -53,7 +53,11 @@ export default class CardManager extends EventEmitter {
         Backend.on(Backend.CARD_HEALTH_CHANGED, this._onCardHealthChanged.bind(this));
         Backend.on(Backend.CARD_COUNTER_CHANGED, this._onCardCounterChanged.bind(this));
         Backend.on(Backend.CARD_DRAWN, this._onCardDrawn.bind(this));
-        Backend.on(Backend.CARD_MOVED_TO_PREVIOUS_GROUP, this._onCardMovedToPreviousGroup.bind(this));
+        Backend.on(Backend.CARD_ROTATED, this._onCardRotated.bind(this));
+        Backend.on(
+            Backend.CARD_MOVED_TO_PREVIOUS_GROUP,
+            this._onCardMovedToPreviousGroup.bind(this)
+        );
     }
 
 
@@ -94,9 +98,10 @@ export default class CardManager extends EventEmitter {
         card.parent = this;
 
         // Возможно стоит вынести все слушатели в отдельный класс
-        card.on(CardEvent.PRESS_TAP, this._onPressTap.bind(this));
-        card.on(CardEvent.PRESS_UNTAP, this._onPressUntap.bind(this));
-        card.on(CardEvent.PLAY_AS_MANA, this._onPlayAsMana.bind(this));
+        card.on(CardEvent.PRESS_TAP, this._onCardPressTap.bind(this));
+        card.on(CardEvent.PRESS_UNTAP, this._onCardPressUntap.bind(this));
+        card.on(CardEvent.PLAY_AS_MANA, this._onCardPlayAsMana.bind(this));
+        card.on(CardEvent.ROTATE, this._onCardRotate.bind(this));
         card.on(CardEvent.CARD_CLICK, this._onCardClick.bind(this));
 
         this._addCard(card);
@@ -166,14 +171,6 @@ export default class CardManager extends EventEmitter {
     }
 
 
-    _playCard(id, ownerId, position) {
-        let card = this.findById(id);
-
-        this._players[ownerId].moveCardFromHandToTable(card);
-        card.play(position);
-    }
-
-
     _addCard(card) {
         this._cards[card.id] = card;
     }
@@ -213,10 +210,18 @@ export default class CardManager extends EventEmitter {
     }
 
 
-    _playCard(id, ownerId, position) {
+    _rotateCard(id, rotated) {
+        let card = this.findById(id);
+        card.rotated = rotated;
+    }
+
+
+    _playCard(id, ownerId, position, playType) {
         let card = this.findById(id);
 
-        this._players[ownerId].moveCardFromHandToTable(card);
+        if (playType == 'summon') {
+            this._players[ownerId].moveCardFromHandToTable(card);
+        }
         card.play(position);
 
         this._deattachCard(card, ownerId);
@@ -306,19 +311,25 @@ export default class CardManager extends EventEmitter {
     /**
      * HANDLERS
      */
-    _onPressTap(event) {
+    _onCardPressTap(event) {
         Backend.tapCard(event.currentTarget.id);
     }
 
 
-    _onPressUntap(event) {
+    _onCardPressUntap(event) {
         Backend.untapCard(event.currentTarget.id);
     }
 
 
-    _onPlayAsMana(event) {
+    _onCardPlayAsMana(event) {
         Backend.playAsMana(event.currentTarget.id);
     }
+
+
+    _onCardRotate(event) {
+        Backend.rotateCard(event.currentTarget.id);
+    }
+
 
     _onCardClick(event) {
         var card = event.currentTarget;
@@ -365,7 +376,7 @@ export default class CardManager extends EventEmitter {
 
     //TODO: remove it to MoveAction class
     _onCardPlayed(event) {
-        this._playCard(event.id, event.ownerId, event.position);
+        this._playCard(event.id, event.ownerId, event.position, event.playType);
     }
 
 
@@ -378,6 +389,12 @@ export default class CardManager extends EventEmitter {
     //TODO: remove it to MoveAction class
     _onCardDrawn(event) {
         this._drawCard(event.id, event.ownerId);
+    }
+
+
+    //TODO: remove it to MoveAction class
+    _onCardRotated(event) {
+        this._rotateCard(event.id, event.rotated);
     }
 
 

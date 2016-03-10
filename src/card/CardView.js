@@ -296,16 +296,12 @@ export default class CardView extends EventEmitter {
 
     // Handlers
     _onClick(event, pointer) {
-        var button = inputHelpers.getMouseButton(event);
-
-        if (PhaserWrapper.game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)) {
-            this.emit(CardViewEvent.CTRL_CLICK);
-        } else {
-            if (pointer.leftButton.isDown) {
-                this.emit(CardViewEvent.CLICK);
-            } else if (pointer.rightButton.isDown) {
-                this.emit(CardViewEvent.RIGHT_CLICK);
-            }
+        if (pointer.leftButton.isDown) {
+            this.emit(CardViewEvent.CLICK);
+        } else if (pointer.rightButton.isDown) {
+            this.emit(CardViewEvent.RIGHT_CLICK);
+        } else if (pointer.middleButton.isDown) {
+            this.emit(CardViewEvent.MIDDLE_CLICK);
         }
     }
 

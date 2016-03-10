@@ -30,11 +30,9 @@ export default class TableView extends CardRowViewManager {
      * @param {Card[]} cards
      */
     reorderCards(cards) {
-
         var attachedCards = this._getAttachedCards(cards);
         var attachedCardsIds = attachedCards.map(c => c.id);
         var notAttachedCards = _.reject(cards, c => _.contains(attachedCardsIds, c.id));
-
 
         var nextX = this._x;
         var cardMargin = this.getCardMargin(notAttachedCards.length);
