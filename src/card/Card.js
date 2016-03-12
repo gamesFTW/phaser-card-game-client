@@ -79,7 +79,7 @@ export default class Card extends EventEmitter {
 
 
         this._createCardView(this._data);
-        if (this._data.onField) {
+        if (this._data.onField && this._data.type != 'spell') {
             this._createFieldView();
         }
     }

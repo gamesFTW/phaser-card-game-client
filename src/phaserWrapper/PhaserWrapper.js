@@ -112,6 +112,9 @@ class PhaserWrapper {
 
         // Card Areas
         this._game.load.image('area_forest', '/assets/areas/forest.png');
+        this._game.load.image('area_firewall', '/assets/areas/firewall.png');
+        this._game.load.image('area_windwall', '/assets/areas/windwall.png');
+        this._game.load.image('area_lake', '/assets/areas/lake.png');
 
         //this._game.load.atlas('field_bg', '/assets/bg/field.jpg', null, getFieldBgAtlasData(24, 24));
 
