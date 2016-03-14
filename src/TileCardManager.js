@@ -150,12 +150,14 @@ export default class TileCardManager {
             }
 
             if (isSelectedCardInTable && this._selectedCard.onField) {
+
                 Backend.moveCardTo(
                     this._selectedCard.id, clickedTile.position
                 );
             }
 
             if (isSelectedCardInTable && !this._selectedCard.onField) {
+
                 Backend.playCard(
                     this._selectedCard.id, clickedTile.position
                 );

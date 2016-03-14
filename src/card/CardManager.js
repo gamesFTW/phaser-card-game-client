@@ -90,7 +90,8 @@ export default class CardManager extends EventEmitter {
      * @returns {Card}
      */
     createCard(cardData) {
-        if (cardData.cardGroup == 'table') {
+        // TODO говно же бекграунд, плохо считать сыграность карты по наличию X и Y, нужно иметь поле attached.
+        if (cardData.cardGroup === 'table' && cardData.x !== undefined) {
             cardData.onField = true;
         }
 
