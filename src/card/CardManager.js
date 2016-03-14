@@ -166,6 +166,7 @@ export default class CardManager extends EventEmitter {
         var cardsToUntap = playerCards.getAllCardsFromTable();
         cardsToUntap.forEach(c => Backend.untapCard(c.id));
 
+        //Untap mana
         var manaToUntap = playerCards.getTappedCardsFromManaPool();
         _.slice(manaToUntap,0, 2).forEach(c => Backend.untapCard(c.id));
     }
@@ -406,7 +407,12 @@ export default class CardManager extends EventEmitter {
 
     //TODO: remove it to MoveAction class
     _onCardDied(event) {
-        this._dieCard(event.id, event.ownerId);
+        let id = event.id,
+            card = this.findById(id),
+            ownerId = event.ownerId;
+
+        this._deattachCard(card, ownerId);
+        this._dieCard(id, ownerId);
     }
 
 
