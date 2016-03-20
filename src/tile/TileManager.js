@@ -29,7 +29,7 @@ function getCornerCells(a, b, c, w, h) {
 
 
 export default class TileManager extends EventEmitter {
-    constructor(width = 24, height = 24) {
+    constructor(width = 16, height = 16) {
         super();
 
 
@@ -49,12 +49,7 @@ export default class TileManager extends EventEmitter {
      * @param {int} height
      */
     createTiles(width, height) {
-        var cellsToIgnore = [].concat(
-            getCornerCells({x:5, y:0}, {x:0, y:5}, {x:0,y:0}, width, height),
-            getCornerCells({x:19, y:0}, {x:24, y:4}, {x:24,y:0}, width, height),
-            getCornerCells({x:0, y:19}, {x:4, y:24}, {x:0,y:24}, width, height),
-            getCornerCells({x:19, y:24}, {x:24, y:19}, {x:24,y:24}, width, height)
-        );
+        var cellsToIgnore = [];
 
         for (var i = 0; i < width; i++) {
             this._items[i] = {};

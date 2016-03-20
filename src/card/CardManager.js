@@ -169,7 +169,7 @@ export default class CardManager extends EventEmitter {
 
         //Untap mana
         var manaToUntap = playerCards.getTappedCardsFromManaPool();
-        _.slice(manaToUntap,0, 2).forEach(c => Backend.untapCard(c.id));
+        _.slice(manaToUntap,0, 3).forEach(c => Backend.untapCard(c.id));
     }
 
 
