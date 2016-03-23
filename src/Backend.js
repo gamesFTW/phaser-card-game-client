@@ -1,7 +1,7 @@
 import EventEmitter from 'external/EventEmitter';
 
-var Card = MeteorApp.Card;
-var Action = MeteorApp.Action;
+var Cards = MeteorApp.CardsInGame;
+var Actions = MeteorApp.Actions;
 
 
 class Backend extends EventEmitter {
@@ -30,7 +30,7 @@ class Backend extends EventEmitter {
         //TODO ХАК для того что бы все прошлые эвенты не пожгружались
         var initializing = true;
 
-        Action.find().observe({
+        Actions.find().observe({
             added: function(action) {
                 if(!initializing) {
                     this.emit(action.type, action.params);
@@ -45,7 +45,7 @@ class Backend extends EventEmitter {
     // ----------------------- Getters -----------------------
     // TODO: move it to class.
     getCards() {
-        return Card.find().fetch().map(function(card) {
+        return Cards.find().fetch().map(function(card) {
             // TODO здесь хочется сделать нормальное отбрасывание ненужного из cardData
             // TODO Тоесть хочется отдавать только нужно для создание карты у плеера
             var cardData = card;
