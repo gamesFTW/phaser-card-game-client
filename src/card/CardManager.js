@@ -34,7 +34,9 @@ export default class CardManager extends EventEmitter {
          * @type {Object}
          */
         this._players = PlayerCardsFactory.createPlayerCards(
-            Backend.getPlayersIds(), Backend.getPlayerId()
+            Backend.getGameType(),
+            Backend.getAllPlayersIds(),
+            Backend.getCurrentPlayerId()
         );
 
 
@@ -121,7 +123,7 @@ export default class CardManager extends EventEmitter {
         if (!card) {
             return false;
         }
-        var playerCards = this._players[Backend.getPlayerId()];
+        var playerCards = this._players[Backend.getCurrentPlayerId()];
         if (type == 'hand') {
             return playerCards.checkCardInHand(card);
         }
@@ -157,7 +159,7 @@ export default class CardManager extends EventEmitter {
 
 
     endOfTurn() {
-        var ownerId = Backend.getPlayerId();
+        var ownerId = Backend.getCurrentPlayerId();
         var playerCards = this._players[ownerId];
         // Draw 2 cards
         var cardsToDraw = playerCards.getNCardsFromTopDeck(2);
@@ -335,7 +337,7 @@ export default class CardManager extends EventEmitter {
 
     _onCardClick(event) {
         var card = event.currentTarget;
-        var playerCards = this._players[Backend.getPlayerId()];
+        var playerCards = this._players[Backend.getCurrentPlayerId()];
 
         // Если игрок хочет отменить draw/die/play
         var isCardPlayUndo = PhaserWrapper.game.input.keyboard.isDown(Phaser.Keyboard.Z);

@@ -30,7 +30,7 @@ class Backend extends EventEmitter {
         //TODO ХАК для того что бы все прошлые эвенты не пожгружались
         var initializing = true;
 
-        Actions.find().observe({
+        Actions.find({gameId: this.getGameId()}).observe({
             added: function(action) {
                 if(!initializing) {
                     this.emit(action.type, action.params);
@@ -45,7 +45,7 @@ class Backend extends EventEmitter {
     // ----------------------- Getters -----------------------
     // TODO: move it to class.
     getCards() {
-        return Cards.find().fetch().map(function(card) {
+        return Cards.find({gameId: this.getGameId()}).fetch().map(function(card) {
             // TODO здесь хочется сделать нормальное отбрасывание ненужного из cardData
             // TODO Тоесть хочется отдавать только нужно для создание карты у плеера
             var cardData = card;
@@ -57,80 +57,96 @@ class Backend extends EventEmitter {
     }
 
 
-    getPlayerId() {
-        return MeteorApp.data.playerId;
+    getMapWidth() {
+        return MeteorApp.data.mapWidth;
     }
 
 
-    getPlayersIds() {
-        return MeteorApp.data.gameType == 'solo' ? ['1', '2'] : ['1', '2', '3', '4'];
+    getMapHeight() {
+        return MeteorApp.data.mapHeight;
+    }
+
+
+    getGameType() {
+        return MeteorApp.data.gameType;
+    }
+
+
+    getGameId() {
+        return MeteorApp.data.gameId;
+    }
+
+
+    getCurrentPlayerId() {
+        return MeteorApp.data.currentPlayerId;
+    }
+
+
+    getAllPlayersIds() {
+        return MeteorApp.data.allPlayersIds;
     }
 
 
     // ----------------------- Setters -----------------------
     // TODO: move it to class.
-    endTurn() {
-        Meteor.call('endTurn', this.getPlayerId());
-    }
-
     removeCard(id) {
-        Meteor.call('removeCard', id);
+        Meteor.call('removeCard', this.getGameId(), id);
     }
 
 
     moveCardTo(id, position) {
-        Meteor.call('moveCard', id, position);
+        Meteor.call('moveCard', this.getGameId(), id, position);
     }
 
 
     tapCard(id) {
-        Meteor.call('tapCard', id);
+        Meteor.call('tapCard', this.getGameId(), id);
     }
 
 
     drawCard(id) {
-        Meteor.call('drawCard', id);
+        Meteor.call('drawCard', this.getGameId(), id);
     }
 
 
     untapCard(id) {
-        Meteor.call('untapCard', id);
+        Meteor.call('untapCard', this.getGameId(), id);
     }
 
 
     //TODO rename to playCardAsMana
     playAsMana(id) {
-        Meteor.call('playAsMana', id);
+        Meteor.call('playAsMana', this.getGameId(), id);
     }
 
 
     playCard(id, position) {
-        Meteor.call('playCard', id, position);
+        Meteor.call('playCard', this.getGameId(), id, position);
     }
 
 
     playCardAsSpell(playedCardId, targetCardId) {
-        Meteor.call('playCardAsSpell', playedCardId, targetCardId);
+        Meteor.call('playCardAsSpell', this.getGameId(), playedCardId, targetCardId);
     }
 
 
     moveCardToPreviousGroup(id) {
-        Meteor.call('moveCardToPreviousGroup', id);
+        Meteor.call('moveCardToPreviousGroup', this.getGameId(), id);
     }
 
 
     addHealth(id, health) {
-        Meteor.call('addHealth', id, health);
+        Meteor.call('addHealth', this.getGameId(), id, health);
     }
 
 
     addCounter(id, counter) {
-        Meteor.call('addCounter', id, counter);
+        Meteor.call('addCounter', this.getGameId(), id, counter);
     }
 
 
     rotateCard(id) {
-        Meteor.call('rotateCard', id);
+        Meteor.call('rotateCard', this.getGameId(), id);
     }
 }
 

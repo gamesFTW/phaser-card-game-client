@@ -29,7 +29,7 @@ function getCornerCells(a, b, c, w, h) {
 
 
 export default class TileManager extends EventEmitter {
-    constructor(width = 16, height = 16) {
+    constructor(width = 14, height = 14) {
         super();
 
 
