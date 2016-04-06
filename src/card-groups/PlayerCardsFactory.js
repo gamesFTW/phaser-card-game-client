@@ -112,20 +112,31 @@ export default class PlayerCardsFactory {
     }
 
 
-    static createPlayerCards(playersIds, yourId) {
-        var friends = {
-            '1': '3',
-            '2': '4',
-            '3': '1',
-            '4': '2'
-        };
+    static createPlayerCards(gameType, playersIds, yourId) {
+        var friends = {};
+        var enemies = {};
 
-        var enemies = {
-            '1': ['2', '4'],
-            '2': ['1', '3'],
-            '3': ['2', '4'],
-            '4': ['1', '3']
-        };
+        var player1Id = playersIds[0];
+        var player2Id = playersIds[1];
+        var player3Id = playersIds[2];
+        var player4Id = playersIds[3];
+
+        if (gameType == 'solo') {
+            enemies[player1Id] = [player2Id];
+            enemies[player2Id] = [player1Id];
+        } else if (gameType == 'ogre') {
+            enemies[player1Id] = [player2Id, player4Id];
+            enemies[player2Id] = [player1Id, player3Id];
+            enemies[player3Id] = [player2Id, player4Id];
+            enemies[player4Id] = [player1Id, player3Id];
+
+            friends[player1Id] = player3Id;
+            friends[player2Id] = player4Id;
+            friends[player3Id] = player1Id;
+            friends[player4Id] = player2Id;
+        } else {
+            console.error('Unknown game type.');
+        }
 
         return _.transform(playersIds, function(obj, id) {
             var playerType = null;

@@ -45,7 +45,10 @@ class Main {
 
     _init() {
         this._disableRightClick();
-        this._tileManager = new TileManager();
+        this._tileManager = new TileManager(
+            Backend.getMapWidth(),
+            Backend.getMapHeight()
+        );
         this._cardManager = new CardManager();
 
         this._interfaceManager = new InterfaceManager();
