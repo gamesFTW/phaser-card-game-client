@@ -1,8 +1,5 @@
 import EventEmitter from 'external/EventEmitter';
 
-var Cards = MeteorApp.CardsInGame;
-var Actions = MeteorApp.Actions;
-
 
 class Backend extends EventEmitter {
     get CARD_MOVED() { return 'Backend:cardMoved'}
@@ -29,8 +26,10 @@ class Backend extends EventEmitter {
     listenServerActions() {
         //TODO ХАК для того что бы все прошлые эвенты не пожгружались
         var initializing = true;
+        
+        console.log('gameId', this.getGameId());
 
-        Actions.find({gameId: this.getGameId()}).observe({
+        MeteorApp.Actions.find({gameId: this.getGameId()}).observe({
             added: function(action) {
                 if(!initializing) {
                     this.emit(action.type, action.params);
@@ -45,15 +44,26 @@ class Backend extends EventEmitter {
     // ----------------------- Getters -----------------------
     // TODO: move it to class.
     getCards() {
-        return Cards.find({gameId: this.getGameId()}).fetch().map(function(card) {
-            // TODO здесь хочется сделать нормальное отбрасывание ненужного из cardData
-            // TODO Тоесть хочется отдавать только нужно для создание карты у плеера
-            var cardData = card;
-            cardData['id'] = cardData['_id'];
-            delete cardData['_id'];
+        return MeteorApp.CardsInGame.find({gameId: this.getGameId()})
+            .map(function(card) {
+                // TODO здесь хочется сделать нормальное отбрасывание ненужного из cardData
+                // TODO Тоесть хочется отдавать только нужно для создание карты у плеера
+                var cardData = card;
+                cardData['id'] = cardData['_id'];
+                delete cardData['_id'];
 
-            return cardData;
-        });
+                return cardData;
+            });
+    }
+
+
+    getCardImages() {
+        var imagesCardsIds = MeteorApp.CardsInGame.find(
+            {gameId: this.getGameId()}, {fields: {imageId: 1 }}
+        ).map(c => c.imageId);
+        
+        return MeteorApp.Images.find({_id: { $in: imagesCardsIds }})
+            .map(i => ({_id: i._id, url: i.url()}));
     }
 
 

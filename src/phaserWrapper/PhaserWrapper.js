@@ -1,7 +1,12 @@
 import _ from 'lodash';
 
+
+import Backend from 'Backend';
+
+
 global.PIXI = require('pixi');
 global.p2 = require('p2');
+
 
 var Phaser = require('phaser');
 
@@ -118,10 +123,9 @@ class PhaserWrapper {
 
         //this._game.load.atlas('field_bg', '/assets/bg/field.jpg', null, getFieldBgAtlasData(24, 24));
 
-        MeteorApp.imageFileNames.forEach(function(imageFileName) {
-            this._game.load.image('creature_' + imageFileName, '/assets/creatures/' + imageFileName + '.png');
-        }.bind(this));
+        Backend.getCardImages().forEach(i => this._game.load.image(i._id, i.url));
 
+        
         // Card view
         this._game.load.image('card_bg', '/assets/card1.png');
         this._game.load.image('card_bg_facedown', '/assets/card2.png');
@@ -140,7 +144,6 @@ class PhaserWrapper {
 
     _update() {
        this.refreshAllGroupSorting();
-
     }
 
 
