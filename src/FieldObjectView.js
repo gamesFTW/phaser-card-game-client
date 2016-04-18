@@ -60,11 +60,7 @@ export default class FieldObjectView extends EventEmitter {
 
 
     renderRotate() {
-        if (this._data.rotated) {
-            this._containerSprite.scale.x = -1;
-        } else {
-            this._containerSprite.scale.x = 1;
-        }
+        console.error('renderRotate not implemented');
     }
 
 

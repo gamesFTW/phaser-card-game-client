@@ -57,6 +57,14 @@ export default class AreaView extends FieldObjectView {
             this._areaSprite.tint = defaultColor;
         }
     }
+    
+    renderRotate() {
+        if (this._data.rotated) {
+            this._containerSprite.scale.x = -1;
+        } else {
+            this._containerSprite.scale.x = 1;
+        }
+    }
 
 }
 

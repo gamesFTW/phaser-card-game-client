@@ -22,6 +22,8 @@ import Backend from 'Backend';
  * @property {Boolean} tapped
  * @property {Boolean} attachable
  * @property {Boolean} rotated
+ * @property {Boolean} big
+ * @property {Boolean} hero 
  * @property {Number} mana
  * @property {Number} health
  * @property {Number} maxHealth

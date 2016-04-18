@@ -20,7 +20,7 @@ export default class CreatureView extends FieldObjectView {
         );
 
         this._creatureSprite = PhaserWrapper.game.add.sprite(
-            0, 0, data.imageId
+            data.big ? 30 : 0, 0, data.imageId
         );
         this._creatureSprite.anchor.x = 0.5;
         this._creatureSprite.anchor.y = 0.5;
@@ -58,6 +58,14 @@ export default class CreatureView extends FieldObjectView {
             var defaultColor = 0xffffff;
             this._isHighlighted = false;
             this._creatureSprite.tint = defaultColor;
+        }
+    }
+    
+    renderRotate() {
+        if (this._data.rotated) {
+            this._creatureSprite.scale.x = -1;
+        } else {
+            this._creatureSprite.scale.x = 1;
         }
     }
 
