@@ -13,7 +13,7 @@ export default class FieldObjectView extends EventEmitter {
     /**
      */
     get position() {
-        return {x: this._data.x, y: this._data.y};
+        return { x: this._data.x, y: this._data.y };
     }
 
 

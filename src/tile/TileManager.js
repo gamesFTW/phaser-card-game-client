@@ -1,8 +1,13 @@
 import _ from 'lodash';
 
+import EventEmitter from 'external/EventEmitter';
+
 
 import TileView from 'tile/TileView';
-import EventEmitter from 'external/EventEmitter';
+import FiledObjectsViewEvent from 'FiledObjectsViewEvent';
+
+
+import { findCellsInRadius } from 'lib/map';
 
 
 export default class TileManager extends EventEmitter {
@@ -15,7 +20,11 @@ export default class TileManager extends EventEmitter {
          * @private
          */
         this._items = {};
-
+        
+        
+        this._width = width;
+        this._height = height;
+        
 
         this.createTiles(width, height);
     }
@@ -26,16 +35,11 @@ export default class TileManager extends EventEmitter {
      * @param {int} height
      */
     createTiles(width, height) {
-        var cellsToIgnore = [];
-
         for (var i = 0; i < width; i++) {
             this._items[i] = {};
 
             for (var j = 0; j < height; j++) {
-                if (!_.some(cellsToIgnore, [i, j])) {
-                    this._items[i][j] = this.createTile(i, j);
-                }
-
+                this._items[i][j] = this.createTile(i, j);
             }
         }
     }
@@ -50,6 +54,29 @@ export default class TileManager extends EventEmitter {
         var tile = new TileView({x: x, y: y});
         tile.parent = this;
 
+        this.addHandlers(tile);
+
         return tile;
     }
+
+
+    addHandlers(tile) {
+        tile.on(FiledObjectsViewEvent.OVER, this._onTileOver.bind(this));
+        tile.on(FiledObjectsViewEvent.OUT, this._onTileOut.bind(this));
+    }
+
+    
+    _onTileOver(event) {
+        let tile = event.currentTarget;
+        let cellsToHighlight = findCellsInRadius(this._width, this._height, tile.position, 3);
+        cellsToHighlight.forEach((cell) => { this._items[cell.x][cell.y].hightlight = true });
+    }
+    
+    
+    _onTileOut(event) {
+        let tile = event.currentTarget;
+        let cellsToHighlight = findCellsInRadius(this._width, this._height, tile.position, 3);
+        cellsToHighlight.forEach((cell) => { this._items[cell.x][cell.y].hightlight = false });
+    }
+
 }

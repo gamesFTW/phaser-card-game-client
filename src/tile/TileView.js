@@ -1,9 +1,33 @@
 import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
 import FieldObjectView from 'FieldObjectView';
+import TileEvent from './TileEvent';
+
 import isometric from 'lib/isometric';
 
 
 export default class TileView extends FieldObjectView {
+    
+    set hightlight(value) {
+        this._isHightlighted = value;
+        
+        if (value) {
+            this._addHighlight();
+        } else {
+            this._removeHighlight();
+        }
+        
+    }
+    
+    set hover(value) {
+        this._isHovered = value;
+         
+        if (value) {
+            this._addHover();
+        } else {
+            this._removeHover();
+        }
+    }
+    
     constructor(data) {
         super(data);
 
@@ -12,6 +36,8 @@ export default class TileView extends FieldObjectView {
          * @private
          */
         this._isHovered = false;
+        
+        this._isHightlighted = false;
 
         var position = isometric.pointerToIcometric({x: data.x, y: data.y});
         this._containerSprite = PhaserWrapper.game.add.sprite(
@@ -29,36 +55,46 @@ export default class TileView extends FieldObjectView {
 
         this.addHandlers();
     }
+    
+    
+    _addHighlight() {
+        var defaultColor = '0x00B50F';
+        this._containerSprite.tint = defaultColor;
+    }
+    
+    
+    _removeHighlight() {
+        var defaultColor = '0xffffff';
+        this._containerSprite.tint = defaultColor;
+    }
 
 
     _removeHover() {
-        if (this._isHovered == true) {
-            this._isHovered = false;
-            var defaultColor = '0xffffff';
-            this._containerSprite.tint = defaultColor;
-        }
+        var defaultColor = '0xffffff';
+        this._containerSprite.tint = defaultColor;
+    }
+    
+    
+    _addHover() {
+        var darker = '0xbbbbbb';
+        this._containerSprite.tint = darker;
     }
 
 
     _onOver(event) {
         super._onOver(event);
-
-        if (this._isHovered == false) {
-            this._isHovered = true;
-            var darker = '0xbbbbbb';
-            this._containerSprite.tint = darker;
-        }
+        this.hover = true;
     }
 
 
     _onOut(event) {
         super._onOut(event);
-        this._removeHover();
+        this.hover = false;
     }
 
 
     _onClick(event, pointer) {
         super._onClick(event, pointer);
-        this._removeHover();
+        this.hover = false;
     }
 }
