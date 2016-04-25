@@ -7,6 +7,10 @@ import TileView from 'tile/TileView';
 import FiledObjectsViewEvent from 'FiledObjectsViewEvent';
 
 
+import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
+import Phaser from 'phaser';
+
+
 import { findCellsInRadius } from 'lib/map';
 
 
@@ -20,6 +24,13 @@ export default class TileManager extends EventEmitter {
          * @private
          */
         this._items = {};
+
+
+        /**
+         * @type {TileView}
+         * @private
+         */
+        this._currentHoveredTile = null;
         
         
         this._width = width;
@@ -27,6 +38,13 @@ export default class TileManager extends EventEmitter {
         
 
         this.createTiles(width, height);
+
+        for (var i = 1; i <= 9; i++) {
+            var keyCode = String(i).charCodeAt(0);
+            var phaserKey = PhaserWrapper.game.input.keyboard.addKey(keyCode);
+            phaserKey.onDown.add(_.partialRight(this._onNumberKeyDown, i), this);
+            phaserKey.onUp.add(_.partialRight(this._onNumberKeyUp, i), this);
+        }
     }
 
 
@@ -62,21 +80,61 @@ export default class TileManager extends EventEmitter {
 
     addHandlers(tile) {
         tile.on(FiledObjectsViewEvent.OVER, this._onTileOver.bind(this));
-        tile.on(FiledObjectsViewEvent.OUT, this._onTileOut.bind(this));
     }
 
-    
+
+    /**
+     * @param {Booelan} highlight
+     * @private
+     */
+    _setTilesHighlight(highlight) {
+        let tile = this._currentHoveredTile;
+        let radius = this._highlitedRadius;
+
+        if (tile && radius) {
+            let cellsToHighlight = findCellsInRadius(
+                this._width, this._height, tile.position, radius
+            );
+            cellsToHighlight.forEach((cell) => {
+                this._items[cell.x][cell.y].hightlight = highlight
+            });
+        }
+    }
+
+
+    /**
+     * @param {Object} event
+     * @param {Booelan} keyValue
+     * @private
+     */
+    _onNumberKeyDown(event, keyValue) {
+        this._highlitedRadius = keyValue;
+
+        this._setTilesHighlight(true);
+    }
+
+
+    /**
+     * @param {Object} event
+     * @param {Booelan} keyValue
+     * @private
+     */
+    _onNumberKeyUp(event, keyValue) {
+        this._highlitedRadius = keyValue;
+
+        this._setTilesHighlight(false);
+
+        this._highlitedRadius = null;
+    }
+
+
+    /**
+     * @param {Object} event
+     * @private
+     */
     _onTileOver(event) {
-        let tile = event.currentTarget;
-        let cellsToHighlight = findCellsInRadius(this._width, this._height, tile.position, 3);
-        cellsToHighlight.forEach((cell) => { this._items[cell.x][cell.y].hightlight = true });
+        this._setTilesHighlight(false);
+        this._currentHoveredTile = event.currentTarget;
+        this._setTilesHighlight(true);
     }
-    
-    
-    _onTileOut(event) {
-        let tile = event.currentTarget;
-        let cellsToHighlight = findCellsInRadius(this._width, this._height, tile.position, 3);
-        cellsToHighlight.forEach((cell) => { this._items[cell.x][cell.y].hightlight = false });
-    }
-
 }

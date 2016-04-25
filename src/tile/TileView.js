@@ -15,7 +15,6 @@ export default class TileView extends FieldObjectView {
         } else {
             this._removeHighlight();
         }
-        
     }
     
     set hover(value) {
@@ -58,8 +57,8 @@ export default class TileView extends FieldObjectView {
     
     
     _addHighlight() {
-        var defaultColor = '0x00B50F';
-        this._containerSprite.tint = defaultColor;
+        var darker = '0xbbbbbb';
+        this._containerSprite.tint = darker;
     }
     
     
