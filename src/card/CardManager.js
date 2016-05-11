@@ -161,8 +161,8 @@ export default class CardManager extends EventEmitter {
     endOfTurn() {
         var ownerId = Backend.getCurrentPlayerId();
         var playerCards = this._players[ownerId];
-        // Draw 2 cards
-        var cardsToDraw = playerCards.getNCardsFromTopDeck(2);
+        // Draw 1 cards
+        var cardsToDraw = playerCards.getNCardsFromTopDeck(1);
         cardsToDraw.forEach(c => Backend.drawCard(c.id));
 
         //Untap creatures
@@ -171,7 +171,7 @@ export default class CardManager extends EventEmitter {
 
         //Untap mana
         var manaToUntap = playerCards.getTappedCardsFromManaPool();
-        _.slice(manaToUntap,0, 3).forEach(c => Backend.untapCard(c.id));
+        _.slice(manaToUntap, 0, 3).forEach(c => Backend.untapCard(c.id));
     }
 
 
