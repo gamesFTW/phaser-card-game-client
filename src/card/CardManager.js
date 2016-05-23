@@ -56,6 +56,7 @@ export default class CardManager extends EventEmitter {
         Backend.on(Backend.CARD_COUNTER_CHANGED, this._onCardCounterChanged.bind(this));
         Backend.on(Backend.CARD_DRAWN, this._onCardDrawn.bind(this));
         Backend.on(Backend.CARD_ROTATED, this._onCardRotated.bind(this));
+        Backend.on(Backend.CARD_CREATED, this._onCardCreated.bind(this));
         Backend.on(
             Backend.CARD_MOVED_TO_PREVIOUS_GROUP,
             this._onCardMovedToPreviousGroup.bind(this)
@@ -399,6 +400,12 @@ export default class CardManager extends EventEmitter {
     //TODO: remove it to MoveAction class
     _onCardRotated(event) {
         this._rotateCard(event.id, event.rotated);
+    }
+
+
+    //TODO: remove it to MoveAction class
+    _onCardCreated(event) {
+        this.createCard(event.card);
     }
 
 

@@ -15,6 +15,7 @@ class Backend extends EventEmitter {
     get CARD_DIED() { return 'Backend:cardDied'}
     get CARD_ROTATED() { return 'Backend:cardRotated'}
     get CARD_MOVED_TO_PREVIOUS_GROUP() { return 'Backend:cardMovedToPreviousGroup'}
+    get CARD_CREATED() { return 'Backend:cardCreated'}
 
 
     constructor() {

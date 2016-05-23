@@ -306,11 +306,11 @@ export default class Card extends EventEmitter {
         );
 
         this._cardView.on(
-            CardViewEvent.LEFT_PRESS, this._onCardViewLeftPress.bind(this)
+            CardViewEvent.UNDERSCORE_PRESS, this._onCardViewUnderscorePress.bind(this)
         );
 
         this._cardView.on(
-            CardViewEvent.RIGHT_PRESS, this._onCardViewRightPress.bind(this)
+            CardViewEvent.EQUALES_PRESS, this._onCardViewEqualesPress.bind(this)
         );
 
         this._cardView.on(
@@ -416,12 +416,12 @@ export default class Card extends EventEmitter {
     }
 
 
-    _onCardViewLeftPress(event) {
+    _onCardViewUnderscorePress(event) {
         Backend.addCounter(this._data.id, -1);
     }
 
 
-    _onCardViewRightPress(event) {
+    _onCardViewEqualesPress(event) {
         Backend.addCounter(this._data.id, +1);
     }
 

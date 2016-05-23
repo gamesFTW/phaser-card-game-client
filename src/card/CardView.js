@@ -159,21 +159,20 @@ export default class CardView extends EventEmitter {
         // Keyboard input
         var upKey = PhaserWrapper.game.input.keyboard.addKey(Phaser.Keyboard.UP);
         var downKey = PhaserWrapper.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
-        var leftKey = PhaserWrapper.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
-        var rightKey = PhaserWrapper.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+
+        var underscoreKey = PhaserWrapper.game.input.keyboard.addKey(Phaser.Keyboard.UNDERSCORE);
+        var equalsKey = PhaserWrapper.game.input.keyboard.addKey(Phaser.Keyboard.EQUALS);
 
         downKey.onDown.add(this._onDownKeyPress, this);
         upKey.onDown.add(this._onUpKeyPress, this);
-        leftKey.onDown.add(this._onLeftKeyPress, this);
-        rightKey.onDown.add(this._onRightKeyPress, this);
+        underscoreKey.onDown.add(this._onUnderscoreKeyPress, this);
+        equalsKey.onDown.add(this._onEqualsKeyPress, this);
 
         // Mouse input
         this._sprite.inputEnabled = true;
         this._sprite.events.onInputDown.add(this._onClick, this);
         this._sprite.events.onInputOver.add(this._onOver, this);
         this._sprite.events.onInputOut.add(this._onOut, this);
-
-
     }
 
 
@@ -313,16 +312,16 @@ export default class CardView extends EventEmitter {
     }
 
 
-    _onLeftKeyPress(event) {
+    _onUnderscoreKeyPress(event) {
         if (this._isHighlighted) {
-            this.emit(CardViewEvent.LEFT_PRESS);
+            this.emit(CardViewEvent.UNDERSCORE_PRESS);
         }
     }
 
 
-    _onRightKeyPress(event) {
+    _onEqualsKeyPress(event) {
         if (this._isHighlighted) {
-            this.emit(CardViewEvent.RIGHT_PRESS);
+            this.emit(CardViewEvent.EQUALES_PRESS);
         }
     }
 
