@@ -37,6 +37,9 @@ class PhaserWrapper {
         this._game.state.start('Boot');
     }
 
+    loadImage(id, url) {
+        this._game.load.image(id, url);
+    }
 
     /**
      *
@@ -109,21 +112,15 @@ class PhaserWrapper {
 
     _preload() {
         this._game.load.image('isometric-tile', '/assets/isometric-tile.png');
-        this._game.load.image('tile', '/assets/tile.png');
 
         this._game.load.image('counter', '/assets/counter.png');
 
         this._game.load.image('lines', '/assets/bg/lines.png');
 
-        // Card Areas
-        this._game.load.image('area_forest', '/assets/areas/forest.png');
-        this._game.load.image('area_firewall', '/assets/areas/firewall.png');
-        this._game.load.image('area_windwall', '/assets/areas/windwall.png');
-        this._game.load.image('area_lake', '/assets/areas/lake.png');
 
         //this._game.load.atlas('field_bg', '/assets/bg/field.jpg', null, getFieldBgAtlasData(24, 24));
 
-        Backend.getCardImages().forEach(i => this._game.load.image(i._id, i.url));
+        Backend.getCardImages().forEach(i => this.loadImage(i._id, i.url));
 
         
         // Card view

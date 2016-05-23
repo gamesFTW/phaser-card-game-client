@@ -59,11 +59,7 @@ class Backend extends EventEmitter {
 
 
     getCardImages() {
-        var imagesCardsIds = MeteorApp.CardsInGame.find(
-            {gameId: this.getGameId()}, {fields: {imageId: 1 }}
-        ).map(c => c.imageId);
-        
-        return MeteorApp.Images.find({_id: { $in: imagesCardsIds }})
+        return MeteorApp.Images.find()
             .map(i => ({_id: i._id, url: i.url()}));
     }
 
