@@ -5,7 +5,7 @@
  */
 import EventEmitter from 'external/EventEmitter';
 
-import GroupTypes from './GroupTypes'; 
+import GroupTypes from './CardGroupTypes'; 
 import Hand from './Hand/Hand';
 import Deck from './Deck/Deck';
 import Graveyard from './Graveyard/Graveyard';
@@ -43,7 +43,7 @@ export default class PlayerCards extends EventEmitter {
     /**
      *
      * @param {Card} card
-     * @param {String} cardGroup
+     * @param {CardGroupTypes} cardGroup
      */
     addCard(card, cardGroup) {
         switch (cardGroup) {

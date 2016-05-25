@@ -13,7 +13,7 @@ import CardManagerEvent from 'card/CardManagerEvent';
 
 import PlayerCards from 'card-groups/PlayerCards';
 import PlayerCardsFactory from 'card-groups/PlayerCardsFactory';
-import GroupTypes from 'card-groups/GroupTypes'; 
+import GroupTypes from 'card-groups/CardGroupTypes'; 
 
 
 import Backend from 'Backend';
@@ -312,19 +312,16 @@ export default class CardManager extends EventEmitter {
     _onCardRightClick(event) {
         var card = event.currentTarget;
         
-        console.log(card)
         if (this.checkCardIn(GroupTypes.GRAVEYARD, card)) {
-            console.log('ga');
-        }
-        
-        if (this.checkCardIn(GroupTypes.DECK, card)) {
-            console.log('de');
-        }
-        
-        if (card.tapped) {
-            Backend.untapCard(card.id);
+
+        } else if (this.checkCardIn(GroupTypes.DECK, card)) {
+                
         } else {
-            Backend.tapCard(card.id);
+            if (card.tapped) {
+                Backend.untapCard(card.id);
+            } else {
+                Backend.tapCard(card.id);
+            }    
         }
     }
 
