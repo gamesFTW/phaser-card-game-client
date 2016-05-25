@@ -62,8 +62,9 @@ export default class CardView extends EventEmitter {
 
     /**
      * @param {CardData} data
+     * @param {ClientCardData} clientData
      */
-    constructor(data) {
+    constructor(data, clientData) {
         super();
 
         /**

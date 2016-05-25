@@ -13,30 +13,6 @@ import FiledObjectsViewEvent from 'FiledObjectsViewEvent';
 import Backend from 'Backend';
 
 
-/**
- * @typedef {Object} CardData
- * @property {Number} id
- * @property {Number} x
- * @property {Number} y
- * @property {Boolean} onField
- * @property {Boolean} tapped
- * @property {Boolean} attachable
- * @property {Boolean} rotated
- * @property {Boolean} big
- * @property {Boolean} hero 
- * @property {Number} mana
- * @property {Number} health
- * @property {Number} maxHealth
- * @property {Number} counter
- * @property {String} title
- * @property {String} text
- * @property {String} type
- * @property {String} imageName
- * @property {String} color
- * @property {String[]} attachedCards
- */
-
-
 export default class Card extends EventEmitter {
     /**
      * @param {CardData} data
@@ -65,6 +41,14 @@ export default class Card extends EventEmitter {
          */
         this._cardView = null;
 
+        /**
+         * @type {ClientCardData}
+         * @private
+         */
+        this._clientData = {
+            inListView: false
+        };
+
 
         /**
          * @type {CardFullView}
@@ -80,7 +64,7 @@ export default class Card extends EventEmitter {
         this._fieldView = null;
 
 
-        this._createCardView(this._data);
+        this._createCardView(this._data, this._clientData);
         if (this._data.onField && this._data.type != 'spell') {
             this._createFieldView();
         }
