@@ -21,3 +21,7 @@
  * @property {String[]} attachedCards
  */
 
+/**
+ * @typedef {Object} ClientCardData
+ * @property {Boolean} inListView 
+ */
