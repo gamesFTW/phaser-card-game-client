@@ -1,13 +1,12 @@
 import Backend from 'Backend';
 
+import GroupTypes from 'card-groups/GroupTypes'; 
 import TileManager from 'tile/TileManager';
 import CardManager from 'card/CardManager';
 import CardManagerEvent from 'card/CardManagerEvent';
-
+import Card from 'card/Card';
 import CardEvent from 'card/CardEvent';
 import FiledObjectsViewEvent from 'FiledObjectsViewEvent';
-
-import Card from 'card/Card';
 
 
 export default class TileCardManager {
@@ -54,7 +53,7 @@ export default class TileCardManager {
         );
 
         this._cardManager.on(
-            CardEvent.PLAY_AS_MANA, this._onCardPlayedAsMana.bind(this)
+            CardEvent.CARD_MIDDLE_CLICK, this._onCardPlayedAsMana.bind(this)
         );
 
         this._cardManager.on(
@@ -95,9 +94,9 @@ export default class TileCardManager {
     _onCardClick(event) {
         var clickedCard = event.card;
 
-        var isSelectedCardInHand = this._cardManager.checkCardIn('hand', this._selectedCard);
-        var isClickedCardInHand = this._cardManager.checkCardIn('hand', clickedCard);
-        var isClickedCardInTable = this._cardManager.checkCardIn('table', clickedCard);
+        var isSelectedCardInHand = this._cardManager.checkCardIn(GroupTypes.HAND, this._selectedCard);
+        var isClickedCardInHand = this._cardManager.checkCardIn(GroupTypes.HAND, clickedCard);
+        var isClickedCardInTable = this._cardManager.checkCardIn(GroupTypes.TABLE, clickedCard);
 
         if (isSelectedCardInHand) {
             Backend.playCardAsSpell(
@@ -135,8 +134,8 @@ export default class TileCardManager {
     _onTileClick(event) {
         var clickedTile = event.currentTarget;
         var cardOnTile = this._cardManager.getCreatureByPoint(clickedTile.position);
-        var isSelectedCardInHand = this._cardManager.checkCardIn('hand', this._selectedCard);
-        var isSelectedCardInTable = this._cardManager.checkCardIn('table', this._selectedCard);
+        var isSelectedCardInHand = this._cardManager.checkCardIn(GroupTypes.HAND, this._selectedCard);
+        var isSelectedCardInTable = this._cardManager.checkCardIn(GroupTypes.TABLE, this._selectedCard);
 
         if (cardOnTile && cardOnTile.type == 'creature') {
             this._selectedCard = cardOnTile;

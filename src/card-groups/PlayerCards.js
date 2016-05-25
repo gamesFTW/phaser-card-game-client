@@ -5,7 +5,7 @@
  */
 import EventEmitter from 'external/EventEmitter';
 
-
+import GroupTypes from './GroupTypes'; 
 import Hand from './Hand/Hand';
 import Deck from './Deck/Deck';
 import Graveyard from './Graveyard/Graveyard';
@@ -47,19 +47,19 @@ export default class PlayerCards extends EventEmitter {
      */
     addCard(card, cardGroup) {
         switch (cardGroup) {
-           case 'deck':
+           case GroupTypes.DECK:
                this.addCardToDeck(card);
                break;
-           case 'hand':
+           case GroupTypes.HAND:
                this.addCardToHand(card);
                break;
-           case 'table':
+           case GroupTypes.TABLE:
                this.addCardToTable(card);
                break;
-           case 'graveyard':
+           case GroupTypes.GRAVEYARD:
                this.addCardToGraveyard(card);
                break;
-           case 'manaPool':
+           case GroupTypes.MANA_POOL:
                this.addCardToManaPool(card);
                break;
         }
@@ -146,20 +146,23 @@ export default class PlayerCards extends EventEmitter {
 
 
     /**
+     * @param {String} cardGroup 
      * @param {Card} card
      * @return {Boolean}
      */
-    checkCardInHand(card) {
-        return this._hand.findById(card.id) !== undefined;
-    }
-
-
-    /**
-     * @param {Card} card
-     * @return {Boolean}
-     */
-    checkCardInDeck(card) {
-        return this._deck.findById(card.id) !== undefined;
+    checkCardIn(cardGroup, card) {
+        switch (cardGroup) {
+            case GroupTypes.DECK:
+                return this._deck.findById(card.id) !== undefined;
+            case GroupTypes.HAND:
+                return this._hand.findById(card.id) !== undefined;
+            case GroupTypes.TABLE:
+                return this._table.findById(card.id) !== undefined;
+            case GroupTypes.GRAVEYARD:
+                return this._graveyard.findById(card.id) !== undefined;
+            case GroupTypes.MANA_POOL:
+                return this._manaPool.findById(card.id) !== undefined;
+        }
     }
 
 
@@ -175,14 +178,5 @@ export default class PlayerCards extends EventEmitter {
 
     getTappedCardsFromManaPool() {
         return _.filter(this._manaPool.cards, c => c.tapped);
-    }
-
-
-    /**
-     * @param {Card} card
-     * @return {Boolean}
-     */
-    checkCardInTable(card) {
-        return this._table.findById(card.id) !== undefined;
     }
 }

@@ -329,7 +329,7 @@ export default class Card extends EventEmitter {
         this._fieldView.on(
             FiledObjectsViewEvent.CLICK, this._onFieldViewClick.bind(this)
         );
-
+        
         this._fieldView.on(
             FiledObjectsViewEvent.OVER, this._onFieldViewOver.bind(this)
         );
@@ -343,7 +343,7 @@ export default class Card extends EventEmitter {
     _onFieldViewClick(event) {
         this.emit(CardEvent.FIELD_CLICK);
     }
-
+    
 
     _onFieldViewOver(event) {
         this.highlightOn();
@@ -362,11 +362,7 @@ export default class Card extends EventEmitter {
 
 
     _onCardViewRightClick(event) {
-        if (this._data.tapped) {
-            this.emit(CardEvent.PRESS_UNTAP);
-        } else {
-            this.emit(CardEvent.PRESS_TAP);
-        }
+        this.emit(CardEvent.CARD_RIGHT_CLICK);
     }
 
     _onCardViewOver(event) {
@@ -382,11 +378,7 @@ export default class Card extends EventEmitter {
 
 
     _onCardViewMiddleClick(event) {
-        if (this.onField) {
-            this.emit(CardEvent.ROTATE);
-        } else {
-            this.emit(CardEvent.PLAY_AS_MANA);
-        }
+        this.emit(CardEvent.CARD_MIDDLE_CLICK);
     }
 
 

@@ -13,6 +13,7 @@ import CardManagerEvent from 'card/CardManagerEvent';
 
 import PlayerCards from 'card-groups/PlayerCards';
 import PlayerCardsFactory from 'card-groups/PlayerCardsFactory';
+import GroupTypes from 'card-groups/GroupTypes'; 
 
 
 import Backend from 'Backend';
@@ -94,7 +95,7 @@ export default class CardManager extends EventEmitter {
      */
     createCard(cardData) {
         // TODO говно же бекграунд, плохо считать сыграность карты по наличию X и Y, нужно иметь поле attached.
-        if (cardData.cardGroup === 'table' && cardData.x !== undefined) {
+        if (cardData.cardGroup === GroupTypes.TABLE && cardData.x !== undefined) {
             cardData.onField = true;
         }
 
@@ -102,10 +103,8 @@ export default class CardManager extends EventEmitter {
         card.parent = this;
 
         // Возможно стоит вынести все слушатели в отдельный класс
-        card.on(CardEvent.PRESS_TAP, this._onCardPressTap.bind(this));
-        card.on(CardEvent.PRESS_UNTAP, this._onCardPressUntap.bind(this));
-        card.on(CardEvent.PLAY_AS_MANA, this._onCardPlayAsMana.bind(this));
-        card.on(CardEvent.ROTATE, this._onCardRotate.bind(this));
+        card.on(CardEvent.CARD_RIGHT_CLICK, this._onCardRightClick.bind(this));
+        card.on(CardEvent.CARD_MIDDLE_CLICK, this._onCardMiddleClick.bind(this));
         card.on(CardEvent.CARD_CLICK, this._onCardClick.bind(this));
 
         this._addCard(card);
@@ -117,22 +116,16 @@ export default class CardManager extends EventEmitter {
 
 
     /**
+     * @param {String} cardGroup
      * @param {Card} card
      * @return {Boolean}
      */
-    checkCardIn(type, card) {
+    checkCardIn(cardGroup, card) {
         if (!card) {
             return false;
         }
         var playerCards = this._players[Backend.getCurrentPlayerId()];
-        if (type == 'hand') {
-            return playerCards.checkCardInHand(card);
-        }
-
-        if (type == 'table') {
-            return playerCards.checkCardInTable(card);
-        }
-
+        return playerCards.checkCardIn(cardGroup, card);
     }
 
 
@@ -278,21 +271,21 @@ export default class CardManager extends EventEmitter {
         let card = this.findById(id);
         var player = this._players[ownerId];
 
-        if (oldCardGroup === 'hand') {
+        if (oldCardGroup === GroupTypes.HAND) {
             player.moveCardFromHandToDeck(card)
-        } else if (oldCardGroup === 'table') {
+        } else if (oldCardGroup === GroupTypes.TABLE) {
             player.moveCardFromTableToHand(card);
             card.die();
 
             this._deattachCard(card, ownerId);
-        } else if (oldCardGroup === 'graveyard') {
-            if (newCardGroup === 'table') {
+        } else if (oldCardGroup === GroupTypes.GRAVEYARD) {
+            if (newCardGroup === GroupTypes.TABLE) {
                 player.moveCardFromGraveyardToTable(card);
                 card.play(card.position);
-            } else if (newCardGroup === 'hand') {
+            } else if (newCardGroup === GroupTypes.HAND) {
                 player.moveCardFromGraveyardToHand(card);
             }
-        } else if (oldCardGroup === 'manaPool') {
+        } else if (oldCardGroup === GroupTypes.MANA_POOL) {
             player.moveCardFromManaPoolToHand(card);
         }
     }
@@ -316,23 +309,32 @@ export default class CardManager extends EventEmitter {
     /**
      * HANDLERS
      */
-    _onCardPressTap(event) {
-        Backend.tapCard(event.currentTarget.id);
+    _onCardRightClick(event) {
+        var card = event.currentTarget;
+        
+        console.log(card)
+        if (this.checkCardIn(GroupTypes.GRAVEYARD, card)) {
+            console.log('ga');
+        }
+        
+        if (this.checkCardIn(GroupTypes.DECK, card)) {
+            console.log('de');
+        }
+        
+        if (card.tapped) {
+            Backend.untapCard(card.id);
+        } else {
+            Backend.tapCard(card.id);
+        }
     }
 
 
-    _onCardPressUntap(event) {
-        Backend.untapCard(event.currentTarget.id);
-    }
-
-
-    _onCardPlayAsMana(event) {
-        Backend.playAsMana(event.currentTarget.id);
-    }
-
-
-    _onCardRotate(event) {
-        Backend.rotateCard(event.currentTarget.id);
+    _onCardMiddleClick(event) {
+        if (event.currentTarget.onField) {
+            Backend.rotateCard(event.currentTarget.id);
+        } else {
+            Backend.playAsMana(event.currentTarget.id);
+        }
     }
 
 
@@ -347,7 +349,7 @@ export default class CardManager extends EventEmitter {
             return;
         }
 
-        if (playerCards.checkCardInDeck(card)) {
+        if (playerCards.checkCardIn(GroupTypes.DECK ,card)) {
             Backend.drawCard(card.id);
         } else {
             this.emit(CardManagerEvent.CARD_IN_GAME_CLICK, {card: card});

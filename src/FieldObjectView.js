@@ -83,8 +83,11 @@ export default class FieldObjectView extends EventEmitter {
 
 
     _onClick(event, pointer) {
+        // Походу ctrl click больше не нужен
         if (PhaserWrapper.game.input.keyboard.isDown(Phaser.Keyboard.CONTROL)) {
             this.emit(FiledObjectsViewEvent.CTRL_CLICK);
+        } else if (pointer.middleButton.isDown) {
+            this.emit(FiledObjectsViewEvent.MIDDLE_CLICK);
         } else {
             this.emit(FiledObjectsViewEvent.CLICK);
         }
