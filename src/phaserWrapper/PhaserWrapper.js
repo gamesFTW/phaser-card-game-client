@@ -66,6 +66,7 @@ class PhaserWrapper {
 
     refreshCardsSorting() {
         this._sortGroupZByHoverAndX('cards');
+        this._sortGroupZByHoverAndX('cardsList');
     }
 
     refreshCreaturesSorting() {
@@ -158,7 +159,8 @@ class PhaserWrapper {
             'areas',
             'creatures',
             'cards',
-            'fullCards'
+            'cardsList', // просмотр стека(дека или грейвард)
+            'fullCards' // зазумленные карты
         ];
 
         this._groups = _.reduce(groupNames, function (obj, name) {
