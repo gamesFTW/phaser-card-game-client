@@ -1,4 +1,4 @@
-import CardRowViewManager from './../CardRowViewManager';
+import CardRowViewManager from './../cardViewManagers/CardRowViewManager';
 import CardView from 'card/CardView';
 
 

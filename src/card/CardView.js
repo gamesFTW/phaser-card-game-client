@@ -51,7 +51,7 @@ export default class CardView extends EventEmitter {
      * @param {Number} point.y
      */
     set position(point) {
-        if(this._container.x == 0 && this._container.y == 0 ) {
+        if((this._container.x == 0 && this._container.y == 0) || this.visible === false) {
             this._container.x = point.x;
             this._container.y = point.y;
         } else {

@@ -11,9 +11,9 @@ import CardInFieldManager from 'card/CardInFieldManager';
 import CardManagerEvent from 'card/CardManagerEvent';
 
 
-import PlayerCards from 'card-groups/PlayerCards';
-import PlayerCardsFactory from 'card-groups/PlayerCardsFactory';
-import GroupTypes from 'card-groups/CardGroupTypes'; 
+import PlayerCards from 'cardGroups/PlayerCards';
+import PlayerCardsFactory from 'cardGroups/PlayerCardsFactory';
+import GroupTypes from 'cardGroups/CardGroupTypes';
 
 
 import Backend from 'Backend';
@@ -59,6 +59,10 @@ export default class CardManager extends EventEmitter {
         Backend.on(Backend.CARD_ROTATED, this._onCardRotated.bind(this));
         Backend.on(Backend.CARD_CREATED, this._onCardCreated.bind(this));
         Backend.on(
+            Backend.CARD_TOOK_FROM_GRAVEYARD,
+            this._onCardTookFromGraveyard.bind(this)
+        );
+        Backend.on(
             Backend.CARD_MOVED_TO_PREVIOUS_GROUP,
             this._onCardMovedToPreviousGroup.bind(this)
         );
@@ -103,9 +107,9 @@ export default class CardManager extends EventEmitter {
         card.parent = this;
 
         // Возможно стоит вынести все слушатели в отдельный класс
+        card.on(CardEvent.CARD_CLICK, this._onCardClick.bind(this));
         card.on(CardEvent.CARD_RIGHT_CLICK, this._onCardRightClick.bind(this));
         card.on(CardEvent.CARD_MIDDLE_CLICK, this._onCardMiddleClick.bind(this));
-        card.on(CardEvent.CARD_CLICK, this._onCardClick.bind(this));
 
         this._addCard(card);
 
@@ -124,8 +128,7 @@ export default class CardManager extends EventEmitter {
         if (!card) {
             return false;
         }
-        var playerCards = this._players[Backend.getCurrentPlayerId()];
-        return playerCards.checkCardIn(cardGroup, card);
+        return this._currentPlayerCards.checkCardIn(cardGroup, card);
     }
 
 
@@ -153,8 +156,7 @@ export default class CardManager extends EventEmitter {
 
 
     endOfTurn() {
-        var ownerId = Backend.getCurrentPlayerId();
-        var playerCards = this._players[ownerId];
+        var playerCards = this._players[Backend.getCurrentPlayerId()];
         // Draw 1 cards
         var cardsToDraw = playerCards.getNCardsFromTopDeck(1);
         cardsToDraw.forEach(c => Backend.drawCard(c.id));
@@ -166,6 +168,15 @@ export default class CardManager extends EventEmitter {
         //Untap mana
         var manaToUntap = playerCards.getTappedCardsFromManaPool();
         _.slice(manaToUntap, 0, 3).forEach(c => Backend.untapCard(c.id));
+    }
+
+
+    /**
+     * @returns {PlayerCards}
+     * @private
+     */
+    get _currentPlayerCards() {
+        return this._players[Backend.getCurrentPlayerId()];
     }
 
 
@@ -306,6 +317,30 @@ export default class CardManager extends EventEmitter {
         }
     }
 
+
+    _onCardClick(event) {
+        var card = event.currentTarget;
+
+        // Если игрок хочет отменить draw/die/play
+        var isCardPlayUndo = PhaserWrapper.game.input.keyboard.isDown(Phaser.Keyboard.Z);
+        var inDeck = this._currentPlayerCards.checkCardIn(GroupTypes.DECK ,card);
+        var inGraveyard = this._currentPlayerCards.checkCardIn(GroupTypes.GRAVEYARD ,card);
+
+        if (isCardPlayUndo) {
+            Backend.moveCardToPreviousGroup(card.id);
+            return;
+        }
+
+        if (inDeck) {
+            Backend.drawCard(card.id);
+        } else if (inGraveyard){
+            Backend.takeCardFromGraveyard(card.id);
+        } else {
+            this.emit(CardManagerEvent.CARD_IN_GAME_CLICK, {card: card});
+        }
+    }
+
+
     /**
      * HANDLERS
      */
@@ -313,9 +348,9 @@ export default class CardManager extends EventEmitter {
         var card = event.currentTarget;
         
         if (this.checkCardIn(GroupTypes.GRAVEYARD, card)) {
-
+            this._currentPlayerCards.showGraveyardList();
         } else if (this.checkCardIn(GroupTypes.DECK, card)) {
-                
+            this._currentPlayerCards.showDeckList();
         } else {
             if (card.tapped) {
                 Backend.untapCard(card.id);
@@ -334,24 +369,6 @@ export default class CardManager extends EventEmitter {
         }
     }
 
-
-    _onCardClick(event) {
-        var card = event.currentTarget;
-        var playerCards = this._players[Backend.getCurrentPlayerId()];
-
-        // Если игрок хочет отменить draw/die/play
-        var isCardPlayUndo = PhaserWrapper.game.input.keyboard.isDown(Phaser.Keyboard.Z);
-        if (isCardPlayUndo) {
-            Backend.moveCardToPreviousGroup(card.id);
-            return;
-        }
-
-        if (playerCards.checkCardIn(GroupTypes.DECK ,card)) {
-            Backend.drawCard(card.id);
-        } else {
-            this.emit(CardManagerEvent.CARD_IN_GAME_CLICK, {card: card});
-        }
-    }
 
     //TODO: remove it to MoveAction class
     _onCardMoved(event) {
@@ -443,5 +460,13 @@ export default class CardManager extends EventEmitter {
             event.id, event.ownerId, event.oldCardGroup, event.newCardGroup
         );
     }
-}
 
+
+    //TODO: remove it to MoveAction class
+    _onCardTookFromGraveyard(event) {
+        let card = this.findById(event.id);
+        var player = this._players[event.ownerId];
+
+        player.moveCardFromGraveyardToHand(card);
+    }
+}

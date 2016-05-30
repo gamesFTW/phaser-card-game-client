@@ -16,6 +16,7 @@ class Backend extends EventEmitter {
     get CARD_ROTATED() { return 'Backend:cardRotated'}
     get CARD_MOVED_TO_PREVIOUS_GROUP() { return 'Backend:cardMovedToPreviousGroup'}
     get CARD_CREATED() { return 'Backend:cardCreated'}
+    get CARD_TOOK_FROM_GRAVEYARD() { return 'Backend:cardTookFromGraveyard'}
 
 
     constructor() {
@@ -113,6 +114,11 @@ class Backend extends EventEmitter {
 
     drawCard(id) {
         Meteor.call('drawCard', this.getGameId(), id);
+    }
+
+
+    takeCardFromGraveyard(id) {
+        Meteor.call('takeCardFromGraveyard', this.getGameId(), id);
     }
 
 

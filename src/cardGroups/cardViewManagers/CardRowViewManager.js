@@ -1,5 +1,5 @@
 import CardViewManager from './CardViewManager';
-import CardView from './../card/CardView';
+import CardView from './../../card/CardView';
 
 
 export default class CardRowViewManager extends CardViewManager {
@@ -12,7 +12,8 @@ export default class CardRowViewManager extends CardViewManager {
      * @param {Number} padding
      * @param {Number} maxWidth - если 0 то не ограничено, используется только с adaptive
      */
-    constructor({x: x, y: y, faceUp: faceUp, adaptive: adaptive = false, scale: scale = 1, padding: padding = 5, maxWidth = maxWidth = 0}) {
+    constructor({x: x, y: y, faceUp: faceUp, adaptive: adaptive = false,
+                scale: scale = 1, padding: padding = 5, maxWidth = maxWidth = 0}) {
         super(...arguments);
         this._scale = scale;
         this._adaptive = adaptive;

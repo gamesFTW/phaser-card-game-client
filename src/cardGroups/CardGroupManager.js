@@ -13,11 +13,20 @@ export default class CardGroupManager extends EventEmitter {
     }
 
 
-    constructor(cards = [], view = null) {
+    constructor() {
         super();
 
-        this._cards = cards;
-        this._view = view;
+        /**
+         * @type {Card[]}
+         * @protected
+         */
+        this._cards = [];
+
+        /**
+         * @type {CardViewManager}
+         * @protected
+         */
+        this._view = null;
 
         // TODO event names via class and getter
         this.on('change', this._onChange.bind(this));

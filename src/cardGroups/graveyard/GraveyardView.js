@@ -1,4 +1,4 @@
-import CardStackViewManager from './../CardStackViewManager';
+import CardStackViewManager from './../cardViewManagers/CardStackViewManager';
 
 
 export default class GraveyardView extends CardStackViewManager {
