@@ -32,7 +32,7 @@ export default class CardManager extends EventEmitter {
 
 
         /**
-         * @type {Object}
+         * @type {Object.<String, PlayerCards>}
          */
         this._players = PlayerCardsFactory.createPlayerCards(
             Backend.getGameType(),
@@ -41,6 +41,9 @@ export default class CardManager extends EventEmitter {
         );
 
 
+        /**
+         * @type {Card[]}
+         */
         this._cards = {};
 
 

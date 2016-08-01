@@ -1,6 +1,7 @@
 import CardGroupManager from './../CardGroupManager';
 import GraveyardView from './GraveyardView';
 import ListView from 'cardGroups/cardViewManagers/ListView';
+import GlobalEvent from 'GlobalEvent';
 
 
 export default class Graveyard extends CardGroupManager {
@@ -16,6 +17,9 @@ export default class Graveyard extends CardGroupManager {
          * @private
          */
         this._listView = null;
+
+
+        this._view.on(GlobalEvent.ESC_PRESSED, this._viewEscPressedHandler.bind(this));
     }
 
 
@@ -23,5 +27,18 @@ export default class Graveyard extends CardGroupManager {
         this._listView = new ListView({});
 
         this._listView.reorderCards(this._cards);
+    }
+
+
+    closeList() {
+        this._listView = null;
+        this.redraw();
+    }
+
+
+    _viewEscPressedHandler() {
+        if (this._listView !== null) {
+            this.closeList();
+        }
     }
 }

@@ -2,6 +2,9 @@ import _ from 'lodash';
 
 
 import CardViewManager from './CardViewManager';
+import GlobalEvent from 'GlobalEvent';
+import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
+import Phaser from 'phaser';
 
 
 export default class CardStackViewManager extends CardViewManager {
@@ -13,6 +16,10 @@ export default class CardStackViewManager extends CardViewManager {
      */
     constructor({x: x, y: y, faceUp: faceUp, scale: scale = 1}) {
         super(...arguments);
+
+
+        var escKey = PhaserWrapper.game.input.keyboard.addKey(Phaser.Keyboard.ESC);
+        escKey.onDown.add(this._onEscKeyPress, this);
     }
 
 
@@ -29,5 +36,10 @@ export default class CardStackViewManager extends CardViewManager {
         }
 
         _.rest(cardsViews).forEach(cv => cv.visible = false);
+    }
+
+
+    _onEscKeyPress(event) {
+        this.emit(GlobalEvent.ESC_PRESSED);
     }
 }

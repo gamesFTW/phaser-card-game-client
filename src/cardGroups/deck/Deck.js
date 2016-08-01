@@ -1,6 +1,7 @@
 import CardGroupManager from 'cardGroups/CardGroupManager';
 import DeckView from './DeckView';
 import ListView from 'cardGroups/cardViewManagers/ListView';
+import GlobalEvent from 'GlobalEvent';
 
 
 export default class Deck extends CardGroupManager {
@@ -17,6 +18,9 @@ export default class Deck extends CardGroupManager {
          * @private
          */
         this._listView = null;
+
+
+        this._view.on(GlobalEvent.ESC_PRESSED, this._viewEscPressedHandler.bind(this));
     }
 
 
@@ -24,5 +28,18 @@ export default class Deck extends CardGroupManager {
         this._listView = new ListView({});
 
         this._listView.reorderCards(this._cards);
+    }
+
+
+    closeList() {
+        this._listView = null;
+        this.redraw();
+    }
+
+
+    _viewEscPressedHandler() {
+        if (this._listView !== null) {
+            this.closeList();
+        }
     }
 }
