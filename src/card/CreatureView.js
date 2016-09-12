@@ -20,7 +20,7 @@ export default class CreatureView extends FieldObjectView {
         );
 
         this._creatureSprite = PhaserWrapper.game.add.sprite(
-            data.big ? 30 : 0, 0, data.imageId
+            data.big ? 50 : 0, 0, data.imageId
         );
         this._creatureSprite.anchor.x = 0.5;
         this._creatureSprite.anchor.y = 0.5;
