@@ -20,7 +20,7 @@ export default class AreaView extends FieldObjectView {
         );
 
         this._areaSprite = PhaserWrapper.game.add.sprite(
-            -30, -45, data.imageId
+            -45, -80, data.imageId
         );
 
         var filter = new filters.OutlineFilter(
