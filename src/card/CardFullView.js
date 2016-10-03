@@ -58,7 +58,7 @@ export default class CardFullView extends EventEmitter {
 
         this._container = PhaserWrapper.game.make.sprite();
         PhaserWrapper.addToGroup('fullCards', this._container);
-        this.position = { x: 600, y: 100 };
+        this.position = { x: 710, y: 260 };
 
         this._sprite = null;
         this._background = null;

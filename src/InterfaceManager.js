@@ -22,7 +22,7 @@ export default class InterfaceManager extends EventEmitter {
 
 
     _createEndTurnButton() {
-        this._eotButton =  PhaserWrapper.game.add.button(590, 625, 'button_eot', this._onEndTurnButtonClick, this);
+        this._eotButton =  PhaserWrapper.game.add.button(750, 840, 'button_eot', this._onEndTurnButtonClick, this);
     }
 
 

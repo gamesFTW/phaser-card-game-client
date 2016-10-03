@@ -15,97 +15,97 @@ export default class PlayerCardsFactory {
         return {
             you: {
                 hand: {
-                    x: 820, y: 596, faceUp: true,
+                    x: 1290, y: 835, faceUp: true,
                     padding: 5, adaptive: true,
-                    maxWidth: 480
+                    maxWidth: 385
                 },
                 table: {
-                    x: 850, y: 513, faceUp: true,
+                    x: 1290, y: 750, faceUp: true,
                     padding: 5, adaptive:true,
-                    maxWidth: 520, verticalPadding: - 15
+                    maxWidth: 385, verticalPadding: -15
                 },
                 deck: {
-                    x: 1320, y: 596, faceUp: false
-                },
-                graveyard: {
-                    x: 1320, y: 348, faceUp: true
+                    x: 1615, y: 565, faceUp: false
                 },
                 manaPool: {
-                    x: 1050, y: 430, faceUp: false,
+                    x: 1290, y: 650, faceUp: false,
                     padding: 5, adaptive: true,
-                    maxWidth: 320
+                    maxWidth: 385
+                },
+                graveyard: {
+                    x: 1550, y: 565, faceUp: true
                 }
             },
 
             enemy: {
                 hand: {
-                    x: 820, y: 17, faceUp: false,
+                    x: 1290, y: 5, faceUp: false,
                     padding: 5, adaptive: true,
-                    maxWidth: 480
+                    maxWidth: 385
                 },
                 table: {
-                    x: 850, y: 101, faceUp: true,
+                    x: 1290, y: 105, faceUp: true,
                     padding: 5, adaptive: true,
-                    maxWidth: 520, verticalPadding: 15
+                    maxWidth: 385, verticalPadding: -15
                 },
                 deck: {
-                    x: 1320, y: 17, faceUp: false
-                },
-                graveyard: {
-                    x: 1320, y: 267, faceUp: true
+                    x: 1615, y: 275, faceUp: false
                 },
                 manaPool: {
-                    x: 1050, y: 185, faceUp: false,
+                    x: 1290, y: 190, faceUp: false,
                     padding: 5, adaptive: true,
-                    maxWidth: 320
+                    maxWidth: 385
+                },
+                graveyard: {
+                    x: 1550, y: 275, faceUp: true
                 }
             },
 
             ally: {
                 hand: {
-                    x: 18, y: 596, faceUp: true,
+                    x: 5, y: 835, faceUp: true,
                     padding: 5, adaptive: true,
-                    maxWidth: 380
+                    maxWidth: 385
                 },
                 table: {
-                    x: 18, y: 513, faceUp: true,
+                    x: 5, y: 750, faceUp: true,
                     padding: 5, adaptive: true,
-                    maxWidth: 250, verticalPadding: - 15
+                    maxWidth: 385, verticalPadding: -15
                 },
                 deck: {
-                    x: 413, y: 596, faceUp: false
-                },
-                graveyard: {
-                    x: 30, y: 348, faceUp: true
+                    x: 5, y: 565, faceUp: false
                 },
                 manaPool: {
-                    x: 18, y: 430, faceUp: false,
+                    x: 5, y: 650, faceUp: false,
                     padding: 5, adaptive: true,
-                    maxWidth: 100
+                    maxWidth: 385
+                },
+                graveyard: {
+                    x: 70, y: 565, faceUp: true
                 }
             },
 
             enemy2: {
                 hand: {
-                    x: 18, y: 17, faceUp: false,
+                    x: 5, y: 5, faceUp: false,
                     padding: 5, adaptive: true,
-                    maxWidth: 380
+                    maxWidth: 385
                 },
                 table: {
-                    x: 18, y: 101, faceUp: true,
+                    x: 5, y: 105, faceUp: true,
                     padding: 5, adaptive: true,
-                    maxWidth: 250, verticalPadding: 15
+                    maxWidth: 385, verticalPadding: -15
                 },
                 deck: {
-                    x: 413, y: 17, faceUp: false
-                },
-                graveyard: {
-                    x: 30, y: 267, faceUp: true
+                    x: 5, y: 275, faceUp: false
                 },
                 manaPool: {
-                    x: 18, y: 185, faceUp: false,
+                    x: 5, y: 190, faceUp: false,
                     padding: 5, adaptive: true,
-                    maxWidth: 100
+                    maxWidth: 385
+                },
+                graveyard: {
+                    x: 70, y: 275, faceUp: true
                 }
             }
         };

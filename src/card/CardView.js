@@ -121,7 +121,7 @@ export default class CardView extends EventEmitter {
 
     tap() {
         // 88 потому что долго считали и из ебучей анки все так плохо, надо переделать
-        PhaserWrapper.game.add.tween(this._sprite).to( { x: 48, angle: 90 }, 300).start();
+        PhaserWrapper.game.add.tween(this._sprite).to( { x: 80, angle: 90 }, 300).start();
     }
 
 
@@ -181,8 +181,8 @@ export default class CardView extends EventEmitter {
         this._sprite = PhaserWrapper.game.make.sprite(
             0, 0
         );
-        this._sprite.pivot.x = this._sprite.width * .5;
-        this._sprite.pivot.y = this._sprite.height * .5;
+        //this._sprite.pivot.x = this._sprite.width * .5;
+        //this._sprite.pivot.y = this._sprite.height * .5;
 
 
         this._container.addChild(this._sprite);
