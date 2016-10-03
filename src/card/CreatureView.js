@@ -9,6 +9,12 @@ import FieldObjectView from 'FieldObjectView';
 import isometric from 'lib/isometric';
 import filters from 'lib/filters';
 
+var Color = {
+    '1': '0xff8888',
+    '2': '0x8888ff',
+    '3': '0x88ffff',
+    '4': '0xffff88'
+};
 
 export default class CreatureView extends FieldObjectView {
     constructor(data) {
@@ -26,7 +32,7 @@ export default class CreatureView extends FieldObjectView {
         this._creatureSprite.anchor.y = 0.5;
 
         var filter = new filters.OutlineFilter(
-            PhaserWrapper.game.width, PhaserWrapper.game.height, 1, data.color
+            PhaserWrapper.game.width, PhaserWrapper.game.height, 1, Color[data.color]
         );
 
         this._creatureSprite.filters = [filter];
