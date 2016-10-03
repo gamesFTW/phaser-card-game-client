@@ -9,11 +9,11 @@ export default {
         //var yOffset = 120;
 
 
-        var TILE_WIDTH = 100;
-        var TILE_HEIGHT = 50;
+        var TILE_WIDTH = 130;
+        var TILE_HEIGHT = 65;
 
-        var xOffset = 680;
-        var yOffset = 150;
+        var xOffset = 870;
+        var yOffset = 210;
 
         return {
             x: (x - y) * (TILE_WIDTH / 2) + xOffset,

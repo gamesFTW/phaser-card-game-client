@@ -21,7 +21,7 @@ class PhaserWrapper {
 
     constructor() {
         this._game = new Phaser.Game(
-            1366, 660, Phaser.AUTO, 'gameView', null, false, true
+            1680, 920, Phaser.AUTO, 'gameView', null, false, true
         );
 
         // Объект из Phaser.Group, где ключ название группы. @see this._createGroups
