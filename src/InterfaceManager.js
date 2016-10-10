@@ -18,11 +18,33 @@ export default class InterfaceManager extends EventEmitter {
         this._eotButton = null;
 
         this._createEndTurnButton();
+        this._createTurnsNumberLabel();
+
+        //TODO: remove it to MoveAction class
+        Backend.on(Backend.GAME_TURN_ENDED, this._onTurnEnd.bind(this));
     }
 
+    
+    _onTurnEnd() {
+        this._turnsNumberLabel.text = Backend.getGameTurnNumber();
+    }
 
     _createEndTurnButton() {
-        this._eotButton =  PhaserWrapper.game.add.button(750, 840, 'button_eot', this._onEndTurnButtonClick, this);
+        this._eotButton = PhaserWrapper.game.add.button(750, 840, 'button_eot', this._onEndTurnButtonClick, this);
+    }
+    
+    
+    _createTurnsNumberLabel() {
+        this._turnsNumberLabel = PhaserWrapper.game.add.text(
+            820, 890,
+            Backend.getGameTurnNumber(),
+            {
+                font: "28px Arial",
+                boundsAlignH: "center",
+                align: "center",
+                fill: 'white'
+            }
+        );
     }
 
 
