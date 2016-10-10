@@ -159,6 +159,8 @@ export default class CardManager extends EventEmitter {
 
 
     endOfTurn() {
+        Backend.addEndOfTurnEvent();
+        
         var playerCards = this._players[Backend.getCurrentPlayerId()];
         // Draw 1 cards
         var cardsToDraw = playerCards.getNCardsFromTopDeck(1);

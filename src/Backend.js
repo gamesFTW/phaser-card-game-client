@@ -93,12 +93,22 @@ class Backend extends EventEmitter {
     getAllPlayersIds() {
         return MeteorApp.data.allPlayersIds;
     }
+    
+    
+    getGameTurnNumber() {
+        return MeteorApp.Games.findOne(this.getGameId()).turnNumber || 0;
+    }
 
 
     // ----------------------- Setters -----------------------
     // TODO: move it to class.
     removeCard(id) {
         Meteor.call('removeCard', this.getGameId(), id);
+    }
+    
+    
+    addEndOfTurnEvent() {
+        Meteor.call('addEndOfTurnEvent', this.getGameId(), this.getCurrentPlayerId());
     }
 
 
