@@ -1,8 +1,6 @@
 import Backend from 'Backend';
 
 import GroupTypes from 'cardGroups/CardGroupTypes';
-import TileManager from 'tile/TileManager';
-import CardManager from 'card/CardManager';
 import CardManagerEvent from 'card/CardManagerEvent';
 import Card from 'card/Card';
 import CardEvent from 'card/CardEvent';

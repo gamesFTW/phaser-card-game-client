@@ -164,7 +164,7 @@ export default class CardManager extends EventEmitter {
         
         if (Backend.getGameTurnNumber() >= 4) {
             numberOfManaToUntap = 4;
-            if (Backend.getGameTurnNumber() >= 7) {
+            if (Backend.getGameTurnNumber() >= 8) {
                 numberOfManaToUntap = 5;
                 numberOfCardsToDraw = 2;
             }
