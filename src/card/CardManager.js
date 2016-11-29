@@ -69,6 +69,7 @@ export default class CardManager extends EventEmitter {
             Backend.CARD_MOVED_TO_PREVIOUS_GROUP,
             this._onCardMovedToPreviousGroup.bind(this)
         );
+        Backend.on(Backend.TIMER_ALARMED_END_OF_TURN, this._onTimerAlarmedEndOfTurn.bind(this));
     }
 
 
@@ -440,6 +441,11 @@ export default class CardManager extends EventEmitter {
         this.createCard(event.card);
     }
 
+    _onTimerAlarmedEndOfTurn(event) {
+        if(event.playerId === Backend.getCurrentPlayerId()) {
+            this.endOfTurn();
+        }
+    }
 
     //TODO: remove it to MoveAction class
     _onCardPlayedAsMana(event) {

@@ -19,12 +19,31 @@ class Backend extends EventEmitter {
     get CARD_TOOK_FROM_GRAVEYARD() { return 'Backend:cardTookFromGraveyard'}
     get PLAYER_TURN_ENDED() { return 'Backend:endOfPlayerTurn'}
     get GAME_TURN_ENDED() { return 'Backend:endOfGameTurn'}
+    get TIMER_ALARMED_END_OF_TURN() { return 'Backend:timerAlarmedEndOfPlayerTurn'}
 
 
     constructor() {
         super();
 
         this.listenServerActions();
+
+        // var ddpEvents = new EventDDP('raix:push', Meteor.connection);
+        //
+        // ddpEvents.addListener('push', function(message) {
+        //     // Got message
+        //     // Use the notification api to display a nice native notification?
+        //     console.log(message);
+        // });
+        //
+        // ddpEvents.setClient({
+        //     // Setting userId here throws an error
+        //     // userId: '',
+        //     // This is an example of metadata
+        //     appId: '2222'
+        // });
+        //
+        // ddpEvents.emit('token', 'hello you bitch');
+
     }
 
     listenServerActions() {
