@@ -19,11 +19,16 @@ export default class InterfaceManager extends EventEmitter {
 
         this._createEndTurnButton();
         this._createTurnsNumberLabel();
+        this._createTimeLeftTimer();
 
         //TODO: remove it to MoveAction class
         Backend.on(Backend.GAME_TURN_ENDED, this._onTurnEnd.bind(this));
+        Backend.on(Backend.GAME_TIMER_TICKED, this._onTimerTick.bind(this));
     }
 
+    _onTimerTick(timerData) {
+        this._timeLeftTimerLablel.text = timerData.timeLeft;
+    }
     
     _onTurnEnd() {
         this._turnsNumberLabel.text = Backend.getGameTurnNumber();
@@ -43,6 +48,19 @@ export default class InterfaceManager extends EventEmitter {
                 boundsAlignH: "center",
                 align: "center",
                 fill: 'white'
+            }
+        );
+    }
+
+    _createTimeLeftTimer() {
+        this._timeLeftTimerLablel = PhaserWrapper.game.add.text(
+            820, 800,
+            'Таймер',
+            {
+                font: "32px Arial",
+                boundsAlignH: "center",
+                align: "center",
+                fill: 'gray'
             }
         );
     }

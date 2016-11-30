@@ -20,35 +20,23 @@ class Backend extends EventEmitter {
     get PLAYER_TURN_ENDED() { return 'Backend:endOfPlayerTurn'}
     get GAME_TURN_ENDED() { return 'Backend:endOfGameTurn'}
     get TIMER_ALARMED_END_OF_TURN() { return 'Backend:timerAlarmedEndOfPlayerTurn'}
+    get GAME_TIMER_TICKED() { return 'Backend:gameTimerTicked'}
 
 
     constructor() {
         super();
 
         this.listenServerActions();
-
-        // var ddpEvents = new EventDDP('raix:push', Meteor.connection);
-        //
-        // ddpEvents.addListener('push', function(message) {
-        //     // Got message
-        //     // Use the notification api to display a nice native notification?
-        //     console.log(message);
-        // });
-        //
-        // ddpEvents.setClient({
-        //     // Setting userId here throws an error
-        //     // userId: '',
-        //     // This is an example of metadata
-        //     appId: '2222'
-        // });
-        //
-        // ddpEvents.emit('token', 'hello you bitch');
-
     }
 
     listenServerActions() {
         //TODO ХАК для того что бы все прошлые эвенты не пожгружались
         var initializing = true;
+        var ddpEvents = new EventDDP('raix:push', Meteor.connection);
+        
+        ddpEvents.setClient({
+            gameId: this.getGameId()
+        });
         
         console.log('gameId', this.getGameId());
 
@@ -59,6 +47,13 @@ class Backend extends EventEmitter {
                 }
             }.bind(this)
         });
+        
+        // Listen events via DPP
+        ddpEvents.addListener('timerTicked', (timersData) => {
+            this.emit(this.GAME_TIMER_TICKED, timersData);
+        });
+        
+        //ddpEvents.emit('token', 'hello you bitch');
 
         initializing = false;
     }
