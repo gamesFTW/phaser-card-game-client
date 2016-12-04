@@ -1,5 +1,3 @@
-import R from 'ramda';
-
 import Phaser from 'phaser';
 import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
 import FiledObjectsViewEvent from 'FiledObjectsViewEvent';

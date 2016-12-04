@@ -16,18 +16,39 @@ export default class InterfaceManager extends EventEmitter {
          * @private
          */
         this._eotButton = null;
+        this._timeLeftTimerLablel = null;
+        this._turnsNumberLabel = null;
+        this._globalTimerCurrentPlayer = null;
+        this._globalTimerOtherPlayer = null;
 
         this._createEndTurnButton();
         this._createTurnsNumberLabel();
         this._createTimeLeftTimer();
+        this._createGlobalTimerCurrentPlayer();
+        this._createGlobalTimerOtherPlayer();
 
         //TODO: remove it to MoveAction class
         Backend.on(Backend.GAME_TURN_ENDED, this._onTurnEnd.bind(this));
         Backend.on(Backend.GAME_TIMER_TICKED, this._onTimerTick.bind(this));
     }
 
+    /**
+     * 
+     * @param timerData
+     * @param timerData.timeLeft Number
+     * @param timerData.globalTimers Object
+     * @private
+     */
     _onTimerTick(timerData) {
-        this._timeLeftTimerLablel.text = timerData.timeLeft;
+        this._timeLeftTimerLablel.text = secToMin(timerData.timeLeft);
+        
+        _.forEach(timerData.globalTimers, (v, k) => {
+            if (k == Backend.getCurrentPlayerId()) {
+                this._globalTimerCurrentPlayer.text = secToMin(v);
+            } else {
+                this._globalTimerOtherPlayer.text = secToMin(v);
+            }
+        });
     }
     
     _onTurnEnd() {
@@ -51,7 +72,36 @@ export default class InterfaceManager extends EventEmitter {
             }
         );
     }
+     
+    
+    _createGlobalTimerOtherPlayer() {
+        this._globalTimerOtherPlayer = PhaserWrapper.game.add.text(
+            1100, 20,
+            'Global timer',
+            {
+                font: "18px Arial",
+                boundsAlignH: "center",
+                align: "center",
+                fill: 'gray'
+            }
+        );
+    }
 
+    
+    _createGlobalTimerCurrentPlayer() {
+        this._globalTimerCurrentPlayer = PhaserWrapper.game.add.text(
+            1100, 860,
+            'Global timer',
+            {
+                font: "18px Arial",
+                boundsAlignH: "center",
+                align: "center",
+                fill: 'gray'
+            }
+        );
+    }
+
+    
     _createTimeLeftTimer() {
         this._timeLeftTimerLablel = PhaserWrapper.game.add.text(
             820, 800,
@@ -72,3 +122,9 @@ export default class InterfaceManager extends EventEmitter {
 }
 
 
+function secToMin(sec) {
+    if (sec === Infinity) {
+        return '--';
+    }
+    return new Date(sec * 1000).toISOString().substr(14, 5);
+}

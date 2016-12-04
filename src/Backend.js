@@ -104,6 +104,11 @@ class Backend extends EventEmitter {
     getCurrentPlayerId() {
         return MeteorApp.data.currentPlayerId;
     }
+    
+    
+    getCurrentPlayerIndex() {
+        
+    }
 
 
     getAllPlayersIds() {
