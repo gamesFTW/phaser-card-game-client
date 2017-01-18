@@ -156,6 +156,11 @@ class Backend extends EventEmitter {
     untapCard(id) {
         Meteor.call('untapCard', this.getGameId(), id);
     }
+    
+    
+    tooglePauseGame() {
+        Meteor.call('tooglePause', this.getGameId());
+    }
 
 
     //TODO rename to playCardAsMana

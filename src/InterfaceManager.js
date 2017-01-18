@@ -1,6 +1,6 @@
 import EventEmitter from 'external/EventEmitter';
 
-
+import Phaser from 'phaser';
 import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
 import Backend from 'Backend';
 
@@ -26,10 +26,13 @@ export default class InterfaceManager extends EventEmitter {
         this._createTimeLeftTimer();
         this._createGlobalTimerCurrentPlayer();
         this._createGlobalTimerOtherPlayer();
+        
+        this._createPauseHandler();
 
         //TODO: remove it to MoveAction class
         Backend.on(Backend.GAME_TURN_ENDED, this._onTurnEnd.bind(this));
         Backend.on(Backend.GAME_TIMER_TICKED, this._onTimerTick.bind(this));
+        
     }
 
     /**
@@ -50,6 +53,11 @@ export default class InterfaceManager extends EventEmitter {
             }
         });
     }
+
+    _onSpacePress() {
+        console.log('pause by spacebar');
+        Backend.tooglePauseGame();
+    }
     
     _onTurnEnd() {
         this._turnsNumberLabel.text = Backend.getGameTurnNumber();
@@ -58,7 +66,11 @@ export default class InterfaceManager extends EventEmitter {
     _createEndTurnButton() {
         this._eotButton = PhaserWrapper.game.add.button(750, 840, 'button_eot', this._onEndTurnButtonClick, this);
     }
-    
+
+    _createPauseHandler() {
+        var space = PhaserWrapper.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        space.onDown.add(this._onSpacePress, this);
+    }
     
     _createTurnsNumberLabel() {
         this._turnsNumberLabel = PhaserWrapper.game.add.text(
