@@ -61,6 +61,7 @@ export default class CardManager extends EventEmitter {
         Backend.on(Backend.CARD_DRAWN, this._onCardDrawn.bind(this));
         Backend.on(Backend.CARD_ROTATED, this._onCardRotated.bind(this));
         Backend.on(Backend.CARD_CREATED, this._onCardCreated.bind(this));
+        Backend.on(Backend.CARD_DISCARDED, this._onCardDiscarded.bind(this));
         Backend.on(
             Backend.CARD_TOOK_FROM_GRAVEYARD,
             this._onCardTookFromGraveyard.bind(this)
@@ -236,6 +237,13 @@ export default class CardManager extends EventEmitter {
     }
 
 
+    _discardCard(id, ownerId) {
+        let card = this.findById(id);
+
+        this._players[ownerId].moveCardToGraveyard(card);
+    }
+
+
     _rotateCard(id, rotated) {
         let card = this.findById(id);
         card.rotated = rotated;
@@ -339,12 +347,18 @@ export default class CardManager extends EventEmitter {
         var card = event.currentTarget;
 
         // Если игрок хочет отменить draw/die/play
-        var isCardPlayUndo = PhaserWrapper.game.input.keyboard.isDown(Phaser.Keyboard.Z);
+        var isUndo = PhaserWrapper.game.input.keyboard.isDown(Phaser.Keyboard.Z);
+        var isDiscard = PhaserWrapper.game.input.keyboard.isDown(Phaser.Keyboard.D);
         var inDeck = this._currentPlayerCards.checkCardIn(GroupTypes.DECK ,card);
         var inGraveyard = this._currentPlayerCards.checkCardIn(GroupTypes.GRAVEYARD ,card);
 
-        if (isCardPlayUndo) {
+        if (isUndo) {
             Backend.moveCardToPreviousGroup(card.id);
+            return;
+        }
+
+        if (isDiscard) {
+            Backend.discardCard(card.id);
             return;
         }
 
@@ -387,56 +401,53 @@ export default class CardManager extends EventEmitter {
     }
 
 
-    //TODO: remove it to MoveAction class
+    //TODO: maybe move all listeners to MoveAction class?
     _onCardMoved(event) {
         var card = this.findById(event.id);
         card.position = event.position;
     }
 
 
-    //TODO: remove it to MoveAction class
     _onCardRemoved(event) {
         this._removeCard(event.id);
     }
 
 
-    //TODO: remove it to MoveAction class
     _onCardTapped(event) {
         this._tapCard(event.id);
     }
 
 
-    //TODO: remove it to MoveAction class
     _onCardUntapped(event) {
         this._untapCard(event.id);
     }
 
 
-    //TODO: remove it to MoveAction class
     _onCardPlayed(event) {
         this._playCard(event.id, event.ownerId, event.position, event.playType);
     }
 
 
-    //TODO: remove it to MoveAction class
     _onCardPlayedAsSpell(event) {
         this._playCardAsSpell(event.playedCardId, event.targetCardId, event.ownerId);
     }
 
 
-    //TODO: remove it to MoveAction class
     _onCardDrawn(event) {
         this._drawCard(event.id, event.ownerId);
     }
 
 
-    //TODO: remove it to MoveAction class
+    _onCardDiscarded(event) {
+        this._discardCard(event.id, event.ownerId);
+    }
+
+
     _onCardRotated(event) {
         this._rotateCard(event.id, event.rotated);
     }
 
 
-    //TODO: remove it to MoveAction class
     _onCardCreated(event) {
         this.createCard(event.card);
     }
@@ -447,13 +458,11 @@ export default class CardManager extends EventEmitter {
         }
     }
 
-    //TODO: remove it to MoveAction class
     _onCardPlayedAsMana(event) {
         this._playCardAsMana(event.id, event.ownerId);
     }
 
 
-    //TODO: remove it to MoveAction class
     _onCardDied(event) {
         let id = event.id,
             card = this.findById(id),
@@ -464,19 +473,16 @@ export default class CardManager extends EventEmitter {
     }
 
 
-    //TODO: remove it to MoveAction class
     _onCardHealthChanged(event) {
         this._changeCardHealth(event.id, event.health);
     }
 
 
-    //TODO: remove it to MoveAction class
     _onCardCounterChanged(event) {
         this._changeCardCounter(event.id, event.counter);
     }
 
 
-    //TODO: remove it to MoveAction class
     _onCardMovedToPreviousGroup(event) {
         this._moveCardToPreviousGroup(
             event.id, event.ownerId, event.oldCardGroup, event.newCardGroup
@@ -484,7 +490,6 @@ export default class CardManager extends EventEmitter {
     }
 
 
-    //TODO: remove it to MoveAction class
     _onCardTookFromGraveyard(event) {
         let card = this.findById(event.id);
         var player = this._players[event.ownerId];

@@ -17,6 +17,7 @@ class Backend extends EventEmitter {
     get CARD_MOVED_TO_PREVIOUS_GROUP() { return 'Backend:cardMovedToPreviousGroup'}
     get CARD_CREATED() { return 'Backend:cardCreated'}
     get CARD_TOOK_FROM_GRAVEYARD() { return 'Backend:cardTookFromGraveyard'}
+    get CARD_DISCARDED() { return 'Backend:cardDiscarded'}
     get PLAYER_TURN_ENDED() { return 'Backend:endOfPlayerTurn'}
     get GAME_TURN_ENDED() { return 'Backend:endOfGameTurn'}
     get TIMER_ALARMED_END_OF_TURN() { return 'Backend:timerAlarmedEndOfPlayerTurn'}
@@ -181,6 +182,11 @@ class Backend extends EventEmitter {
 
     moveCardToPreviousGroup(id) {
         Meteor.call('moveCardToPreviousGroup', this.getGameId(), id);
+    }
+
+
+    discardCard(id) {
+        Meteor.call('discardCard', this.getGameId(), id);
     }
 
 

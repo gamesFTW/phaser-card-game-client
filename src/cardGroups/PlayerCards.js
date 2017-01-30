@@ -5,7 +5,7 @@
  */
 import EventEmitter from 'external/EventEmitter';
 
-import GroupTypes from './CardGroupTypes'; 
+import CardGroupTypes from './CardGroupTypes'; 
 import Hand from './hand/Hand';
 import Deck from './deck/Deck';
 import Graveyard from './graveyard/Graveyard';
@@ -37,6 +37,14 @@ export default class PlayerCards extends EventEmitter {
 
         this._manaPool = new ManaPool(decksViewsProperties.manaPool);
         this._manaPool.parent = this;
+
+        this._cardGroupMapping = {
+            [`${CardGroupTypes.DECK}`]: this._deck,
+            [`${CardGroupTypes.HAND}`]: this._hand,
+            [`${CardGroupTypes.TABLE}`]: this._table,
+            [`${CardGroupTypes.GRAVEYARD}`]: this._graveyard,
+            [`${CardGroupTypes.MANA_POOL}`]: this._manaPool
+        };
     }
 
 
@@ -47,22 +55,31 @@ export default class PlayerCards extends EventEmitter {
      */
     addCard(card, cardGroup) {
         switch (cardGroup) {
-           case GroupTypes.DECK:
+           case CardGroupTypes.DECK:
                this.addCardToDeck(card);
                break;
-           case GroupTypes.HAND:
+           case CardGroupTypes.HAND:
                this.addCardToHand(card);
                break;
-           case GroupTypes.TABLE:
+           case CardGroupTypes.TABLE:
                this.addCardToTable(card);
                break;
-           case GroupTypes.GRAVEYARD:
+           case CardGroupTypes.GRAVEYARD:
                this.addCardToGraveyard(card);
                break;
-           case GroupTypes.MANA_POOL:
+           case CardGroupTypes.MANA_POOL:
                this.addCardToManaPool(card);
                break;
         }
+    }
+
+
+    /**
+     * @param {Card} card
+     */
+    removeCardFromCurrentCardGroup(card) {
+        var currentCardGroup = this.getCardGroupByCard(card);
+        this._cardGroupMapping[currentCardGroup].removeCard(card);
     }
 
 
@@ -143,6 +160,12 @@ export default class PlayerCards extends EventEmitter {
         this._manaPool.removeCard(card);
         this._hand.addCard(card);
     }
+    
+    
+    moveCardToGraveyard(card) {
+        this.removeCardFromCurrentCardGroup(card);
+        this.addCard(card, CardGroupTypes.GRAVEYARD);
+    }
 
 
     /**
@@ -152,17 +175,34 @@ export default class PlayerCards extends EventEmitter {
      */
     checkCardIn(cardGroup, card) {
         switch (cardGroup) {
-            case GroupTypes.DECK:
+            case CardGroupTypes.DECK:
                 return this._deck.findById(card.id) !== undefined;
-            case GroupTypes.HAND:
+            case CardGroupTypes.HAND:
                 return this._hand.findById(card.id) !== undefined;
-            case GroupTypes.TABLE:
+            case CardGroupTypes.TABLE:
                 return this._table.findById(card.id) !== undefined;
-            case GroupTypes.GRAVEYARD:
+            case CardGroupTypes.GRAVEYARD:
                 return this._graveyard.findById(card.id) !== undefined;
-            case GroupTypes.MANA_POOL:
+            case CardGroupTypes.MANA_POOL:
                 return this._manaPool.findById(card.id) !== undefined;
         }
+    }
+
+
+    /**
+     * @param {Card} card
+     * @return {CardGroupTypes|null}
+     */
+    getCardGroupByCard(card) {
+        var currentCardGroup = null;
+        _.forEach(this._cardGroupMapping, (cardGroupManager, cardGroup) => {
+            if (cardGroupManager.findById(card.id) !== undefined) {
+                currentCardGroup = cardGroup;
+                return false;
+            }
+        });
+
+        return currentCardGroup;
     }
 
 
