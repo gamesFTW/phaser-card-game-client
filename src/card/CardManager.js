@@ -161,29 +161,16 @@ export default class CardManager extends EventEmitter {
 
 
     endOfTurn() {
-        var numberOfManaToUntap = 3;
         var numberOfCardsToDraw = 1;
-        
-        if (Backend.getGameTurnNumber() >= 4) {
-            numberOfManaToUntap = 4;
-            if (Backend.getGameTurnNumber() >= 8) {
-                numberOfManaToUntap = 5;
-                numberOfCardsToDraw = 2;
-            }
+    
+        if (Backend.getGameTurnNumber() >= 6) {
+            numberOfCardsToDraw = 2;
         }
         
         var playerCards = this._players[Backend.getCurrentPlayerId()];
-        // Draw 1 cards
+        // Draw cards
         var cardsToDraw = playerCards.getNCardsFromTopDeck(numberOfCardsToDraw);
         cardsToDraw.forEach(c => Backend.drawCard(c.id));
-
-        //Untap creatures
-        var cardsToUntap = playerCards.getAllCardsFromTable();
-        cardsToUntap.forEach(c => Backend.untapCard(c.id));
-
-        //Untap mana
-        var manaToUntap = playerCards.getTappedCardsFromManaPool();
-        _.slice(manaToUntap, 0, numberOfManaToUntap).forEach(c => Backend.untapCard(c.id));
 
         Backend.addEndOfTurnEvent();
     }
