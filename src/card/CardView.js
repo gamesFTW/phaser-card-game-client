@@ -181,10 +181,6 @@ export default class CardView extends EventEmitter {
         this._sprite = PhaserWrapper.game.make.sprite(
             0, 0
         );
-        //this._sprite.pivot.x = this._sprite.width * .5;
-        //this._sprite.pivot.y = this._sprite.height * .5;
-
-
         this._container.addChild(this._sprite);
 
         this.render();

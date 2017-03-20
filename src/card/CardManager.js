@@ -163,9 +163,9 @@ export default class CardManager extends EventEmitter {
     endOfTurn() {
         var numberOfCardsToDraw = 1;
     
-        if (Backend.getGameTurnNumber() >= 6) {
-            numberOfCardsToDraw = 2;
-        }
+        //if (Backend.getGameTurnNumber() >= 6) {
+        //    numberOfCardsToDraw = 2;
+        //}
         
         var playerCards = this._players[Backend.getCurrentPlayerId()];
         // Draw cards
