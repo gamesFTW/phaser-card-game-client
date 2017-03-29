@@ -15,22 +15,22 @@ export default class PlayerCardsFactory {
         return {
             you: {
                 hand: {
-                    x: 1290, y: 835, faceUp: true,
+                    x: 1240, y: 835, faceUp: true,
                     padding: 5, adaptive: true,
-                    maxWidth: 385
+                    maxWidth: 430
                 },
                 table: {
-                    x: 1290, y: 750, faceUp: true,
+                    x: 1240, y: 750, faceUp: true,
                     padding: 5, adaptive:true,
-                    maxWidth: 385, verticalPadding: -15
+                    maxWidth: 430, verticalPadding: -15
                 },
                 deck: {
                     x: 1615, y: 565, faceUp: false
                 },
                 manaPool: {
-                    x: 1290, y: 650, faceUp: false,
+                    x: 1240, y: 650, faceUp: false,
                     padding: 5, adaptive: true,
-                    maxWidth: 385
+                    maxWidth: 430
                 },
                 graveyard: {
                     x: 1550, y: 565, faceUp: true
@@ -39,22 +39,22 @@ export default class PlayerCardsFactory {
 
             enemy: {
                 hand: {
-                    x: 1290, y: 5, faceUp: false,
+                    x: 1240, y: 5, faceUp: false,
                     padding: 5, adaptive: true,
-                    maxWidth: 385
+                    maxWidth: 430
                 },
                 table: {
-                    x: 1290, y: 105, faceUp: true,
+                    x: 1240, y: 105, faceUp: true,
                     padding: 5, adaptive: true,
-                    maxWidth: 385, verticalPadding: -15
+                    maxWidth: 430, verticalPadding: -15
                 },
                 deck: {
                     x: 1615, y: 275, faceUp: false
                 },
                 manaPool: {
-                    x: 1290, y: 190, faceUp: false,
+                    x: 1240, y: 190, faceUp: false,
                     padding: 5, adaptive: true,
-                    maxWidth: 385
+                    maxWidth: 430
                 },
                 graveyard: {
                     x: 1550, y: 275, faceUp: true

@@ -125,9 +125,12 @@ class PhaserWrapper {
 
         
         // Card view
-        this._game.load.image('card_bg', '/assets/card1.png');
-        this._game.load.image('card_bg_facedown', '/assets/card2.png');
-        this._game.load.image('card_bg_big', '/assets/card3.png');
+        // this._game.load.image('card_bg', '/assets/card1.png');
+        // this._game.load.image('card_bg_facedown', '/assets/card2.png');
+        // this._game.load.image('card_bg_big', '/assets/card3.png');
+        this._game.load.image('card_bg', '/assets/back/card2-creature.png');
+        this._game.load.image('card_bg_facedown', '/assets/back/card2-back.png');
+        this._game.load.image('card_bg_big', '/assets/back/card2-creature_big.png');
 
         // Buttons
         this._game.load.image('button_eot', '/assets/button_eot.png');

@@ -103,7 +103,7 @@ export default class CardView extends EventEmitter {
 
 
     render() {
-        this._container.removeChild();
+        this._sprite.removeChildren();
 
         this._addBg();
         if (this.faceUp) {
@@ -201,7 +201,7 @@ export default class CardView extends EventEmitter {
 
     _addHeader() {
         var text = PhaserWrapper.game.make.text(
-            0, 12,
+            0, 15,
             this._data.title,
             {
                 font: "11px Arial",
@@ -209,12 +209,13 @@ export default class CardView extends EventEmitter {
                 align: "center"
             }
         );
-        text.setTextBounds(0, 0, CardView.CARD_WIDTH, 40);
+        text.setTextBounds(0, 0, CardView.CARD_WIDTH, 38);
+        text.wordWrapWidth = CardView.CARD_WIDTH - 38;
         text.wordWrap = true;
         text.lineSpacing = -6;
 
         var mana = PhaserWrapper.game.make.text(
-            6, 0,
+            5, 0,
             this._data.mana,
             {
                 font: "bold 14px Arial",
@@ -230,18 +231,6 @@ export default class CardView extends EventEmitter {
     }
 
     _addMiddle() {
-        //var text = PhaserWrapper.game.make.text(
-        //    3, 20,
-        //    this._data.text,
-        //    {
-        //        font: "9px Arial"
-        //    }
-        //);
-        //text.wordWrap = true;
-        //text.wordWrapWidth = CardView.CARD_WIDTH - 6;
-        //text.lineSpacing = -8;
-        //
-        //this._sprite.addChild(text);
 
         return this;
     }
@@ -262,7 +251,7 @@ export default class CardView extends EventEmitter {
         var counters = _.range(countersQuantity).map(function(n) {
             var padding = n * 5;
             return PhaserWrapper.game.make.sprite(
-                padding + (CardView.CARD_WIDTH / 2) - 20, CardView.CARD_HEIGHT - 30, 'counter'
+                padding + (CardView.CARD_WIDTH / 2) - 20, CardView.CARD_HEIGHT - 33, 'counter'
             );
         });
 

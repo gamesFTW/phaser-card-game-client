@@ -18,8 +18,8 @@ export default class CardFullView extends EventEmitter {
     static get CARD_WIDTH() {
         return 300;
     }
-    
-    
+
+
     static get CARD_HEIGHT() {
         return 400;
     }
@@ -121,7 +121,7 @@ export default class CardFullView extends EventEmitter {
 
     _addHeader() {
         var text = PhaserWrapper.game.make.text(
-            30, 5,
+            70, 25,
             this._data.title,
             {
                 font: "20px Arial"
@@ -129,7 +129,7 @@ export default class CardFullView extends EventEmitter {
         );
 
         var mana = PhaserWrapper.game.make.text(
-            6, 2,
+            31, 22,
             this._data.mana,
             {
                 font: "bold 26px Arial",
@@ -147,14 +147,15 @@ export default class CardFullView extends EventEmitter {
 
     _addMiddle() {
         var text = PhaserWrapper.game.make.text(
-            10, 200,
+            25, 100,
             this._data.text,
             {
-                font: "14px Arial"
+                font: "14px Arial",
+                boundsAlignH: "center",
             }
         );
         text.wordWrap = true;
-        text.wordWrapWidth = CardFullView.CARD_WIDTH - 12;
+        text.wordWrapWidth = CardFullView.CARD_WIDTH - 40;
         text.lineSpacing = -7;
 
         this._sprite.addChild(text);
@@ -165,11 +166,10 @@ export default class CardFullView extends EventEmitter {
 
     _addFooter() {
         var dmg = PhaserWrapper.game.make.text(
-            6, CardFullView.CARD_HEIGHT - 32,
+            31, CardFullView.CARD_HEIGHT - 51,
             this._data.dmg,
             {
                 font: "bold 26px Arial",
-                align: "left",
                 fill: 'black'
             }
         );
@@ -188,12 +188,11 @@ export default class CardFullView extends EventEmitter {
             : this._data.health + '/' + this._data.maxHealth;
 
         var hp = PhaserWrapper.game.make.text(
-            CardFullView.CARD_WIDTH - 26, CardFullView.CARD_HEIGHT - 32,
+            CardFullView.CARD_WIDTH - 48, CardFullView.CARD_HEIGHT - 51,
             hpValue,
             {
                 font: "bold 26px Arial",
-                align: "right",
-                boundsAlignH: "right",
+                boundsAlignH: "center",
                 fill: 'black'
             }
         );
