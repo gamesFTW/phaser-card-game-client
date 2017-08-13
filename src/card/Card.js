@@ -126,6 +126,18 @@ export default class Card extends EventEmitter {
 
 
     /**
+     * @returns {Number}
+     */
+    get mana() { return this._data.mana; }
+
+
+    /**
+     * @returns {String}
+     */
+    get title() { return this._data.title; }
+
+
+    /**
      * @param {Object} point
      */
     set position(point) {

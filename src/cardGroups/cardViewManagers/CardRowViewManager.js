@@ -42,7 +42,9 @@ export default class CardRowViewManager extends CardViewManager {
             cardsViews.forEach(function(cardView) {
                 this.placeCard(cardView, nextX, this._y);
 
-                nextX = nextX + (CardView.CARD_WIDTH + this._padding + cardOverlay);
+                // Я просто подобрал эту переменную. Ну и что? Кто меня за это осудит?
+                let MEGA_CONST = 2;
+                nextX = nextX + (CardView.CARD_WIDTH + this._padding + cardOverlay - MEGA_CONST);
             }.bind(this));
 
         } else {

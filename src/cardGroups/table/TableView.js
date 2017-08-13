@@ -48,7 +48,9 @@ export default class TableView extends CardRowViewManager {
                 }.bind(this));
             }
 
-            nextX = nextX + (CardView.CARD_WIDTH + this._padding + cardMargin);
+            // Я просто подобрал эту переменную. Ну и что? Кто меня за это осудит?
+            let MEGA_CONST = 2;
+            nextX = nextX + (CardView.CARD_WIDTH + this._padding + cardMargin - MEGA_CONST);
         }.bind(this));
     }
 
