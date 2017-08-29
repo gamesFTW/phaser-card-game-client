@@ -1,5 +1,6 @@
 export default class CardViewEvent {
     static get CLICK() { return 'CardViewEvent:click' }
+    static get DOUBLE_CLICK() { return 'CardViewEvent:doubleClick' }
     static get MIDDLE_CLICK() { return 'CardViewEvent:middleClick' }
     static get RIGHT_CLICK() { return 'CardViewEvent:rightClick' }
 

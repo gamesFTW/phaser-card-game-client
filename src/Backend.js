@@ -9,6 +9,7 @@ class Backend extends EventEmitter {
     get CARD_UNTAPPED() { return 'Backend:cardUntapped'}
     get CARD_PLAYED() { return 'Backend:cardPlayed'}
     get CARD_PLAYED_AS_SPELL() { return 'Backend:cardPlayedAsSpell'}
+    get CARD_PLAYED_AS_ATTACH() { return 'Backend:cardPlayedAsAttach'}
     get CARD_PLAYED_AS_MANA() { return 'Backend:cardPlayedAsMana'}
     get CARD_HEALTH_CHANGED() { return 'Backend:cardHealthChanged'}
     get CARD_COUNTER_CHANGED() { return 'Backend:cardCounterChanged'}
@@ -164,19 +165,24 @@ class Backend extends EventEmitter {
     }
 
 
+    playCard(id, position) {
+        Meteor.call('playCard', this.getGameId(), id, position);
+    }
+
+
     //TODO rename to playCardAsMana
     playAsMana(id) {
         Meteor.call('playAsMana', this.getGameId(), id);
     }
 
 
-    playCard(id, position) {
-        Meteor.call('playCard', this.getGameId(), id, position);
+    playCardAsAttach(playedCardId, targetCardId) {
+        Meteor.call('playCardAsAttach', this.getGameId(), playedCardId, targetCardId);
     }
 
 
-    playCardAsSpell(playedCardId, targetCardId) {
-        Meteor.call('playCardAsSpell', this.getGameId(), playedCardId, targetCardId);
+    putSpellOnTable(id) {
+        Meteor.call('putSpellOnTable', this.getGameId(), id);
     }
 
 

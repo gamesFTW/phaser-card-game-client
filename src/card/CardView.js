@@ -281,7 +281,9 @@ export default class CardView extends EventEmitter {
 
     // Handlers
     _onClick(event, pointer) {
-        if (pointer.leftButton.isDown) {
+        if (pointer.msSinceLastClick < PhaserWrapper.game.input.doubleTapRate) {
+            this.emit(CardViewEvent.DOUBLE_CLICK);
+        } else if (pointer.leftButton.isDown) {
             this.emit(CardViewEvent.CLICK);
         } else if (pointer.rightButton.isDown) {
             this.emit(CardViewEvent.RIGHT_CLICK);

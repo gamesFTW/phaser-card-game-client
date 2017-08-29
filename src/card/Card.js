@@ -278,6 +278,10 @@ export default class Card extends EventEmitter {
         );
 
         this._cardView.on(
+            CardViewEvent.DOUBLE_CLICK, this._onCardViewDoubleClick.bind(this)
+        );
+
+        this._cardView.on(
             CardViewEvent.RIGHT_CLICK, this._onCardViewRightClick.bind(this)
         );
 
@@ -370,6 +374,11 @@ export default class Card extends EventEmitter {
     // Card view handlers
     _onCardViewClick(event) {
         this.emit(CardEvent.CARD_CLICK);
+    }
+
+
+    _onCardViewDoubleClick(event) {
+        this.emit(CardEvent.CARD_DOUBLE_CLICK);
     }
 
 

@@ -53,6 +53,7 @@ export default class CardManager extends EventEmitter {
         Backend.on(Backend.CARD_TAPPED, this._onCardTapped.bind(this));
         Backend.on(Backend.CARD_UNTAPPED, this._onCardUntapped.bind(this));
         Backend.on(Backend.CARD_PLAYED, this._onCardPlayed.bind(this));
+        Backend.on(Backend.CARD_PLAYED_AS_ATTACH, this._onCardPlayedAsAttach.bind(this));
         Backend.on(Backend.CARD_PLAYED_AS_SPELL, this._onCardPlayedAsSpell.bind(this));
         Backend.on(Backend.CARD_PLAYED_AS_MANA, this._onCardPlayedAsMana.bind(this));
         Backend.on(Backend.CARD_DIED, this._onCardDied.bind(this));
@@ -113,6 +114,7 @@ export default class CardManager extends EventEmitter {
 
         // Возможно стоит вынести все слушатели в отдельный класс
         card.on(CardEvent.CARD_CLICK, this._onCardClick.bind(this));
+        card.on(CardEvent.CARD_DOUBLE_CLICK, this._onCardDoubleClick.bind(this));
         card.on(CardEvent.CARD_RIGHT_CLICK, this._onCardRightClick.bind(this));
         card.on(CardEvent.CARD_MIDDLE_CLICK, this._onCardMiddleClick.bind(this));
 
@@ -249,7 +251,14 @@ export default class CardManager extends EventEmitter {
     }
 
 
-    _playCardAsSpell(playedCardId, targetCardId, ownerId) {
+    _playCardAsSpell(id, ownerId) {
+        let card = this.findById(id);
+
+        this._players[ownerId].moveCardFromHandToTable(card);
+    }
+
+
+    _playCardAsAttach(playedCardId, targetCardId, ownerId) {
         let playedCard = this.findById(playedCardId);
         let targetCard = this.findById(targetCardId);
 
@@ -359,6 +368,19 @@ export default class CardManager extends EventEmitter {
     }
 
 
+    _onCardDoubleClick(event) {
+        let card = event.currentTarget;
+        let inHand = this._currentPlayerCards.checkCardIn(GroupTypes.HAND ,card);
+        let inTable = this._currentPlayerCards.checkCardIn(GroupTypes.TABLE ,card);
+
+        if (inHand) {
+            Backend.putSpellOnTable(card.id);
+        } else if (inTable) {
+            Backend.playCard(card.id);
+        }
+    }
+
+
     /**
      * HANDLERS
      */
@@ -415,8 +437,13 @@ export default class CardManager extends EventEmitter {
     }
 
 
+    _onCardPlayedAsAttach(event) {
+        this._playCardAsAttach(event.playedCardId, event.targetCardId, event.ownerId);
+    }
+
+
     _onCardPlayedAsSpell(event) {
-        this._playCardAsSpell(event.playedCardId, event.targetCardId, event.ownerId);
+        this._playCardAsSpell(event.id, event.ownerId);
     }
 
 

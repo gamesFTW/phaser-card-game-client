@@ -97,7 +97,7 @@ export default class TileCardManager {
         var isClickedCardInTable = this._cardManager.checkCardIn(GroupTypes.TABLE, clickedCard);
 
         if (isSelectedCardInHand) {
-            Backend.playCardAsSpell(
+            Backend.playCardAsAttach(
                 this._selectedCard.id, clickedCard.id
             );
             this._selectedCard = null;

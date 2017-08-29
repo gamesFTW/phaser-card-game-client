@@ -1,5 +1,6 @@
 export default class CardEvent {
     static get CARD_CLICK() { return 'CardEvent:cardClick'}
+    static get CARD_DOUBLE_CLICK() { return 'CardEvent:cardDoubleClick'}
     static get CARD_MIDDLE_CLICK() { return 'CardEvent:cardMiddleClick'}
     static get CARD_RIGHT_CLICK() { return 'CardEvent:cardRightCLick' }
 
