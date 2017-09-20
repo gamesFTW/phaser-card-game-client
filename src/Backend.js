@@ -33,14 +33,21 @@ class Backend extends EventEmitter {
 
     listenServerActions() {
         //TODO ХАК для того что бы все прошлые эвенты не пожгружались
-        var initializing = true;
-        var ddpEvents = new EventDDP('raix:push', Meteor.connection);
+        let initializing = true;
+
+        let ddpEvents = null;
+
+        if (window.ddpEvents) {
+            ddpEvents = window.ddpEvents;
+            ddpEvents.removeListener('timerTicked', this._onTimerTicked.bind(this));
+        } else {
+            ddpEvents = new EventDDP('raix:push', Meteor.connection);
+            window.ddpEvents = ddpEvents;
+        }
         
         ddpEvents.setClient({
             gameId: this.getGameId()
         });
-        
-        console.log('gameId', this.getGameId());
 
         MeteorApp.Actions.find({gameId: this.getGameId()}).observe({
             added: function(action) {
@@ -51,13 +58,16 @@ class Backend extends EventEmitter {
         });
         
         // Listen events via DPP
-        ddpEvents.addListener('timerTicked', (timersData) => {
-            this.emit(this.GAME_TIMER_TICKED, timersData);
-        });
+        ddpEvents.addListener('timerTicked', this._onTimerTicked.bind(this));
         
         //ddpEvents.emit('token', 'hello you bitch');
 
         initializing = false;
+    }
+
+
+    _onTimerTicked(timersData) {
+        this.emit(this.GAME_TIMER_TICKED, timersData);
     }
 
 
@@ -210,6 +220,5 @@ class Backend extends EventEmitter {
         Meteor.call('rotateCard', this.getGameId(), id);
     }
 }
-
 
 export default new Backend();

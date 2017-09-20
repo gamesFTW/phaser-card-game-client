@@ -198,4 +198,10 @@ class PhaserWrapper {
 //}
 
 // Всегда отдает один инстанс
-export default new PhaserWrapper();
+
+let phaserWrapper = new PhaserWrapper();
+global.phaserWrapper = phaserWrapper;
+
+export default phaserWrapper;
+
+
