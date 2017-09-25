@@ -126,6 +126,12 @@ export default class Card extends EventEmitter {
 
 
     /**
+     * @returns {Boolean}
+     */
+    get hero() { return this._data.hero; }
+
+    
+    /**
      * @returns {Number}
      */
     get mana() { return this._data.mana; }

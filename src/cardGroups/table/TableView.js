@@ -27,6 +27,7 @@ export default class TableView extends CardRowViewManager {
 
 
     /**
+     * WARNING reorderCards вызывается столько раз сколько карт в руке у плеера, при каждом добавлении карты. =( это баг
      * @param {Card[]} cards
      */
     reorderCards(cards) {
@@ -35,25 +36,64 @@ export default class TableView extends CardRowViewManager {
         var notAttachedCards = _.reject(cards, c => _.contains(attachedCardsIds, c.id));
 
         var nextX = this._x;
-        var cardMargin = this.getCardMargin(notAttachedCards.length);
+        var currentType = null;
+        
+        var numberOfGapsBetweenTypes = this._getNumberOfGapsBetweenType(notAttachedCards);
+        var cardMargin = this.getCardMargin(notAttachedCards.length + numberOfGapsBetweenTypes);
+        
+        notAttachedCards = this._groupCardsByType(notAttachedCards);
 
         notAttachedCards.forEach(function(card) {
+            
+            if (card.type !== currentType) {
+                if (currentType !== null) {
+                    nextX += this._calculatePaddingForCard(cardMargin);
+                }
+                currentType = card.type;
+            }
+            
             this.placeCard(card.cardView, nextX, this._y);
 
-            if(card.attachedCards.length) {
-                var y = this._y + this._verticalPadding;
-                card.attachedCards.forEach(function(attachedCard) {
-                    this.placeCard(attachedCard.cardView, nextX, y);
-                    y += this._verticalPadding;
-                }.bind(this));
-            }
+            this._replaceAttachedCardToTarget(card, nextX);
 
-            // Я просто подобрал эту переменную. Ну и что? Кто меня за это осудит?
-            let MEGA_CONST = 2;
-            nextX = nextX + (CardView.CARD_WIDTH + this._padding + cardMargin - MEGA_CONST);
+            nextX += this._calculatePaddingForCard(cardMargin);
         }.bind(this));
     }
+    
+    _calculatePaddingForCard(cardMargin) {
+        // Нужно чтобы карты не залазили за экран
+        // Я просто подобрал эту переменную. Ну и что? Кто меня за это осудит?
+        let MEGA_CONST = 2;
+        return CardView.CARD_WIDTH + this._padding + cardMargin - MEGA_CONST;
+    }
+    
+    _getNumberOfGapsBetweenType(cards) {
+        let groups = _.keys(_.groupBy(cards, 'type'));
+        return groups.length == 0 ? 0 : groups.length -1;
+    }
+    
+    _replaceAttachedCardToTarget(card, nextX) {
+        if(card.attachedCards.length) {
+            var y = this._y + this._verticalPadding;
+            card.attachedCards.forEach((attachedCard) => {
+                this.placeCard(attachedCard.cardView, nextX, y);
+                y += this._verticalPadding;
+            });
+        }
+    }
 
+    _groupCardsByType(cards) {
+        let groups = _.groupBy(cards, 'type');
+
+        let heroes = _.remove(groups['creature'] || [], 'hero');
+
+        return _.compact([].concat(
+            heroes,
+            groups['creature'],
+            groups['spell'],
+            groups['area']
+        ));
+    }
 
     /**
      * Считает растояние которое нужно поставить между картами(на самом деле между картами и их паддингом)
