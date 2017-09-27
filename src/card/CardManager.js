@@ -215,6 +215,16 @@ export default class CardManager extends EventEmitter {
 
     _untapCard(id) {
         let card = this.findById(id);
+
+        if (!card.tapped) {
+            alert(
+                'Внимание! Кажется произошёл баг с антапом манны. ' +
+                'Позовите нас. Если нас нет, то все нажмите F5 и ' +
+                'продолжайте играть.'
+            );
+            console.warn(`Карта ${card._id}, ${card.title} уже тапнута!`);
+        }
+
         card.untap();
     }
 
