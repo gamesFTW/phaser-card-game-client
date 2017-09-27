@@ -72,6 +72,7 @@ export default class CardManager extends EventEmitter {
             this._onCardMovedToPreviousGroup.bind(this)
         );
         Backend.on(Backend.TIMER_ALARMED_END_OF_TURN, this._onTimerAlarmedEndOfTurn.bind(this));
+        Backend.on(Backend.PLAYER_TURN_ENDED, this._onPlayerTurnEnded.bind(this));
     }
 
 
@@ -163,17 +164,6 @@ export default class CardManager extends EventEmitter {
 
 
     endOfTurn() {
-        var numberOfCardsToDraw = 1;
-    
-        //if (Backend.getGameTurnNumber() >= 6) {
-        //    numberOfCardsToDraw = 2;
-        //}
-        
-        var playerCards = this._players[Backend.getCurrentPlayerId()];
-        // Draw cards
-        var cardsToDraw = playerCards.getNCardsFromTopDeck(numberOfCardsToDraw);
-        cardsToDraw.forEach(c => Backend.drawCard(c.id));
-
         Backend.addEndOfTurnEvent();
     }
 
@@ -479,6 +469,21 @@ export default class CardManager extends EventEmitter {
     _onTimerAlarmedEndOfTurn(event) {
         if(event.playerId === Backend.getCurrentPlayerId()) {
             this.endOfTurn();
+        }
+    }
+
+    _onPlayerTurnEnded(event) {
+        if(event.playerId === Backend.getCurrentPlayerId()) {
+            var numberOfCardsToDraw = 1;
+
+            //if (Backend.getGameTurnNumber() >= 6) {
+            //    numberOfCardsToDraw = 2;
+            //}
+
+            var playerCards = this._players[Backend.getCurrentPlayerId()];
+            // Draw cards
+            var cardsToDraw = playerCards.getNCardsFromTopDeck(numberOfCardsToDraw);
+            cardsToDraw.forEach(c => Backend.drawCard(c.id));
         }
     }
 
