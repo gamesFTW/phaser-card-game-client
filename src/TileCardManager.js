@@ -1,4 +1,4 @@
-import Backend from 'Backend';
+import Backend from 'BackendAdapter';
 
 import GroupTypes from 'cardGroups/CardGroupTypes';
 import CardManagerEvent from 'card/CardManagerEvent';

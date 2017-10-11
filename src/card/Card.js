@@ -10,7 +10,7 @@ import CardViewEvent from 'card/CardViewEvent';
 import FiledObjectsViewEvent from 'FiledObjectsViewEvent';
 
 
-import Backend from 'Backend';
+import Backend from 'BackendAdapter';
 
 
 export default class Card extends EventEmitter {

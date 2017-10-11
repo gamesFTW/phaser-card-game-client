@@ -16,7 +16,7 @@ import PlayerCardsFactory from 'cardGroups/PlayerCardsFactory';
 import GroupTypes from 'cardGroups/CardGroupTypes';
 
 
-import Backend from 'Backend';
+import Backend from 'BackendAdapter';
 
 
 export default class CardManager extends EventEmitter {
@@ -212,7 +212,7 @@ export default class CardManager extends EventEmitter {
                 'Позовите нас. Если нас нет, то все нажмите F5 и ' +
                 'продолжайте играть.'
             );
-            console.warn(`Карта ${card._id}, ${card.title} уже тапнута!`);
+            console.warn(`Карта ${card.id}, ${card.title} уже тапнута!`);
         }
 
         card.untap();
@@ -476,7 +476,7 @@ export default class CardManager extends EventEmitter {
         if(event.playerId === Backend.getCurrentPlayerId()) {
             var numberOfCardsToDraw = 1;
 
-            //if (Backend.getGameTurnNumber() >= 6) {
+            //if (BackendAdapter.getGameTurnNumber() >= 6) {
             //    numberOfCardsToDraw = 2;
             //}
 

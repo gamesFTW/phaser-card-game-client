@@ -1,9 +1,9 @@
 import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
 import TileManager from 'tile/TileManager';
 import CardManager from 'card/CardManager';
-import TileCardManager from 'TileCardManager';
-import Backend from 'Backend';
-import InterfaceManager from 'InterfaceManager';
+import TileCardManager from './TileCardManager';
+import InterfaceManager from './InterfaceManager';
+import Backend from './BackendAdapter';
 
 
 /**
@@ -82,6 +82,10 @@ class Main {
         var cardsData = Backend.getCards();
 
         this._cardManager.createCardsFromData(cardsData);
+        
+        if (Backend.playHistory) {
+            Backend.playHistory();
+        }
     }
 }
 

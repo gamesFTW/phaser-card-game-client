@@ -2,7 +2,7 @@ import EventEmitter from 'external/EventEmitter';
 
 import Phaser from 'phaser';
 import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
-import Backend from 'Backend';
+import Backend from 'BackendAdapter';
 
 
 export default class InterfaceManager extends EventEmitter {

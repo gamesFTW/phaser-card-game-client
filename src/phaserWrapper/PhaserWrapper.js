@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 
-import Backend from 'Backend';
+import Backend from 'BackendAdapter';
 
 
 global.PIXI = require('pixi');
