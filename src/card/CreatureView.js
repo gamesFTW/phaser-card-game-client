@@ -32,10 +32,11 @@ export default class CreatureView extends FieldObjectView {
         this._creatureSprite.anchor.y = 0.5;
 
         var filter = new filters.OutlineFilter(
-            PhaserWrapper.game.width, PhaserWrapper.game.height, 1, Color[data.color]
+            PhaserWrapper.game.width, PhaserWrapper.game.height, 1.5, Color[data.color]
         );
 
         this._creatureSprite.filters = [filter];
+
         // Никто не знает зачем это, вроде как дает ускорение, но ломает божественный tint
         //this._creatureSprite.shader = filter;
 
