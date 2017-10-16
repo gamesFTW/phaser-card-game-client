@@ -58,7 +58,6 @@ class PhaserWrapper {
 
 
     refreshAllGroupSorting() {
-
         this.refreshCardsSorting();
         this.refreshCreaturesSorting();
         this.refreshAreasSorting();
@@ -134,10 +133,26 @@ class PhaserWrapper {
 
         // Buttons
         this._game.load.image('button_eot', '/assets/button_eot.png');
+
+        // Blood
+        this._game.load.image('blood', '/assets/blood.png');
+        this._game.load.image('heal', '/assets/heal.png');
     }
 
 
     _create() {
+        this._game.physics.startSystem(Phaser.Physics.ARCADE);
+
+        // Create bloodEmitter
+        this.bloodEmitter = this._game.add.emitter(0, 0, 100);
+        this.bloodEmitter.makeParticles('blood');
+        this.bloodEmitter.gravity = 200;
+
+        // Create healEmitter
+        this.healEmitter = this._game.add.emitter(0, 0, 100);
+        this.healEmitter.makeParticles('heal');
+        this.healEmitter.gravity = 200;
+
         this._createGroups();
         this._createFinished();
     }
@@ -170,6 +185,9 @@ class PhaserWrapper {
             obj[name] = this._game.add.group(undefined, name);
             return obj;
         }.bind(this), {});
+
+        this._game.world.bringToTop(this.bloodEmitter);
+        this._game.world.bringToTop(this.healEmitter);
     }
 }
 

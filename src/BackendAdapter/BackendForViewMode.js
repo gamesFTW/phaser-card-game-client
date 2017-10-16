@@ -21,8 +21,8 @@ class BackendForViewMode extends Backend {
 
 
         function preformAction(leftActions) {
-            var currentAction = leftActions.shift();
-            var nextAction = leftActions[0];
+            let currentAction = leftActions.shift();
+            let nextAction = leftActions[0];
 
             if (currentAction === undefined || nextAction === undefined) {
                 return ;
@@ -32,8 +32,8 @@ class BackendForViewMode extends Backend {
             console.log('Preform action', currentAction);
             this.emit(currentAction.type, currentAction.params);
             
-            var timeDiffSecs = Math.abs((nextAction.datetime.getTime() - currentAction.datetime.getTime()) / 1000);
-            var waitTimeSecs = TIME_THRESHOLD_SEC;
+            let timeDiffSecs = Math.abs((nextAction.datetime.getTime() - currentAction.datetime.getTime()) / 1000);
+            let waitTimeSecs = TIME_THRESHOLD_SEC;
             
             if (timeDiffSecs < TIME_THRESHOLD_SEC) {
                 waitTimeSecs = timeDiffSecs;
@@ -51,7 +51,7 @@ class BackendForViewMode extends Backend {
     getCards() {
         return MeteorApp.Games.find(this.getGameId()).fetch()[0].initialStateCards
             .map(function(card) {
-                var cardData = card;
+                let cardData = card;
                 cardData['id'] = cardData['_id'];
                 delete cardData['_id'];
 

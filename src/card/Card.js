@@ -159,12 +159,21 @@ export default class Card extends EventEmitter {
      * @param {Number} value
      */
     set health(value) {
+        if (this._fieldView && this.type == 'creature') {
+            if (this._data.health - value > 0) {
+                this._fieldView.makeSomeBlood();
+            } else {
+                this._fieldView.makeSomeHeal();
+            }
+        }
+
         this._data.health = value;
         this._cardView.render();
 
         if (this._cardFullView) {
             this._cardFullView.render();
         }
+
     }
 
 

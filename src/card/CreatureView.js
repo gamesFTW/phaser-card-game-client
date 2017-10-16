@@ -51,6 +51,26 @@ export default class CreatureView extends FieldObjectView {
     }
 
 
+    makeSomeBlood() {
+        let position = isometric.pointerToIcometric(this.position);
+
+        PhaserWrapper.bloodEmitter.x = position.x;
+        PhaserWrapper.bloodEmitter.y = position.y - 50;
+
+        PhaserWrapper.bloodEmitter.start(true, 700, null, 100);
+    }
+
+
+    makeSomeHeal() {
+        let position = isometric.pointerToIcometric(this.position);
+
+        PhaserWrapper.healEmitter.x = position.x;
+        PhaserWrapper.healEmitter.y = position.y - 50;
+
+        PhaserWrapper.healEmitter.start(true, 700, null, 100);
+    }
+
+
     highlightOn() {
         if (this._isHighlighted == false) {
             this._isHighlighted = true;
