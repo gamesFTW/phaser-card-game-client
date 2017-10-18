@@ -18,6 +18,8 @@ import GroupTypes from 'cardGroups/CardGroupTypes';
 
 import Backend from 'BackendAdapter';
 
+import lodash from 'lodash';
+
 
 export default class CardManager extends EventEmitter {
     constructor() {
@@ -381,16 +383,36 @@ export default class CardManager extends EventEmitter {
     }
 
 
+    getPlayerCardsByCard(card) {
+        let playerCards = null;
+        lodash.forEach(this._players, (pCards, playerId) => {
+            if (pCards.checkCardInAllGroups(card)) {
+                playerCards = pCards;
+                return false;
+            }
+        });
+
+        return playerCards;
+    }
+
+
     /**
      * HANDLERS
      */
     _onCardRightClick(event) {
-        var card = event.currentTarget;
-        
-        if (this.checkCardIn(GroupTypes.GRAVEYARD, card)) {
-            this._currentPlayerCards.showGraveyardList();
-        } else if (this.checkCardIn(GroupTypes.DECK, card)) {
-            this._currentPlayerCards.showDeckList();
+        let card = event.currentTarget;
+
+        let playerCards = this.getPlayerCardsByCard(card);
+        if (playerCards === null) {
+            throw new Error('Не нашлось владельца карты.');
+        }
+
+        if (playerCards.checkCardIn(GroupTypes.GRAVEYARD, card)) {
+            playerCards.showGraveyardList();
+        } else if (playerCards.checkCardIn(GroupTypes.DECK, card)) {
+            if (playerCards === this._currentPlayerCards || MeteorApp.data.viewReplayMode) {
+                playerCards.showDeckList();
+            }
         } else {
             if (card.tapped) {
                 Backend.untapCard(card.id);

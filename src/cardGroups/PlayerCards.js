@@ -191,6 +191,21 @@ export default class PlayerCards extends EventEmitter {
 
     /**
      * @param {Card} card
+     * @return {Boolean}
+     */
+    checkCardInAllGroups(card) {
+        let cardGroup = this.getCardGroupByCard(card);
+
+        if (cardGroup === null) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    /**
+     * @param {Card} card
      * @return {CardGroupTypes|null}
      */
     getCardGroupByCard(card) {

@@ -1,10 +1,10 @@
 import BackendAdapter from 'BackendAdapter/BackendAdapter';
-import BackendForViewMode from 'BackendAdapter/BackendForViewMode';
+import BackendAdapterForReplay from 'BackendAdapter/BackendAdapterForReplay';
 
 let Backend;
 
 if (MeteorApp.data.viewReplayMode) {
-    Backend = new BackendForViewMode();
+    Backend = new BackendAdapterForReplay();
 } else {
     Backend = new BackendAdapter();
 }

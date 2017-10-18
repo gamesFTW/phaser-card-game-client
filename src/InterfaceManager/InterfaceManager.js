@@ -27,7 +27,7 @@ export default class InterfaceManager extends EventEmitter {
         this._createGlobalTimerCurrentPlayer();
         this._createGlobalTimerOtherPlayer();
         
-        this._createPauseHandler();
+        this._createHandlers();
 
         //TODO: remove it to MoveAction class
         Backend.on(Backend.GAME_TURN_ENDED, this._onTurnEnd.bind(this));
@@ -35,43 +35,23 @@ export default class InterfaceManager extends EventEmitter {
         
     }
 
-    /**
-     * 
-     * @param timerData
-     * @param timerData.timeLeft Number
-     * @param timerData.globalTimers Object
-     * @private
-     */
-    _onTimerTick(timerData) {
-        this._timeLeftTimerLablel.text = secToMin(timerData.timeLeft);
-        
-        _.forEach(timerData.globalTimers, (v, k) => {
-            if (k == Backend.getCurrentPlayerId()) {
-                this._globalTimerCurrentPlayer.text = secToMin(v);
-            } else {
-                this._globalTimerOtherPlayer.text = secToMin(v);
-            }
-        });
+
+    _createHandlers() {
+        this._createPauseHandler();
     }
 
-    _onSpacePress() {
-        console.log('pause by spacebar');
-        Backend.tooglePauseGame();
-    }
-    
-    _onTurnEnd() {
-        this._turnsNumberLabel.text = Backend.getGameTurnNumber();
-    }
 
     _createEndTurnButton() {
         this._eotButton = PhaserWrapper.game.add.button(750, 840, 'button_eot', this._onEndTurnButtonClick, this);
     }
 
+
     _createPauseHandler() {
-        var space = PhaserWrapper.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        let space = PhaserWrapper.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         space.onDown.add(this._onSpacePress, this);
     }
-    
+
+
     _createTurnsNumberLabel() {
         this._turnsNumberLabel = PhaserWrapper.game.add.text(
             820, 890,
@@ -113,7 +93,7 @@ export default class InterfaceManager extends EventEmitter {
         );
     }
 
-    
+
     _createTimeLeftTimer() {
         this._timeLeftTimerLablel = PhaserWrapper.game.add.text(
             820, 800,
@@ -127,9 +107,39 @@ export default class InterfaceManager extends EventEmitter {
         );
     }
 
+    /**
+     *
+     * @param timerData
+     * @param timerData.timeLeft Number
+     * @param timerData.globalTimers Object
+     * @private
+     */
+    _onTimerTick(timerData) {
+        this._timeLeftTimerLablel.text = secToMin(timerData.timeLeft);
+
+        _.forEach(timerData.globalTimers, (v, k) => {
+            if (k == Backend.getCurrentPlayerId()) {
+                this._globalTimerCurrentPlayer.text = secToMin(v);
+            } else {
+                this._globalTimerOtherPlayer.text = secToMin(v);
+            }
+        });
+    }
+
+
+    _onSpacePress() {
+        console.log('pause by spacebar');
+        Backend.tooglePauseGame();
+    }
+
 
     _onEndTurnButtonClick() {
         this.emit(InterfaceManager.END_OF_TURN_CLICKED);
+    }
+
+
+    _onTurnEnd() {
+        this._turnsNumberLabel.text = Backend.getGameTurnNumber();
     }
 }
 

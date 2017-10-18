@@ -4,6 +4,15 @@ import _ from 'lodash';
 import PlayerCards from './PlayerCards';
 
 
+function getFaceUpForCurrentMode(initialFaceUp) {
+    if (MeteorApp.data.viewReplayMode) {
+        return true;
+    }
+
+    return initialFaceUp;
+}
+
+
 export default class PlayerCardsFactory {
     constructor() {
 
@@ -39,7 +48,7 @@ export default class PlayerCardsFactory {
 
             enemy: {
                 hand: {
-                    x: 1240, y: 5, faceUp: false,
+                    x: 1240, y: 5, faceUp: getFaceUpForCurrentMode(false),
                     padding: 5, adaptive: true,
                     maxWidth: 430
                 },

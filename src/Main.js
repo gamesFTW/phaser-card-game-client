@@ -2,7 +2,7 @@ import PhaserWrapper from 'phaserWrapper/PhaserWrapper';
 import TileManager from 'tile/TileManager';
 import CardManager from 'card/CardManager';
 import TileCardManager from './TileCardManager';
-import InterfaceManager from './InterfaceManager';
+import {InterfaceManager} from './InterfaceManager';
 import Backend from './BackendAdapter';
 
 
@@ -79,12 +79,13 @@ class Main {
 
 
     _loadSavedGame() {
-        var cardsData = Backend.getCards();
+        let cardsData = Backend.getCards();
 
         this._cardManager.createCardsFromData(cardsData);
         
-        if (Backend.playHistory) {
-            Backend.playHistory();
+        if (Backend.loadActionHistory) {
+            Backend.loadActionHistory();
+            Backend.togglePause();
         }
     }
 }

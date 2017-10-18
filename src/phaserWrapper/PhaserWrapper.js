@@ -151,7 +151,7 @@ class PhaserWrapper {
         // Create healEmitter
         this.healEmitter = this._game.add.emitter(0, 0, 100);
         this.healEmitter.makeParticles('heal');
-        this.healEmitter.gravity = 200;
+        this.healEmitter.gravity = -200;
 
         this._createGroups();
         this._createFinished();

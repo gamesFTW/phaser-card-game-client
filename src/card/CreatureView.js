@@ -65,7 +65,7 @@ export default class CreatureView extends FieldObjectView {
         let position = isometric.pointerToIcometric(this.position);
 
         PhaserWrapper.healEmitter.x = position.x;
-        PhaserWrapper.healEmitter.y = position.y - 50;
+        PhaserWrapper.healEmitter.y = position.y - 20;
 
         PhaserWrapper.healEmitter.start(true, 700, null, 100);
     }
