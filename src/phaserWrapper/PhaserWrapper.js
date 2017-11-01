@@ -134,9 +134,10 @@ class PhaserWrapper {
         // Buttons
         this._game.load.image('button_eot', '/assets/button_eot.png');
 
-        // Blood
+        // Particles
         this._game.load.image('blood', '/assets/blood.png');
         this._game.load.image('heal', '/assets/heal.png');
+        this._game.load.image('counter_pixel', '/assets/counter_pixel.png');
     }
 
 
@@ -152,6 +153,10 @@ class PhaserWrapper {
         this.healEmitter = this._game.add.emitter(0, 0, 100);
         this.healEmitter.makeParticles('heal');
         this.healEmitter.gravity = -200;
+
+        // Create counterEmitter
+        this.counterEmitter = this._game.add.emitter(0, 0, 50);
+        this.counterEmitter.makeParticles('counter_pixel');
 
         this._createGroups();
         this._createFinished();
@@ -188,6 +193,7 @@ class PhaserWrapper {
 
         this._game.world.bringToTop(this.bloodEmitter);
         this._game.world.bringToTop(this.healEmitter);
+        this._game.world.bringToTop(this.counterEmitter);
     }
 }
 

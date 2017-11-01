@@ -181,6 +181,15 @@ export default class Card extends EventEmitter {
      * @param {Number} value
      */
     set counter(value) {
+        if (this._fieldView && this.type == 'creature') {
+            if (this._data.counter - value > 0) {
+                this._fieldView.makeSomeDownCounters();
+            } else {
+                this._fieldView.makeSomeUpCounters();
+            }
+        }
+
+
         this._data.counter = value;
         this._cardView.render();
 
@@ -216,12 +225,20 @@ export default class Card extends EventEmitter {
     tap() {
         this._data.tapped = true;
         this._cardView.tap();
+
+        if (this._fieldView && this.type == 'creature') {
+            this._fieldView.quake();
+        }
     }
 
 
     untap() {
         this._data.tapped = false;
         this._cardView.untap();
+
+        if (this._fieldView && this.type == 'creature') {
+            this._fieldView.quake();
+        }
     }
 
 
