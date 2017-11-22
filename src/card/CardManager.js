@@ -49,7 +49,7 @@ export default class CardManager extends EventEmitter {
         this._cards = {};
 
 
-        //TODO: remove it to MoveAction class
+        //fixme: remove it to MoveAction class
         Backend.on(Backend.CARD_MOVED, this._onCardMoved.bind(this));
         Backend.on(Backend.CARD_REMOVED, this._onCardRemoved.bind(this));
         Backend.on(Backend.CARD_TAPPED, this._onCardTapped.bind(this));
@@ -73,8 +73,6 @@ export default class CardManager extends EventEmitter {
             Backend.CARD_MOVED_TO_PREVIOUS_GROUP,
             this._onCardMovedToPreviousGroup.bind(this)
         );
-        Backend.on(Backend.TIMER_ALARMED_END_OF_TURN, this._onTimerAlarmedEndOfTurn.bind(this));
-        Backend.on(Backend.PLAYER_TURN_ENDED, this._onPlayerTurnEnded.bind(this));
     }
 
 
@@ -107,7 +105,7 @@ export default class CardManager extends EventEmitter {
      * @returns {Card}
      */
     createCard(cardData) {
-        // TODO говно же бекграунд, плохо считать сыграность карты по наличию X и Y, нужно иметь поле attached.
+        // fixme говно же бекграунд, плохо считать сыграность карты по наличию X и Y, нужно иметь поле attached.
         if (cardData.cardGroup === GroupTypes.TABLE && cardData.x !== undefined) {
             cardData.onField = true;
         }
@@ -361,7 +359,13 @@ export default class CardManager extends EventEmitter {
         }
 
         if (inDeck) {
-            Backend.drawCard(card.id);
+            // fixme: перестать использовать faceUp.
+            // Вместо этого сделать колоду кнопкой.
+            if (card._cardView.faceUp) {
+                Backend.drawCard(card.id);
+            } else {
+                Backend.playerDrawRandomCards(Backend.getCurrentPlayerId(), 1);
+            }
         } else if (inGraveyard){
             Backend.takeCardFromGraveyard(card.id);
         } else {
@@ -432,7 +436,7 @@ export default class CardManager extends EventEmitter {
     }
 
 
-    //TODO: maybe move all listeners to MoveAction class?
+    //fixme: maybe move all listeners to MoveAction class?
     _onCardMoved(event) {
         var card = this.findById(event.id);
         card.position = event.position;
@@ -488,26 +492,6 @@ export default class CardManager extends EventEmitter {
         this.createCard(event.card);
     }
 
-    _onTimerAlarmedEndOfTurn(event) {
-        if(event.playerId === Backend.getCurrentPlayerId()) {
-            this.endOfTurn();
-        }
-    }
-
-    _onPlayerTurnEnded(event) {
-        if(event.playerId === Backend.getCurrentPlayerId()) {
-            var numberOfCardsToDraw = 1;
-
-            //if (BackendAdapter.getGameTurnNumber() >= 6) {
-            //    numberOfCardsToDraw = 2;
-            //}
-
-            var playerCards = this._players[Backend.getCurrentPlayerId()];
-            // Draw cards
-            var cardsToDraw = playerCards.getNCardsFromTopDeck(numberOfCardsToDraw);
-            cardsToDraw.forEach(c => Backend.drawCard(c.id));
-        }
-    }
 
     _onCardPlayedAsMana(event) {
         this._playCardAsMana(event.id, event.ownerId);

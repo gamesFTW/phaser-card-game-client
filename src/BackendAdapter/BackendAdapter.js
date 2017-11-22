@@ -19,9 +19,7 @@ class BackendAdapter extends EventEmitter {
     get CARD_CREATED() { return 'Backend:cardCreated'}
     get CARD_TOOK_FROM_GRAVEYARD() { return 'Backend:cardTookFromGraveyard'}
     get CARD_DISCARDED() { return 'Backend:cardDiscarded'}
-    get PLAYER_TURN_ENDED() { return 'Backend:endOfPlayerTurn'}
     get GAME_TURN_ENDED() { return 'Backend:endOfGameTurn'}
-    get TIMER_ALARMED_END_OF_TURN() { return 'Backend:timerAlarmedEndOfPlayerTurn'}
     get GAME_TIMER_TICKED() { return 'Backend:gameTimerTicked'}
 
 
@@ -157,6 +155,11 @@ class BackendAdapter extends EventEmitter {
 
     drawCard(id) {
         Meteor.call('drawCard', this.getGameId(), id);
+    }
+
+
+    playerDrawRandomCards(playerId, cardNumber) {
+        Meteor.call('playerDrawRandomCards', this.getGameId(), playerId, cardNumber);
     }
 
 
