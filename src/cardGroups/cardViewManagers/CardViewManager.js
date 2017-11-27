@@ -19,6 +19,9 @@ export default class CardViewManager extends EventEmitter {
 
     }
 
+    get position() {
+        return { x: this._x, y: this._y };
+    }
 
     /**
      *

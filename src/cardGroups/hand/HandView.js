@@ -8,7 +8,7 @@ export default class HandView extends CardRowViewManager {
     reorderCards(cards) {
         cards = lodash.sortByAll(cards, ['mana', 'title']);
 
-        super.reorderCards(cards);
         cards.forEach(card => card.cardView.visible = true);
+        super.reorderCards(cards);
     }
 }
