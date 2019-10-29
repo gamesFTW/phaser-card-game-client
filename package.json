@@ -13,7 +13,7 @@
     "phaser": "2.4.6",
     "pixi.js": "2.2.9",
     "p2": "0.x.x",
-    "lodash": "3.10.1"
+    "lodash": "4.17.15"
   },
   "devDependencies": {
     "phaser-debug": "1.x.x",
